@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tchat_frontend/splash_screen/screen/main.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: Scaffold(
-        body: Text("Home Page..."),
+        body: SplashScreen(),
       ),
     );
   }
