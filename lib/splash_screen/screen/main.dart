@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
+import 'package:tchat_frontend/authentication/main.dart';
+import 'package:tchat_frontend/authentication/screen/signup.dart';
 
 class SplashScreen extends StatelessWidget {
-
+  SplashScreen({super.key});
   final Widget animationLottie = ClipOval(
     child: Container(
       width: 150,
       height: 150,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(50)),
         color: Colors.white, // Optional: background color for contrast
       ),
@@ -40,8 +42,8 @@ class SplashScreen extends StatelessWidget {
       builder: (BuildContext context) {
         return Container(
           width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 62, 102, 197)
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -65,7 +67,9 @@ class SplashScreen extends StatelessWidget {
                 ),),
                 if(i==3) ...[
                   const SizedBox(height: 40,),
-                  OutlinedButton(onPressed: () {},
+                  OutlinedButton(onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const AuthScreen()));
+                  },
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: Colors.white),
                           shape: RoundedRectangleBorder(
