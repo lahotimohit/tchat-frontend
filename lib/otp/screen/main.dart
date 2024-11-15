@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tchat_frontend/numbers/screens/main.dart';
 
 class OtpScreen extends StatelessWidget{
   @override
@@ -69,7 +70,7 @@ class OtpScreen extends StatelessWidget{
                 const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle OTP submission
+                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => PhoneNumberMainScreen()));
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('OTP Submitted!')),
                     );
