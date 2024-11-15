@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:tchat_frontend/authentication/widgets/bottom_sheet.dart';
 import 'package:tchat_frontend/authentication/widgets/profile_photo.dart';
 import 'package:tchat_frontend/authentication/widgets/text_field.dart';
+import 'package:tchat_frontend/otp/screen/main.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -84,6 +85,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   width: 250,
                   child: ElevatedButton(
                     onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => OtpScreen()));
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
