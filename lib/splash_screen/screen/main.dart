@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
-import 'package:tchat_frontend/authentication/main.dart';
-import 'package:tchat_frontend/authentication/screen/signup.dart';
+import 'package:tchat_frontend/authentication/screen/main.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashScreen({super.key});
@@ -26,6 +26,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     return FlutterCarousel(
   options: FlutterCarouselOptions(
     height: double.infinity,
