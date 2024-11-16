@@ -5,88 +5,88 @@ import 'package:google_fonts/google_fonts.dart';
 class MessagesTab extends StatelessWidget {
   final List<Message> messages = [
     Message(
-      username: 'Thala',
-      lastMessage: 'Oye Kal match hai...',
+      username: 'Frank Martin',
+      lastMessage: 'Hello Brother...',
       timestamp: 'now',
       profileImage:
-          'https://images.firstpost.com/uploads/2024/02/MS-Dhoni-CSK-IPL-2023-PTI-1200-2024-02-9c8c7d515e57c707fd33cef140b5d687.jpg?im=FitAndFill=(1200,675)',
+          'https://images.unsplash.com/photo-1624140716840-5d89f311f500?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     ),
     Message(
-      username: 'Chokli',
-      lastMessage: 'Yaar RCB chodne ka man kar rha hai...',
+      username: 'Marta Popaes',
+      lastMessage: 'Nice to meet you!',
       timestamp: '10:30 PM',
       profileImage:
-          'https://www.hindustantimes.com/static-content/1y/cricket-logos/players/virat-kohli.png',
+          'https://cdn.pixabay.com/photo/2023/01/24/13/23/viet-nam-7741019_1280.jpg',
     ),
     Message(
-      username: 'Pandu Bhai',
-      lastMessage: 'Bhai Shaadi ka kuch jugad hua?',
+      username: 'Theresa',
+      lastMessage: 'TChat is awesome app...',
       timestamp: 'Yesterday',
       profileImage:
-          'https://img.mensxp.com/media/content/2022/Mar/Pandya-Isnt-Considering-IPL-2022-As-Comeback1200_6236fe21d8df5.jpeg',
+          'https://cdn.pixabay.com/photo/2022/04/30/14/04/woman-7165664_1280.jpg',
     ),
     Message(
-      username: 'Thala',
-      lastMessage: 'Oye Kal match hai...',
+      username: 'Frank Martin',
+      lastMessage: 'Hello Brother...',
       timestamp: 'now',
       profileImage:
-          'https://images.firstpost.com/uploads/2024/02/MS-Dhoni-CSK-IPL-2023-PTI-1200-2024-02-9c8c7d515e57c707fd33cef140b5d687.jpg?im=FitAndFill=(1200,675)',
+          'https://images.unsplash.com/photo-1624140716840-5d89f311f500?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     ),
     Message(
-      username: 'Chokli',
-      lastMessage: 'Yaar RCB chodne ka man kar rha hai...',
+      username: 'Marta Popaes',
+      lastMessage: 'Nice to meet you!',
       timestamp: '10:30 PM',
       profileImage:
-          'https://www.hindustantimes.com/static-content/1y/cricket-logos/players/virat-kohli.png',
+          'https://cdn.pixabay.com/photo/2023/01/24/13/23/viet-nam-7741019_1280.jpg',
     ),
     Message(
-      username: 'Pandu Bhai',
-      lastMessage: 'Bhai Shaadi ka kuch jugad hua?',
+      username: 'Theresa',
+      lastMessage: 'TChat is awesome app...',
       timestamp: 'Yesterday',
       profileImage:
-          'https://img.mensxp.com/media/content/2022/Mar/Pandya-Isnt-Considering-IPL-2022-As-Comeback1200_6236fe21d8df5.jpeg',
+          'https://cdn.pixabay.com/photo/2022/04/30/14/04/woman-7165664_1280.jpg',
     ),
     Message(
-      username: 'Thala',
-      lastMessage: 'Oye Kal match hai...',
+      username: 'Frank Martin',
+      lastMessage: 'Hello Brother...',
       timestamp: 'now',
       profileImage:
-          'https://images.firstpost.com/uploads/2024/02/MS-Dhoni-CSK-IPL-2023-PTI-1200-2024-02-9c8c7d515e57c707fd33cef140b5d687.jpg?im=FitAndFill=(1200,675)',
+          'https://images.unsplash.com/photo-1624140716840-5d89f311f500?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     ),
     Message(
-      username: 'Chokli',
-      lastMessage: 'Yaar RCB chodne ka man kar rha hai...',
+      username: 'Marta Popaes',
+      lastMessage: 'Nice to meet you!',
       timestamp: '10:30 PM',
       profileImage:
-          'https://www.hindustantimes.com/static-content/1y/cricket-logos/players/virat-kohli.png',
+          'https://cdn.pixabay.com/photo/2023/01/24/13/23/viet-nam-7741019_1280.jpg',
     ),
     Message(
-      username: 'Pandu Bhai',
-      lastMessage: 'Bhai Shaadi ka kuch jugad hua?',
+      username: 'Theresa',
+      lastMessage: 'TChat is awesome app...',
       timestamp: 'Yesterday',
       profileImage:
-          'https://img.mensxp.com/media/content/2022/Mar/Pandya-Isnt-Considering-IPL-2022-As-Comeback1200_6236fe21d8df5.jpeg',
+          'https://cdn.pixabay.com/photo/2022/04/30/14/04/woman-7165664_1280.jpg',
     ),
     Message(
-      username: 'Thala',
-      lastMessage: 'Oye Kal match hai...',
+      username: 'Frank Martin',
+      lastMessage: 'Hello Brother...',
       timestamp: 'now',
       profileImage:
-          'https://images.firstpost.com/uploads/2024/02/MS-Dhoni-CSK-IPL-2023-PTI-1200-2024-02-9c8c7d515e57c707fd33cef140b5d687.jpg?im=FitAndFill=(1200,675)',
+          'https://images.unsplash.com/photo-1624140716840-5d89f311f500?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     ),
     Message(
-      username: 'Chokli',
-      lastMessage: 'Yaar RCB chodne ka man kar rha hai...',
+      username: 'Marta Popaes',
+      lastMessage: 'Nice to meet you!',
       timestamp: '10:30 PM',
       profileImage:
-          'https://www.hindustantimes.com/static-content/1y/cricket-logos/players/virat-kohli.png',
+          'https://cdn.pixabay.com/photo/2023/01/24/13/23/viet-nam-7741019_1280.jpg',
     ),
     Message(
-      username: 'Pandu Bhai',
-      lastMessage: 'Bhai Shaadi ka kuch jugad hua?',
+      username: 'Theresa',
+      lastMessage: 'TChat is awesome app...',
       timestamp: 'Yesterday',
       profileImage:
-          'https://img.mensxp.com/media/content/2022/Mar/Pandya-Isnt-Considering-IPL-2022-As-Comeback1200_6236fe21d8df5.jpeg',
+          'https://cdn.pixabay.com/photo/2022/04/30/14/04/woman-7165664_1280.jpg',
     ),
   ];
 
@@ -152,7 +152,7 @@ class MessagesTab extends StatelessWidget {
                     child: Text(
                       message.username,
                       style: GoogleFonts.poppins(
-                          fontSize: 16, fontWeight: FontWeight.w500),
+                          fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                   ),
                   subtitle: Text(message.lastMessage,
