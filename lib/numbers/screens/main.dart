@@ -25,15 +25,6 @@ class _PhoneNumberMainScreenState extends State<PhoneNumberMainScreen> {
           },
         ),
         backgroundColor: Colors.white,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(4.0),
-          child: LinearProgressIndicator(
-            value:
-                0.33,
-            backgroundColor: Colors.grey[300],
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
