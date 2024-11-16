@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tchat_frontend/home/screen/main.dart';
 
 
 class PhoneNumberMainScreen extends StatefulWidget {
@@ -124,6 +125,7 @@ class _PhoneNumberMainScreenState extends State<PhoneNumberMainScreen> {
                 width: 300,
                 child: ElevatedButton(
                   onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => HomeMainScreen()));
                   },
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 8),
