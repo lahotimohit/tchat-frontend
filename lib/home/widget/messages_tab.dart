@@ -1,99 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:tchat_frontend/home/models/messages.dart';
+import 'package:flutter/services.dart';
+import 'package:tchat_frontend/home/data/messages.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tchat_frontend/home/widget/appbar.dart';
+import 'package:tchat_frontend/home/widget/drawer.dart';
 
 class MessagesTab extends StatelessWidget {
-  final List<Message> messages = [
-    Message(
-      username: 'Frank Martin',
-      lastMessage: 'Hello Brother...',
-      timestamp: 'now',
-      profileImage:
-          'https://images.unsplash.com/photo-1624140716840-5d89f311f500?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    ),
-    Message(
-      username: 'Marta Popaes',
-      lastMessage: 'Nice to meet you!',
-      timestamp: '10:30 PM',
-      profileImage:
-          'https://cdn.pixabay.com/photo/2023/01/24/13/23/viet-nam-7741019_1280.jpg',
-    ),
-    Message(
-      username: 'Theresa',
-      lastMessage: 'TChat is awesome app...',
-      timestamp: 'Yesterday',
-      profileImage:
-          'https://cdn.pixabay.com/photo/2022/04/30/14/04/woman-7165664_1280.jpg',
-    ),
-    Message(
-      username: 'Frank Martin',
-      lastMessage: 'Hello Brother...',
-      timestamp: 'now',
-      profileImage:
-          'https://images.unsplash.com/photo-1624140716840-5d89f311f500?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    ),
-    Message(
-      username: 'Marta Popaes',
-      lastMessage: 'Nice to meet you!',
-      timestamp: '10:30 PM',
-      profileImage:
-          'https://cdn.pixabay.com/photo/2023/01/24/13/23/viet-nam-7741019_1280.jpg',
-    ),
-    Message(
-      username: 'Theresa',
-      lastMessage: 'TChat is awesome app...',
-      timestamp: 'Yesterday',
-      profileImage:
-          'https://cdn.pixabay.com/photo/2022/04/30/14/04/woman-7165664_1280.jpg',
-    ),
-    Message(
-      username: 'Frank Martin',
-      lastMessage: 'Hello Brother...',
-      timestamp: 'now',
-      profileImage:
-          'https://images.unsplash.com/photo-1624140716840-5d89f311f500?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    ),
-    Message(
-      username: 'Marta Popaes',
-      lastMessage: 'Nice to meet you!',
-      timestamp: '10:30 PM',
-      profileImage:
-          'https://cdn.pixabay.com/photo/2023/01/24/13/23/viet-nam-7741019_1280.jpg',
-    ),
-    Message(
-      username: 'Theresa',
-      lastMessage: 'TChat is awesome app...',
-      timestamp: 'Yesterday',
-      profileImage:
-          'https://cdn.pixabay.com/photo/2022/04/30/14/04/woman-7165664_1280.jpg',
-    ),
-    Message(
-      username: 'Frank Martin',
-      lastMessage: 'Hello Brother...',
-      timestamp: 'now',
-      profileImage:
-          'https://images.unsplash.com/photo-1624140716840-5d89f311f500?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    ),
-    Message(
-      username: 'Marta Popaes',
-      lastMessage: 'Nice to meet you!',
-      timestamp: '10:30 PM',
-      profileImage:
-          'https://cdn.pixabay.com/photo/2023/01/24/13/23/viet-nam-7741019_1280.jpg',
-    ),
-    Message(
-      username: 'Theresa',
-      lastMessage: 'TChat is awesome app...',
-      timestamp: 'Yesterday',
-      profileImage:
-          'https://cdn.pixabay.com/photo/2022/04/30/14/04/woman-7165664_1280.jpg',
-    ),
-  ];
+  const MessagesTab({super.key});
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Theme.of(context).colorScheme.primary,
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light
+    ));
     return Scaffold(
-      backgroundColor: Colors.white,
+        appBar: const MainAppBar(title: "Conversations",),
+        drawer: const SizedBox(
+          width: 270,
+          child: MainDrawer()),
       body: messages.isEmpty
           ? Center(
               child: Column(
@@ -175,7 +101,7 @@ class MessagesTab extends StatelessWidget {
       floatingActionButton: messages.isNotEmpty
           ? FloatingActionButton(
               onPressed: () {},
-              backgroundColor: Color.fromARGB(255, 91, 131, 242),
+              backgroundColor: Theme.of(context).colorScheme.primary,
               child: const Icon(
                 Icons.chat,
                 color: Colors.white,
