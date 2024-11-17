@@ -1,50 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-class Call {
-  final String name;
-  final String timestamp;
-  final String profileImage;
-  final bool isVideoCall;
-  final CallStatus status;
-
-  Call({
-    required this.name,
-    required this.timestamp,
-    required this.profileImage,
-    required this.isVideoCall,
-    required this.status,
-  });
-}
-
-enum CallStatus {
-  missed,
-  outgoing,
-  incoming,
-}
+import 'package:tchat_frontend/home/models/call.dart';
+import 'package:tchat_frontend/home/data/calls.dart';
 
 class CallScreen extends StatelessWidget {
   CallScreen({super.key});
-
-  final List<Call> calls = [
-    Call(
-      name: "Thala",
-      timestamp: "10 minutes ago",
-      profileImage:
-          "https://images.firstpost.com/uploads/2024/02/MS-Dhoni-CSK-IPL-2023-PTI-1200-2024-02-9c8c7d515e57c707fd33cef140b5d687.jpg?im=FitAndFill=(1200,675)",
-      isVideoCall: true,
-      status: CallStatus.missed,
-    ),
-    Call(
-      name: "Chokli",
-      timestamp: "Today, 2:30 PM",
-      profileImage:
-          "https://www.hindustantimes.com/static-content/1y/cricket-logos/players/virat-kohli.png",
-      isVideoCall: false,
-      status: CallStatus.outgoing,
-    ),
-    // Add more call records as needed
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +12,14 @@ class CallScreen extends StatelessWidget {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
+          leading: const SizedBox(),
           backgroundColor: Theme.of(context).colorScheme.primary,
-          title: Text(
+          centerTitle: true,
+          title: const Text(
             'Calls',
-            style: GoogleFonts.poppins(
+            style: TextStyle(
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -66,21 +28,8 @@ class CallScreen extends StatelessWidget {
               icon: const Icon(Icons.search, color: Colors.white),
               onPressed: () {},
             ),
-            PopupMenuButton(
-              icon: const Icon(Icons.more_vert, color: Colors.white),
-              itemBuilder: (context) => [
-                const PopupMenuItem(
-                  value: 'clear',
-                  child: Text('Clear call log'),
-                ),
-                const PopupMenuItem(
-                  value: 'settings',
-                  child: Text('Settings'),
-                ),
-              ],
-            ),
           ],
-          bottom: TabBar(
+          bottom: const TabBar(
             labelColor: Colors.white,
             unselectedLabelColor: Colors.white70,
             indicatorColor: Colors.white,
@@ -112,7 +61,7 @@ class CallScreen extends StatelessWidget {
   Widget _buildCallList(List<Call> calls) {
     return ListView.separated(
       itemCount: calls.length,
-      separatorBuilder: (context, index) => const Divider(height: 1),
+      separatorBuilder: (context, index) => const SizedBox(),
       itemBuilder: (context, index) {
         final call = calls[index];
         return ListTile(
@@ -144,24 +93,13 @@ class CallScreen extends StatelessWidget {
               ),
             ],
           ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
+          trailing: IconButton(
                 icon: Icon(
                   call.isVideoCall ? Icons.videocam : Icons.call,
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 onPressed: () {},
               ),
-              const SizedBox(width: 5),
-              Icon(
-                Icons.info_outline,
-                color: Colors.grey[400],
-                size: 20,
-              ),
-            ],
-          ),
           onTap: () {},
         );
       },
