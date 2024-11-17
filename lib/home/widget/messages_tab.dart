@@ -129,47 +129,49 @@ class MessagesTab extends StatelessWidget {
                 ],
               ),
             )
-          : ListView.separated(
-              itemCount: messages.length,
-              separatorBuilder: (context, index) => SizedBox.shrink(),
-              itemBuilder: (context, index) {
-                final message = messages[index];
-                return ListTile(
-                  contentPadding: EdgeInsets.fromLTRB(5, 0, 5, 3),
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(message.profileImage),
-                    radius: 25,
+          : Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.all(7),
+                height: 45,
+                child: SearchBar(
+                  hintText: "Search...",
+                  elevation: const WidgetStatePropertyAll(1),
+                  leading: const Icon(Icons.search),
+                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                    const EdgeInsets.symmetric(horizontal: 17, vertical: 2),
                   ),
-                  title: InkWell(
-                    onTap: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (ctx) => ChatScreen(
-                      //           username: message.username,
-                      //           status: "Online",
-                      //           profilephoto: message.profileImage,
-                      //         )));
+                ),
+              ),
+              Expanded(
+                child: ListView.separated(
+                    itemCount: messages.length,
+                    separatorBuilder: (context, index) => SizedBox.shrink(),
+                    itemBuilder: (context, index) {
+                      final message = messages[index];
+                      return ListTile(
+                        contentPadding: EdgeInsets.fromLTRB(5, 0, 5, 3),
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(message.profileImage),
+                          radius: 25,
+                        ),
+                        title:Text(
+                            message.username,
+                            style: GoogleFonts.poppins(
+                                fontSize: 16, fontWeight: FontWeight.w600),
+                          ),
+                        subtitle: Text(message.lastMessage,
+                            style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Color.fromARGB(184, 34, 34, 34))),
+                        onTap: () {},
+                      );
                     },
-                    child: Text(
-                      message.username,
-                      style: GoogleFonts.poppins(
-                          fontSize: 16, fontWeight: FontWeight.w600),
-                    ),
                   ),
-                  subtitle: Text(message.lastMessage,
-                      style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromARGB(184, 34, 34, 34))),
-                  trailing: Text(
-                    message.timestamp,
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 157, 157, 157),
-                        fontSize: 12),
-                  ),
-                  onTap: () {},
-                );
-              },
-            ),
+              ),
+            ],
+          ),
       floatingActionButton: messages.isNotEmpty
           ? FloatingActionButton(
               onPressed: () {},
