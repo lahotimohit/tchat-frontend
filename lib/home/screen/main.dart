@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tchat_frontend/home/widget/drawer.dart';
 import 'package:tchat_frontend/home/widget/messages_tab.dart';
 
 class HomeMainScreen extends StatefulWidget {
@@ -17,27 +18,17 @@ class _HomeMainScreen extends State<HomeMainScreen> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
-          leading: Icon(Icons.menu, color: Theme.of(context).colorScheme.surface,),
           centerTitle: true,
           title: Text("Conversations",
           style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 18, fontWeight: FontWeight.w600),),
+          iconTheme: IconThemeData(color: Theme.of(context).colorScheme.surface),
         ),
+        drawer: SizedBox(
+          width: 270,
+          child: MainDrawer()),
         body: SafeArea(
           child: Column(
             children: [
-              // Search Bar
-              Container(
-                margin: const EdgeInsets.all(7),
-                height: 45,
-                child: SearchBar(
-                  hintText: "Search...",
-                  elevation: const WidgetStatePropertyAll(1),
-                  leading: const Icon(Icons.search),
-                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                    const EdgeInsets.symmetric(horizontal: 17, vertical: 2),
-                  ),
-                ),
-              ),
               Expanded(
                 child: TabBarView(
                   children: [
