@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tchat_frontend/setting/screen/main.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
@@ -54,7 +55,9 @@ class MainDrawer extends StatelessWidget {
          ListTile(
           leading: Icon(Icons.settings, color: Colors.grey ,size: 26),
           title: Text("Settings", style: TextStyle(color: Colors.black87),),
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => SettingMainScreen()));
+          },
         )
       ],),
     );
