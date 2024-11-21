@@ -125,7 +125,7 @@ class _PhoneNumberMainScreenState extends State<PhoneNumberMainScreen> {
                 width: 300,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => HomeMainScreen()));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => HomeMainScreen()));
                   },
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 8),

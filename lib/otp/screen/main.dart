@@ -70,7 +70,7 @@ class OtpScreen extends StatelessWidget{
                 const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => PhoneNumberMainScreen()));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => PhoneNumberMainScreen()));
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 13),
