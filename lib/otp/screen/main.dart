@@ -71,9 +71,6 @@ class OtpScreen extends StatelessWidget{
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => PhoneNumberMainScreen()));
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('OTP Submitted!')),
-                    );
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 13),

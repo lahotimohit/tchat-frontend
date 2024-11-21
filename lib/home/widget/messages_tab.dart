@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tchat_frontend/chats/screen/main.dart';
 import 'package:tchat_frontend/home/data/messages.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/home/widget/appbar.dart';
@@ -77,9 +78,11 @@ class MessagesTab extends StatelessWidget {
                       final message = messages[index];
                       return ListTile(
                         contentPadding: EdgeInsets.fromLTRB(5, 0, 5, 3),
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(message.profileImage),
-                          radius: 25,
+                        leading: InkWell(
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(message.profileImage),
+                            radius: 25,
+                          ),
                         ),
                         title:Text(
                             message.username,
@@ -91,7 +94,13 @@ class MessagesTab extends StatelessWidget {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
                                 color: Color.fromARGB(184, 34, 34, 34))),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => ChatMainScreen(
+                            username: message.username,
+                            profileImage: message.profileImage,
+                            status: "Online",
+                          )));
+                        },
                       );
                     },
                   ),
