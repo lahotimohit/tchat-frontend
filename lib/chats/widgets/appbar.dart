@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tchat_frontend/voice_call/screens/main.dart';
 
 PreferredSizeWidget chatAppBar(
     String username, String status, String profilephoto, BuildContext context) {
@@ -41,7 +42,9 @@ PreferredSizeWidget chatAppBar(
       ),
       IconButton(
           icon: Icon(Icons.call,  color: Theme.of(context).colorScheme.surface,),
-          onPressed: () {}),
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => VoiceCallScreen(isIncoming: false, userName: username, userPhoto: profilephoto)));
+          }),
       IconButton(
         icon: Icon(Icons.more_vert, color: Theme.of(context).colorScheme.surface,),
         onPressed: () {},
