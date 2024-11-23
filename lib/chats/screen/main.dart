@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:tchat_frontend/chats/models/chat.dart';
 import 'package:tchat_frontend/chats/widgets/message_input.dart';
 import 'package:tchat_frontend/chats/widgets/messages.dart';
 import 'package:tchat_frontend/chats/data/chat.dart';
 import 'package:tchat_frontend/chats/widgets/appbar.dart';
 
 class ChatMainScreen extends StatefulWidget {
-  const ChatMainScreen({super.key, required this.username, required this.profileImage, required this.status});
+  const ChatMainScreen({
+    super.key,
+    required this.username,
+    required this.profileImage,
+    required this.status,
+  });
+
   final String username;
   final String profileImage;
-  final String status; 
+  final String status;
 
   @override
   State<ChatMainScreen> createState() {
     return _ChatMainScreen();
-}
+  }
 }
 
-class _ChatMainScreen extends State<ChatMainScreen> {
+class _ChatMainScreen extends State<ChatMainScreen> with WidgetsBindingObserver {
   final ScrollController _scrollController = ScrollController();
   late String username;
   late String status;
@@ -28,12 +35,57 @@ class _ChatMainScreen extends State<ChatMainScreen> {
     username = widget.username;
     status = widget.status;
     profilephoto = widget.profileImage;
+
+    WidgetsBinding.instance.addObserver(this);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToBottom();
+    });
   }
 
-    void _scrollToBottom() {
-    if (_scrollController.hasClients) {
-      _scrollController.jumpTo(_scrollController.position.minScrollExtent);
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    if (bottomInset > 0) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+      });
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollToBottom();
+      });
     }
+  }
+
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    }
+  }
+
+  void _onNewMessage(String message) {
+    setState(() {
+      messages.add(Message(
+        senderId: "",
+        receiverId: "",
+        id: '12',
+        content: message,
+        isSent: true,
+        timestamp: DateTime.now(),
+        isRead: false,
+      ));
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    });
   }
 
   @override
@@ -44,7 +96,6 @@ class _ChatMainScreen extends State<ChatMainScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-              reverse: true,
               controller: _scrollController,
               itemCount: messages.length,
               itemBuilder: (context, index) {
@@ -52,8 +103,9 @@ class _ChatMainScreen extends State<ChatMainScreen> {
               },
             ),
           ),
-          buildMessageInputField(context),
+          buildMessageInputField(context, _onNewMessage),
         ],
-      ),);
+      ),
+    );
   }
 }

@@ -50,7 +50,8 @@ void _openBottomSheet(context) {
   );
 }
 
-Widget buildMessageInputField(context) {
+Widget buildMessageInputField(context, onNewMessage(String message)) {
+  TextEditingController messageController = new TextEditingController();
   return Container(
     color: Colors.white,
     margin: const EdgeInsets.all(16),
@@ -60,6 +61,7 @@ Widget buildMessageInputField(context) {
         children: [
           Expanded(
             child: TextField(
+              controller: messageController,
               decoration: InputDecoration(
                 hintText: 'Type a message',
                 border: OutlineInputBorder(
@@ -78,7 +80,9 @@ Widget buildMessageInputField(context) {
           ),
           IconButton(
             icon: const Icon(Icons.send),
-            onPressed: () {},
+            onPressed: () {
+              onNewMessage(messageController.text);
+            },
           ),
         ],
       ),
