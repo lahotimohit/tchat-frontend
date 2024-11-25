@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:tchat_frontend/authentication/screen/main.dart';
+import 'package:tchat_frontend/splash_screen/widgets/splash_widget.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({super.key});
@@ -25,23 +26,6 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 
-  final Widget animationLottie = ClipOval(
-    child: Container(
-      width: 150,
-      height: 150,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(50)),
-        color: Colors.white, // Optional: background color for contrast
-      ),
-      child: Lottie.network(
-        "https://lottie.host/5fce4540-030f-43f1-804a-6aa9ad3c9950/QMT3WC50rM.json",
-        repeat: true,
-        reverse: true,
-        animate: true,
-      ),
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
     return FlutterCarousel(
@@ -61,49 +45,8 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 100),
-                    animationLottie,
-                    const SizedBox(height: 50),
-                    Text("GET NOTIFIED",
-                        style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 20),
-                    Text(
-                      "Communicate with your friend in fast and reliable way.",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                    if (i == 3) ...[
-                      const SizedBox(height: 40),
-                      OutlinedButton(
-                        onPressed: () {
-                          // Reset UI mode before navigating
-                          SystemChrome.setEnabledSystemUIMode(
-                              SystemUiMode.edgeToEdge);
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) => const AuthScreen()));
-                        },
-                        style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: Colors.white),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        child: const Text(
-                          "Continue",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      )
-                    ]
-                  ],
-                ),
+                child: 
+                MainSplashWidget(i: i)
               ),
             );
           },
