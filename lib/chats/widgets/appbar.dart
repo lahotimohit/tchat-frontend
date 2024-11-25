@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tchat_frontend/video_call/screen/main.dart';
 import 'package:tchat_frontend/voice_call/screens/main.dart';
 
 PreferredSizeWidget chatAppBar(
@@ -38,7 +39,9 @@ PreferredSizeWidget chatAppBar(
     actions: [
       IconButton(
         icon: Icon(Icons.videocam, color: Theme.of(context).colorScheme.surface,),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => VideoCallScreen()));
+        },
       ),
       IconButton(
           icon: Icon(Icons.call,  color: Theme.of(context).colorScheme.surface,),
