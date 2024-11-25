@@ -90,16 +90,29 @@ class _MessagesTabState extends State<MessagesTab> {
               Expanded(
                 child: ListView.separated(
                     itemCount: messages.length,
-                    separatorBuilder: (context, index) => SizedBox.shrink(),
+                    separatorBuilder: (context, index) => const SizedBox.shrink(),
                     itemBuilder: (context, index) {
                       final message = messages[index];
                       return ListTile(
-                        contentPadding: EdgeInsets.fromLTRB(5, 0, 5, 3),
+                        contentPadding: const EdgeInsets.fromLTRB(5, 0, 5, 3),
                         leading: InkWell(
                           child: CircleAvatar(
-                            backgroundImage: NetworkImage(message.profileImage),
                             radius: 25,
-                          ),
+                            child: ClipOval(
+                              child: FadeInImage.assetNetwork(
+                                placeholder: 'assets/images/user.jpg', 
+                                image: message.profileImage,
+                                fit: BoxFit.cover,
+                                width: 50,
+                                height: 50,
+                                imageErrorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  'assets/default_profile_image.png',
+                                  fit: BoxFit.cover,
+                                );
+                              },),
+                            ),
+                          )
                         ),
                         title:Text(
                             message.username,

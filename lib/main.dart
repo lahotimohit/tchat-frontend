@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: colorscheme.surface,
         useMaterial3: true,
       ),
-      home: Scaffold(
+      home: const Scaffold(
         body: SplashScreen(),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/numbers/screens/main.dart';
 
 class OtpScreen extends StatelessWidget{
+  const OtpScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,15 +48,15 @@ class OtpScreen extends StatelessWidget{
                           counterText: '',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(50),
-                            borderSide: const BorderSide(color: Colors.grey), // Default border color
+                            borderSide: const BorderSide(color: Colors.grey),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(color: Theme.of(context).colorScheme.surface), // Enabled border color
+                            borderSide: BorderSide(color: Theme.of(context).colorScheme.surface),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(50),
-                            borderSide: BorderSide(color: Theme.of(context).colorScheme.surface), // Focused border color
+                            borderSide: BorderSide(color: Theme.of(context).colorScheme.surface),
                           ),
                         ),
                         onChanged: (value) {
