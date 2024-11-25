@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tchat_frontend/chats/models/chat.dart';
 import 'package:tchat_frontend/chats/widgets/message_input.dart';
 import 'package:tchat_frontend/chats/widgets/messages.dart';
@@ -47,6 +48,11 @@ class _ChatMainScreen extends State<ChatMainScreen> with WidgetsBindingObserver 
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _scrollController.dispose();
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Color.fromARGB(255, 62, 102, 197), // Primary color
+    statusBarBrightness: Brightness.dark,
+    statusBarIconBrightness: Brightness.light,
+  ));
     super.dispose();
   }
 

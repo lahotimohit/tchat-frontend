@@ -6,16 +6,33 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/home/widget/appbar.dart';
 import 'package:tchat_frontend/home/widget/drawer.dart';
 
-class MessagesTab extends StatelessWidget {
-  const MessagesTab({super.key});
+class MessagesTab extends StatefulWidget {
+  MessagesTab({super.key}) {}
+
+  @override
+  State<MessagesTab> createState() => _MessagesTabState();
+}
+
+class _MessagesTabState extends State<MessagesTab> {
+
+@override
+  void initState() {
+    super.initState();
+    _setStatusBarStyle();
+  }
+
+  void _setStatusBarStyle() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor:  Color.fromARGB(255, 62, 102, 197),
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light
+      ));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Theme.of(context).colorScheme.primary,
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.light
-    ));
     return Scaffold(
         appBar: const MainAppBar(title: "Conversations",),
         drawer: const SizedBox(
