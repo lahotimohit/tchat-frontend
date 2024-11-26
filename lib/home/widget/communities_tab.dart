@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tchat_frontend/home/widget/drawer.dart';
 
 class CommunitiesTab extends StatefulWidget {
   const CommunitiesTab({super.key});

@@ -1,9 +1,12 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tchat_frontend/chats/screen/main.dart';
 import 'package:tchat_frontend/home/data/messages.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/home/widget/drawer.dart';
+import 'package:tchat_frontend/video_call/screen/main.dart';
+import 'package:tchat_frontend/voice_call/screens/main.dart';
 
 class MessagesTab extends StatefulWidget {
   const MessagesTab({super.key});
@@ -28,6 +31,69 @@ class _MessagesTabState extends State<MessagesTab> {
       ));
     });
   }
+
+  void _showProfileImage(BuildContext context, String profileImage, String username) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            BackdropFilter(filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+            child: Container(color: Colors.black.withOpacity(0.8), width: 2, height: 2,),),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: CircleAvatar(
+                    radius: 150, 
+                    child: ClipOval(
+                      child: FadeInImage.assetNetwork(
+                        placeholder: 'assets/images/user.jpg',
+                        image: profileImage,
+                        fit: BoxFit.cover,
+                        width: 300,
+                        height: 300,
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            'assets/default_profile_image.png',
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+              IconButton(onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => ChatMainScreen(username: username, profileImage: profileImage, status: "Online")));
+                }, 
+                icon: const Icon(Icons.message, color: Colors.white, size: 36,)),
+
+              IconButton(onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => VoiceCallScreen(isIncoming: false, userName: username, userPhoto: profileImage)));
+              }, 
+              icon: const Icon(Icons.call, color: Colors.white, size: 36,)),
+              IconButton(onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const VideoCallScreen()));
+              }, 
+              icon: const Icon(Icons.video_call, color: Colors.white, size: 36,)),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.info, color: Colors.white, size: 36,)),
+            ],)
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +130,7 @@ class _MessagesTabState extends State<MessagesTab> {
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-                        color: Color.fromARGB(255, 154, 156, 164)),
+                        color: const Color.fromARGB(255, 154, 156, 164)),
                   ),
                   const SizedBox(height: 20),
                   Text(
@@ -72,7 +138,7 @@ class _MessagesTabState extends State<MessagesTab> {
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
-                        color: Color.fromARGB(255, 91, 131, 242)),
+                        color: const Color.fromARGB(255, 91, 131, 242)),
                   )
                 ],
               ),
@@ -100,6 +166,9 @@ class _MessagesTabState extends State<MessagesTab> {
                       return ListTile(
                         contentPadding: const EdgeInsets.fromLTRB(5, 0, 5, 3),
                         leading: InkWell(
+                          onTap: () {
+                            _showProfileImage(context, message.profileImage, message.username);
+                          },
                           child: CircleAvatar(
                             radius: 25,
                             child: ClipOval(
@@ -127,7 +196,7 @@ class _MessagesTabState extends State<MessagesTab> {
                             style: GoogleFonts.poppins(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
-                                color: Color.fromARGB(184, 34, 34, 34))),
+                                color: const Color.fromARGB(184, 34, 34, 34))),
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => ChatMainScreen(
                             username: message.username,
@@ -153,4 +222,5 @@ class _MessagesTabState extends State<MessagesTab> {
           : null,
     );
   }
+
 }
