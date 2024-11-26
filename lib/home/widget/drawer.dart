@@ -18,7 +18,7 @@ class MainDrawer extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     backgroundImage: NetworkImage("https://cdn.pixabay.com/photo/2019/08/28/17/17/girl-4437225_640.jpg",),
                     radius: 40,
                   ),
@@ -33,28 +33,28 @@ class MainDrawer extends StatelessWidget {
         ),
         const SizedBox(height: 16,),
         ListTile(
-          leading: Icon(Icons.group, color: Colors.grey ,size: 26),
-          title: Text("New Group", style: TextStyle(color: Colors.black87),),
+          leading: const Icon(Icons.group, color: Colors.grey ,size: 26),
+          title: const Text("New Group", style: TextStyle(color: Colors.black87),),
           onTap: () {},
         ),
          ListTile(
-          leading: Icon(Icons.broadcast_on_home, color: Colors.grey ,size: 26),
-          title: Text("New Broadcast", style: TextStyle(color: Colors.black87),),
+          leading: const Icon(Icons.broadcast_on_home, color: Colors.grey ,size: 26),
+          title: const Text("New Broadcast", style: TextStyle(color: Colors.black87),),
           onTap: () {},
         ),
          ListTile(
-          leading: Icon(Icons.link, color: Colors.grey ,size: 26),
-          title: Text("Linked Device", style: TextStyle(color: Colors.black87),),
+          leading: const Icon(Icons.link, color: Colors.grey ,size: 26),
+          title: const Text("Linked Device", style: TextStyle(color: Colors.black87),),
           onTap: () {},
         ),
          ListTile(
-          leading: Icon(Icons.star_rounded, color: Colors.grey ,size: 26),
-          title: Text("Starred Messages", style: TextStyle(color: Colors.black87),),
+          leading: const Icon(Icons.star_rounded, color: Colors.grey ,size: 26),
+          title: const Text("Starred Messages", style: TextStyle(color: Colors.black87),),
           onTap: () {},
         ),
          ListTile(
-          leading: Icon(Icons.settings, color: Colors.grey ,size: 26),
-          title: Text("Settings", style: TextStyle(color: Colors.black87),),
+          leading: const Icon(Icons.settings, color: Colors.grey ,size: 26),
+          title: const Text("Settings", style: TextStyle(color: Colors.black87),),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => SettingMainScreen()));
           },

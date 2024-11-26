@@ -3,12 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:tchat_frontend/chats/screen/main.dart';
 import 'package:tchat_frontend/home/data/messages.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tchat_frontend/home/widget/appbar.dart';
 import 'package:tchat_frontend/home/widget/drawer.dart';
 
 class MessagesTab extends StatefulWidget {
-  MessagesTab({super.key}) {}
-
+  const MessagesTab({super.key});
   @override
   State<MessagesTab> createState() => _MessagesTabState();
 }
@@ -34,7 +32,13 @@ class _MessagesTabState extends State<MessagesTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const MainAppBar(title: "Conversations",),
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          centerTitle: true,
+          title: Text("Conversations",
+          style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 18, fontWeight: FontWeight.w600),),
+          iconTheme: IconThemeData(color: Theme.of(context).colorScheme.surface),
+        ),
         drawer: const SizedBox(
           width: 270,
           child: MainDrawer()),

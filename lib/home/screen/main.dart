@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tchat_frontend/home/widget/call_tab.dart';
+import 'package:tchat_frontend/home/widget/communities_tab.dart';
 import 'package:tchat_frontend/home/widget/messages_tab.dart';
 
 class HomeMainScreen extends StatefulWidget {
@@ -23,7 +24,7 @@ class _HomeMainScreen extends State<HomeMainScreen> {
                 child: TabBarView(
                   children: [
                     MessagesTab(),
-                    Center(child: Text('Tab 2 Content')),
+                    CommunitiesTab(),
                     CallScreen(),
                   ],
                 ),
