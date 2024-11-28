@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tchat_frontend/authentication/widgets/text_field.dart';
+import 'package:tchat_frontend/home/screen/main.dart';
 
 class ItemAuth extends StatelessWidget {
   ItemAuth({super.key});
@@ -25,7 +26,9 @@ class ItemAuth extends StatelessWidget {
           Center(
             child: SizedBox(
               width: 250,
-              child: ElevatedButton(onPressed: () {},
+              child: ElevatedButton(onPressed: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => const HomeMainScreen()));
+              },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Theme.of(context).colorScheme.surface),

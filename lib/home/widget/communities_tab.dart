@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lottie/lottie.dart';
 
 class CommunitiesTab extends StatefulWidget {
   const CommunitiesTab({super.key});
@@ -47,7 +48,16 @@ class _CommunitiesTabState extends State<CommunitiesTab> {
               onPressed: () {},
             ),
           ]),
-      body: Text("Communities here....")
+      body: Center(
+        child: Container(
+                        width: 250,
+                        height: 250,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                        ),
+                        child: Lottie.asset('assets/lottie/soon.json')
+                      ),
+      ),
     );
   }
 }
