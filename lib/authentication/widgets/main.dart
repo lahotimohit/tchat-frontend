@@ -62,7 +62,7 @@ class _ItemAuthState extends State<ItemAuth> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-                child: Image.asset("assets/images/logo_tchat.jpg",
+                child: Image.asset("assets/images/logo.png",
                     width: 250, height: 250)),
             Text(
               "Sign In",
