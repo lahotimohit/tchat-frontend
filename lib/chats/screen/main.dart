@@ -24,7 +24,8 @@ class ChatMainScreen extends StatefulWidget {
   }
 }
 
-class _ChatMainScreen extends State<ChatMainScreen> with WidgetsBindingObserver {
+class _ChatMainScreen extends State<ChatMainScreen>
+    with WidgetsBindingObserver {
   final ScrollController _scrollController = ScrollController();
   late String username;
   late String status;
@@ -49,10 +50,10 @@ class _ChatMainScreen extends State<ChatMainScreen> with WidgetsBindingObserver 
     WidgetsBinding.instance.removeObserver(this);
     _scrollController.dispose();
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Color.fromARGB(255, 62, 102, 197), // Primary color
-    statusBarBrightness: Brightness.dark,
-    statusBarIconBrightness: Brightness.light,
-  ));
+      statusBarColor: Color.fromARGB(255, 62, 102, 197), // Primary color
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
+    ));
     super.dispose();
   }
 
@@ -109,7 +110,9 @@ class _ChatMainScreen extends State<ChatMainScreen> with WidgetsBindingObserver 
               },
             ),
           ),
-          buildMessageInputField(context, _onNewMessage),
+          buildMessageInputField(
+            onNewMessage: _onNewMessage,
+          ),
         ],
       ),
     );

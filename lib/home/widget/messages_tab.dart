@@ -5,6 +5,7 @@ import 'package:tchat_frontend/chats/screen/main.dart';
 import 'package:tchat_frontend/home/data/messages.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/home/widget/drawer.dart';
+import 'package:tchat_frontend/services/storage.dart';
 import 'package:tchat_frontend/video_call/screen/main.dart';
 import 'package:tchat_frontend/voice_call/screens/main.dart';
 
@@ -15,6 +16,7 @@ class MessagesTab extends StatefulWidget {
 }
 
 class _MessagesTabState extends State<MessagesTab> {
+  final SecureStorage _storage = SecureStorage();
   @override
   void initState() {
     super.initState();
@@ -146,7 +148,7 @@ class _MessagesTabState extends State<MessagesTab> {
         ),
         iconTheme: IconThemeData(color: Theme.of(context).colorScheme.surface),
       ),
-      drawer: const SizedBox(width: 270, child: MainDrawer()),
+      drawer: SizedBox(width: 270, child: MainDrawer()),
       body: messages.isEmpty
           ? Center(
               child: Column(
@@ -255,7 +257,11 @@ class _MessagesTabState extends State<MessagesTab> {
             ),
       floatingActionButton: messages.isNotEmpty
           ? FloatingActionButton(
-              onPressed: () {},
+              onPressed: () async {
+                var storedEmail = await _storage.readData("email");
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(storedEmail)));
+              },
               backgroundColor: Theme.of(context).colorScheme.primary,
               child: const Icon(
                 Icons.chat,
