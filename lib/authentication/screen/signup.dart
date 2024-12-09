@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -5,6 +7,7 @@ import 'package:tchat_frontend/authentication/widgets/bottom_sheet.dart';
 import 'package:tchat_frontend/authentication/widgets/profile_photo.dart';
 import 'package:tchat_frontend/authentication/widgets/text_field.dart';
 import 'package:tchat_frontend/otp/screen/main.dart';
+import 'package:http/http.dart' as http;
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -48,6 +51,49 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
+  void _submitSignup() async {
+    if (_emailController.text.isEmpty ||
+        _passwordController.text.isEmpty ||
+        _confPasswordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("All fields are necessary"),
+        duration: Duration(seconds: 2),
+      ));
+    } else if (_passwordController.text.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Password length must be atleast 6 digits"),
+        duration: Duration(seconds: 2),
+      ));
+    } else if (_passwordController.text != _confPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Password & Confirm Password not match"),
+        duration: Duration(seconds: 2),
+      ));
+    } else if (!_emailController.text.contains("@")) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Please enter valid email address"),
+        duration: Duration(seconds: 2),
+      ));
+    } else {
+      var url = Uri.http("192.168.14.23:8000", "/register");
+      var response = await http.post(url,
+          body: json.encode({
+            "email": _emailController.text,
+            "password": _passwordController.text
+          }));
+      if (response.statusCode == 200) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (ctx) => OtpScreen()));
+      } else {
+        print(response.body);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(json.decode(response.body).toString()),
+          duration: Duration(seconds: 2),
+        ));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,18 +120,27 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               const SizedBox(height: 40),
-              TextFieldWidget(controller: _emailController, labelText: "Email Address", obscureText: false),
+              TextFieldWidget(
+                  controller: _emailController,
+                  labelText: "Email Address",
+                  obscureText: false),
               const SizedBox(height: 20),
-              TextFieldWidget(controller: _passwordController, labelText: "Password", obscureText: true),
+              TextFieldWidget(
+                  controller: _passwordController,
+                  labelText: "Password",
+                  obscureText: true),
               const SizedBox(height: 20),
-              TextFieldWidget(controller: _confPasswordController, labelText: "Confirm Password", obscureText: true),
+              TextFieldWidget(
+                  controller: _confPasswordController,
+                  labelText: "Confirm Password",
+                  obscureText: true),
               const SizedBox(height: 20),
               Center(
                 child: SizedBox(
                   width: 250,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => OtpScreen()));
+                      _submitSignup();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
