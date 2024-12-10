@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tchat_frontend/authentication/api/login.dart';
 import 'package:tchat_frontend/authentication/widgets/text_field.dart';
 import 'package:tchat_frontend/home/screen/main.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-import 'package:tchat_frontend/services/storage.dart';
 
 class ItemAuth extends StatefulWidget {
   const ItemAuth({super.key});
@@ -14,38 +11,19 @@ class ItemAuth extends StatefulWidget {
 }
 
 class _ItemAuthState extends State<ItemAuth> {
-  final SecureStorage _storage = SecureStorage();
-
   void _onLogin() async {
-    try {
-      var url = Uri.http("192.168.14.23:8000", "/login");
-      var response = await http.post(
-        url,
-        headers: {"Content-Type": "application/json"},
-        body: json.encode({
-          "email": _emailController.text,
-          "password": _passwordController.text,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        await _storage.writeSecureData("email", _emailController.text);
-        var storedEmail = await _storage.readData("email");
-        print("Email stored securely: $storedEmail");
-
-        Navigator.of(context).pushReplacement(
+    LoginAPI api = LoginAPI();
+    final Map<String, dynamic> result = await api.dioLogin(
+        _emailController.text.trim(), _passwordController.text.trim());
+    if (result['code'] == 401) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(result['error'])));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(result['msg'])));
+      Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (ctx) => const HomeMainScreen()),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(response.body)),
-        );
-      }
-    } catch (e) {
-      print("Error during login: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("An error occurred: $e")),
-      );
+          (Route<dynamic> route) => false);
     }
   }
 
