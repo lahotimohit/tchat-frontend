@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tchat_frontend/chats/screen/main.dart';
@@ -34,7 +35,7 @@ class _MessagesTabState extends State<MessagesTab> {
 
   void _showProfileImage(
       BuildContext context, String profileImage, String username) {
-    showDialog(
+    showCupertinoDialog(
       context: context,
       builder: (ctx) {
         return Stack(
