@@ -16,7 +16,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final SecureStorage _storage = SecureStorage();
-  String? email;
+  String? accessToken;
 
   @override
   void initState() {
@@ -25,11 +25,11 @@ class _MyAppState extends State<MyApp> {
   }
 
   void takingSecureEmail() async {
-    String? fetchedEmail = await _storage.readData("email");
+    String? fetchedEmail = await _storage.readData("access_token");
     setState(() {
-      email = fetchedEmail;
+      accessToken = fetchedEmail;
     });
-    print("email at initialisation is: ${email}");
+    print("Token at initialisation is: ${accessToken}");
   }
 
   @override
@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       home: Scaffold(
-        body: email == null ? SplashScreen() : HomeMainScreen(),
+        body: accessToken == null ? SplashScreen() : HomeMainScreen(),
       ),
     );
   }

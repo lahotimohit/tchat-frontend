@@ -104,7 +104,8 @@ class MainDrawer extends StatelessWidget {
               style: TextStyle(color: Colors.black87),
             ),
             onTap: () {
-              _storage.deleteData("email");
+              _storage.deleteData("access_token");
+              _storage.deleteData("refresh_token");
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (ctx) => SplashScreen()),
                 (Route<dynamic> route) => false,
