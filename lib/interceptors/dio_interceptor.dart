@@ -21,10 +21,17 @@ class DioInterceptor extends Interceptor {
   Future<void> onError(
       DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
+      final response = err.response;
+      if (response != null && response.data != null) {
+        if (response.data['error'] == 'Invalid credentials') {
+          handler.reject(err);
+          return;
+        }
+      }
       try {
         SecureStorage storage = SecureStorage();
         final refreshToken = await storage.readData("refresh_token");
-        if (refreshToken != null && refreshToken.isNotEmpty) {
+        if (refreshToken.isNotEmpty) {
           final response = await _dio
               .post(refreshUrl, data: {"refresh_token": refreshToken});
           if (response.statusCode == 200) {
