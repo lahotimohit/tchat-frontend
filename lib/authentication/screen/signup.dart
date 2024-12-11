@@ -21,7 +21,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confPasswordController = TextEditingController();
 
   void _openBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -46,14 +45,11 @@ class _SignupScreenState extends State<SignupScreen> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _confPasswordController.dispose();
     super.dispose();
   }
 
   void _submitSignup() async {
-    if (_emailController.text.isEmpty ||
-        _passwordController.text.isEmpty ||
-        _confPasswordController.text.isEmpty) {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("All fields are necessary"),
         duration: Duration(seconds: 2),
@@ -61,11 +57,6 @@ class _SignupScreenState extends State<SignupScreen> {
     } else if (_passwordController.text.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Password length must be atleast 6 digits"),
-        duration: Duration(seconds: 2),
-      ));
-    } else if (_passwordController.text != _confPasswordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Password & Confirm Password not match"),
         duration: Duration(seconds: 2),
       ));
     } else if (!_emailController.text.contains("@")) {
@@ -104,7 +95,7 @@ class _SignupScreenState extends State<SignupScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Create new account",
+                "Complete Profile Registration",
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontSize: 20,
@@ -121,17 +112,12 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(height: 40),
               TextFieldWidget(
                   controller: _emailController,
-                  labelText: "Email Address",
+                  labelText: "Your Name",
                   obscureText: false),
               const SizedBox(height: 20),
               TextFieldWidget(
                   controller: _passwordController,
-                  labelText: "Password",
-                  obscureText: true),
-              const SizedBox(height: 20),
-              TextFieldWidget(
-                  controller: _confPasswordController,
-                  labelText: "Confirm Password",
+                  labelText: "About You",
                   obscureText: true),
               const SizedBox(height: 20),
               Center(
@@ -145,7 +131,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Theme.of(context).colorScheme.surface,
                     ),
-                    child: const Text("Sign Up"),
+                    child: const Text("Register"),
                   ),
                 ),
               ),
