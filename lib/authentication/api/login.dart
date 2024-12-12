@@ -11,31 +11,18 @@ class LoginAPI {
     _dio.interceptors.add(DioInterceptor());
   }
 
-  final String _loginURL = "https://api.escuelajs.co/api/v1/auth/login";
-  final String _profileURL = "https://api.escuelajs.co/api/v1/auth/profile";
+  final String _loginURL = "http://113.193.84.5:5003/api/v1/auth/login";
 
-  Future<void> _saveToken(Map<String, dynamic> data) async {
-    final accessToken = data['access_token'];
-    final refreshToken = data['refresh_token'];
-    await storage.writeSecureData("access_token", accessToken);
-    await storage.writeSecureData("refresh_token", refreshToken);
-  }
-
-  Future<void> getProfile() async {
-    await _dio.get(_profileURL);
-  }
-
-  Future<Map<String, dynamic>> dioLogin(String email, String password) async {
-    final Map<String, dynamic> loginData = {
-      "email": email,
-      "password": password,
-    };
-
+  Future<Map<String, dynamic>> dioLogin(String email) async {
+    // TODO: Handle the case when server is off....
     try {
-      final response = await _dio.post(_loginURL, data: loginData);
-      if (response.statusCode == 201) {
-        await _saveToken(response.data);
-        return {"msg": "Login Successfully...", "code": 201};
+      final response = await _dio.post(_loginURL, data: {
+        "email": email,
+      });
+      if (response.statusCode == 200) {
+        storage.writeSecureData("email", email);
+        String message = response.data['message'];
+        return {"msg": message, "code": 200};
       }
       return {"error": "Unexpected error arises...", "code": 401};
     } on DioException catch (e) {

@@ -4,6 +4,7 @@ import 'package:tchat_frontend/services/storage.dart';
 import 'package:tchat_frontend/splash_screen/screen/main.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 

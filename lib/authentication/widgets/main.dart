@@ -1,8 +1,11 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tchat_frontend/authentication/api/login.dart';
+import 'package:tchat_frontend/authentication/validators/auth.dart';
+import 'package:tchat_frontend/authentication/widgets/snackmessage.dart';
 import 'package:tchat_frontend/authentication/widgets/text_field.dart';
-import 'package:tchat_frontend/home/screen/main.dart';
+import 'package:tchat_frontend/otp/screen/main.dart';
 
 class ItemAuth extends StatefulWidget {
   const ItemAuth({super.key});
@@ -13,53 +16,55 @@ class ItemAuth extends StatefulWidget {
 
 class _ItemAuthState extends State<ItemAuth> {
   bool isLogin = false;
+  final GlobalKey<_ItemAuthState> mywidgetKey = GlobalKey();
 
-  void _onLogin() async {
-    setState(() {
-      isLogin = true;
-    });
-    showCupertinoDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-
-    try {
-      LoginAPI api = LoginAPI();
-      final Map<String, dynamic> result = await api.dioLogin(
-          _emailController.text.trim(), _passwordController.text.trim());
-
+  void _onLogin(BuildContext context) async {
+    String email = _emailController.text.trim();
+    String response = emailValidate(email);
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult[0] == ConnectivityResult.none) {
+      snackmessage(context, "Please check your internet connection");
+      return;
+    } else if (response == "Success") {
       setState(() {
-        isLogin = false;
+        isLogin = true;
       });
-      Navigator.of(context).pop();
-
-      if (result['code'] == 401) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(result['error'])));
-      } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(result['msg'])));
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (ctx) => const HomeMainScreen()),
-          (Route<dynamic> route) => false,
-        );
-      }
-    } catch (e) {
-      setState(() {
-        isLogin = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("An error occurred: $e")),
+      showCupertinoDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(
+          child: CircularProgressIndicator(),
+        ),
       );
+
+      try {
+        LoginAPI api = LoginAPI();
+        final Map<String, dynamic> result = await api.dioLogin(email);
+        setState(() {
+          isLogin = false;
+        });
+        Navigator.of(context).pop();
+
+        if (result['code'] == 401) {
+          snackmessage(context, result['error']);
+        } else {
+          snackmessage(context, result['msg']);
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (ctx) => const OtpScreen()));
+        }
+      } catch (e) {
+        setState(() {
+          isLogin = false;
+        });
+        snackmessage(context, "Internal Server Error");
+      }
+    } else {
+      snackmessage(context, response);
+      return;
     }
   }
 
   final _emailController = TextEditingController();
-
-  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -84,15 +89,8 @@ class _ItemAuthState extends State<ItemAuth> {
             ),
             TextFieldWidget(
                 controller: _emailController,
-                labelText: "Email Address",
+                labelText: "Enter Your Email",
                 obscureText: false),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFieldWidget(
-                controller: _passwordController,
-                labelText: "Password",
-                obscureText: true),
             const SizedBox(
               height: 20,
             ),
@@ -101,7 +99,7 @@ class _ItemAuthState extends State<ItemAuth> {
                 width: 250,
                 child: ElevatedButton(
                     onPressed: () {
-                      _onLogin();
+                      _onLogin(context);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
