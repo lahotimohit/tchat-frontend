@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:tchat_frontend/authentication/api/otp.dart';
+import 'package:tchat_frontend/api/otp.dart';
 import 'package:tchat_frontend/authentication/screen/signup.dart';
 import 'package:tchat_frontend/home/screen/main.dart';
 import 'package:tchat_frontend/services/storage.dart';
@@ -48,7 +48,6 @@ class _OtpVerificationScreenState extends State<OtpScreen> {
     try {
       OtpAPI api = OtpAPI();
       final Map<String, dynamic> result = await api.verifyOtp(otp);
-      print("result isssssssssssssssssssss: ${result}");
       setState(() {
         isVerified = false;
       });

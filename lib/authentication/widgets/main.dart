@@ -1,7 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tchat_frontend/authentication/api/login.dart';
+import 'package:tchat_frontend/api/login.dart';
 import 'package:tchat_frontend/authentication/validators/auth.dart';
 import 'package:tchat_frontend/authentication/widgets/snackmessage.dart';
 import 'package:tchat_frontend/authentication/widgets/text_field.dart';

@@ -46,6 +46,7 @@ dependencies:
   flutter_secure_storage: ^4.2.1
   dio: ^5.7.0
   connectivity_plus: ^6.1.1
+  flutter_contacts: ^1.1.9+2
 
 dev_dependencies:
   flutter_test:

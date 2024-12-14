@@ -25,10 +25,11 @@ class OtpAPI {
   Future<bool> _getSession() async {
     try {
       final response = await _dio.get(sessionGetURL);
+      final data = response.data;
       if (response.statusCode == 200) {
-        bool isRegistered = response.data['isRegistered'];
+        bool isRegistered = data['isRegistered'];
         await storage.writeSecureData("isRegistered", isRegistered.toString());
-        String credentials = response.data.toString();
+        String credentials = data.toString();
         await storage.writeSecureData("credentials", credentials);
         return true;
       } else {
@@ -41,19 +42,13 @@ class OtpAPI {
 
   Future<Map<String, dynamic>> verifyOtp(String userOTP) async {
     try {
-      // Read email from storage
       await storage.readData("email").then((value) {
         email = value;
       });
-
-      // Prepare request data
       final Map<String, dynamic> data = {"email": email, "otp": userOTP};
 
       try {
-        // Make the API call
         final response = await _dio.post(otpVerifyURL, data: data);
-
-        // Successful response
         if (response.statusCode == 200) {
           _saveToken(response.data);
           _getSession();
@@ -62,27 +57,20 @@ class OtpAPI {
           return {"msg": message, "code": 200};
         }
       } on DioException catch (dioError) {
-        // Specifically handle Dio errors
-        print(
-            "Errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:${dioError.response!.statusCode}");
         if (dioError.response?.statusCode == 401) {
           return {
             "error": dioError.response?.data['message'] ?? "Invalid OTP",
             "code": 401
           };
         }
-
-        // For other Dio errors
         return {
           "error": dioError.message ?? "An unexpected error occurred",
           "code": dioError.response?.statusCode ?? 500
         };
       }
 
-      // Fallback error return
       return {"error": "Unexpected error occurred", "code": 401};
     } catch (e) {
-      // Catch any other unexpected errors
       return {"error": e.toString(), "code": 401};
     }
   }

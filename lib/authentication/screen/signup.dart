@@ -1,12 +1,12 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tchat_frontend/api/register.dart';
+import 'package:tchat_frontend/authentication/widgets/snackmessage.dart';
 import 'dart:io';
 import 'package:tchat_frontend/authentication/widgets/bottom_sheet.dart';
 import 'package:tchat_frontend/authentication/widgets/profile_photo.dart';
-import 'package:tchat_frontend/authentication/widgets/text_field.dart';
-import 'package:tchat_frontend/otp/screen/main.dart';
-import 'package:http/http.dart' as http;
+import 'package:tchat_frontend/home/screen/main.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -17,10 +17,15 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final ImagePicker _picker = ImagePicker();
+  bool isRegister = false;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _aboutController = TextEditingController();
   XFile? _image;
 
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void _openBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -43,65 +48,61 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
     super.dispose();
   }
 
   void _submitSignup() async {
-    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("All fields are necessary"),
-        duration: Duration(seconds: 2),
-      ));
-    } else if (_passwordController.text.length < 6) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Password length must be atleast 6 digits"),
-        duration: Duration(seconds: 2),
-      ));
-    } else if (!_emailController.text.contains("@")) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Please enter valid email address"),
-        duration: Duration(seconds: 2),
-      ));
-    } else {
-      var url = Uri.http("192.168.14.23:8000", "/register");
-      var response = await http.post(url,
-          body: json.encode({
-            "email": _emailController.text,
-            "password": _passwordController.text
-          }));
-      if (response.statusCode == 200) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (ctx) => OtpScreen()));
+    try {
+      RegisterAPI api = RegisterAPI();
+      final Map<String, dynamic> result = await api.dioRegister(
+          "https://placehold.co/600x400",
+          _aboutController.text.trim(),
+          _nameController.text.trim());
+      setState(() {
+        isRegister = false;
+      });
+      Navigator.of(context).pop();
+
+      if (result['code'] == 401) {
+        snackmessage(context, result['error']);
       } else {
-        print(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(json.decode(response.body).toString()),
-          duration: Duration(seconds: 2),
-        ));
+        snackmessage(context, result['msg']);
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (ctx) => const HomeMainScreen()));
       }
+    } catch (e) {
+      setState(() {
+        isRegister = false;
+      });
+      snackmessage(context, "Internal Server Error");
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            )),
+        title: Text(
+          "Profile",
+          style: GoogleFonts.raleway(
+              color: Colors.white, fontWeight: FontWeight.w500),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Complete Profile Registration",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               const SizedBox(height: 40),
               Center(
                 child: ProfilePhoto(
@@ -110,28 +111,51 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               const SizedBox(height: 40),
-              TextFieldWidget(
-                  controller: _emailController,
-                  labelText: "Your Name",
-                  obscureText: false),
-              const SizedBox(height: 20),
-              TextFieldWidget(
-                  controller: _passwordController,
-                  labelText: "About You",
-                  obscureText: true),
-              const SizedBox(height: 20),
               Center(
                 child: SizedBox(
-                  width: 250,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _submitSignup();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      foregroundColor: Theme.of(context).colorScheme.surface,
+                  width: MediaQuery.of(context).size.width - 30,
+                  child: Card(
+                    color: Colors.white,
+                    elevation: 0,
+                    child: Column(
+                      children: [
+                        cardItem(
+                            const Icon(
+                              Icons.person,
+                              color: Colors.grey,
+                            ),
+                            "Name",
+                            _nameController,
+                            "Enter your name"),
+                        const SizedBox(height: 16),
+                        cardItem(
+                            const Icon(Icons.info, color: Colors.grey),
+                            "About",
+                            _aboutController,
+                            "Hey there I'm using TChat"),
+                        const SizedBox(height: 20),
+                        Center(
+                          child: SizedBox(
+                            width: 250,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                _submitSignup();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.primary,
+                                foregroundColor:
+                                    Theme.of(context).colorScheme.surface,
+                              ),
+                              child: const Text("Register"),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        )
+                      ],
                     ),
-                    child: const Text("Register"),
                   ),
                 ),
               ),
@@ -141,4 +165,39 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
     );
   }
+}
+
+Widget cardItem(Icon labelIcon, String labelTitle,
+    TextEditingController controller, String hintText) {
+  return Column(
+    children: [
+      Row(
+        children: [
+          labelIcon,
+          const SizedBox(
+            width: 5,
+          ),
+          Text(labelTitle,
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                color: Colors.grey,
+                fontWeight: FontWeight.w500,
+              )),
+        ],
+      ),
+      const SizedBox(height: 4),
+      Card(
+        color: Colors.white,
+        elevation: 0,
+        child: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: hintText,
+              hintStyle: GoogleFonts.raleway(
+                  color: Colors.grey, fontWeight: FontWeight.w400)),
+        ),
+      ),
+    ],
+  );
 }
