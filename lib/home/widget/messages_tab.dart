@@ -1,13 +1,10 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tchat_frontend/chats/screen/main.dart';
 import 'package:tchat_frontend/home/data/messages.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/home/widget/all_contacts.dart';
 import 'package:tchat_frontend/home/widget/drawer.dart';
-import 'package:tchat_frontend/video_call/screen/main.dart';
-import 'package:tchat_frontend/voice_call/screens/main.dart';
+import 'package:tchat_frontend/home/widget/show_profile_image.dart';
 
 class MessagesTab extends StatefulWidget {
   const MessagesTab({super.key});
@@ -21,111 +18,9 @@ class _MessagesTabState extends State<MessagesTab> {
     super.initState();
   }
 
-  void _showProfileImage(
-      BuildContext context, String profileImage, String username) {
-    showCupertinoDialog(
-      context: context,
-      builder: (ctx) {
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-              child: Container(
-                color: Colors.black.withOpacity(0.8),
-                width: 2,
-                height: 2,
-              ),
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Center(
-                  child: CircleAvatar(
-                    radius: 150,
-                    child: ClipOval(
-                      child: FadeInImage.assetNetwork(
-                        placeholder: 'assets/images/user.jpg',
-                        image: profileImage,
-                        fit: BoxFit.cover,
-                        width: 300,
-                        height: 300,
-                        imageErrorBuilder: (context, error, stackTrace) {
-                          return Image.asset(
-                            'assets/images/user.jpg',
-                            fit: BoxFit.cover,
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) => ChatMainScreen(
-                                  username: username,
-                                  profileImage: profileImage,
-                                  status: "Online")));
-                        },
-                        icon: const Icon(
-                          Icons.message,
-                          color: Colors.white,
-                          size: 36,
-                        )),
-                    IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) => VoiceCallScreen(
-                                  isIncoming: false,
-                                  userName: username,
-                                  userPhoto: profileImage)));
-                        },
-                        icon: const Icon(
-                          Icons.call,
-                          color: Colors.white,
-                          size: 36,
-                        )),
-                    IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) => const VideoCallScreen()));
-                        },
-                        icon: const Icon(
-                          Icons.video_call,
-                          color: Colors.white,
-                          size: 36,
-                        )),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.info,
-                          color: Colors.white,
-                          size: 36,
-                        )),
-                  ],
-                )
-              ],
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
@@ -184,7 +79,9 @@ class _MessagesTabState extends State<MessagesTab> {
                   height: 45,
                   child: SearchBar(
                     hintText: "Search...",
-                    elevation: const WidgetStatePropertyAll(1),
+                    backgroundColor: const WidgetStatePropertyAll(
+                        Color.fromARGB(182, 229, 227, 227)),
+                    elevation: const WidgetStatePropertyAll(0),
                     leading: const Icon(Icons.search),
                     padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
                       const EdgeInsets.symmetric(horizontal: 17, vertical: 2),
@@ -202,7 +99,7 @@ class _MessagesTabState extends State<MessagesTab> {
                         contentPadding: const EdgeInsets.fromLTRB(5, 0, 5, 3),
                         leading: InkWell(
                             onTap: () {
-                              _showProfileImage(context, message.profileImage,
+                              showProfileImage(context, message.profileImage,
                                   message.username);
                             },
                             child: CircleAvatar(
