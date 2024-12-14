@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tchat_frontend/home/screen/main.dart';
 import 'package:tchat_frontend/services/storage.dart';
 import 'package:tchat_frontend/splash_screen/screen/main.dart';
@@ -22,15 +23,14 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    takingSecureEmail();
+    secureTokenAccess();
   }
 
-  void takingSecureEmail() async {
-    String? fetchedEmail = await _storage.readData("access_token");
+  void secureTokenAccess() async {
+    String? fetchedToken = await _storage.readData("access_token");
     setState(() {
-      accessToken = fetchedEmail;
+      accessToken = fetchedToken;
     });
-    print("Token at initialisation is: ${accessToken}");
   }
 
   @override
@@ -48,8 +48,19 @@ class _MyAppState extends State<MyApp> {
         scaffoldBackgroundColor: colorscheme.surface,
         useMaterial3: true,
       ),
+      builder: (context, child) {
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle(
+            statusBarColor: colorscheme.primary,
+            statusBarIconBrightness: Brightness.light, // For Android
+            statusBarBrightness: Brightness.dark, // For iOS
+          ),
+          child: child!,
+        );
+      },
       home: Scaffold(
-        body: accessToken == null ? SplashScreen() : HomeMainScreen(),
+        body:
+            accessToken == null ? const SplashScreen() : const HomeMainScreen(),
       ),
     );
   }

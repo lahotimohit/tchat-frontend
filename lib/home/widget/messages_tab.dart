@@ -7,7 +7,6 @@ import 'package:tchat_frontend/home/data/messages.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/home/widget/all_contacts.dart';
 import 'package:tchat_frontend/home/widget/drawer.dart';
-import 'package:tchat_frontend/services/storage.dart';
 import 'package:tchat_frontend/video_call/screen/main.dart';
 import 'package:tchat_frontend/voice_call/screens/main.dart';
 
@@ -18,20 +17,9 @@ class MessagesTab extends StatefulWidget {
 }
 
 class _MessagesTabState extends State<MessagesTab> {
-  final SecureStorage _storage = SecureStorage();
   @override
   void initState() {
     super.initState();
-    _setStatusBarStyle();
-  }
-
-  void _setStatusBarStyle() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-          statusBarColor: Color.fromARGB(255, 62, 102, 197),
-          statusBarBrightness: Brightness.dark,
-          statusBarIconBrightness: Brightness.light));
-    });
   }
 
   void _showProfileImage(
@@ -140,7 +128,7 @@ class _MessagesTabState extends State<MessagesTab> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        centerTitle: true,
+        systemOverlayStyle: SystemUiOverlayStyle(),
         title: Text(
           "Conversations",
           style: TextStyle(
