@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:tchat_frontend/chats/screen/main.dart';
 import 'package:tchat_frontend/home/data/messages.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tchat_frontend/home/widget/all_contacts.dart';
 import 'package:tchat_frontend/home/widget/drawer.dart';
 import 'package:tchat_frontend/services/storage.dart';
 import 'package:tchat_frontend/video_call/screen/main.dart';
@@ -258,10 +259,9 @@ class _MessagesTabState extends State<MessagesTab> {
             ),
       floatingActionButton: messages.isNotEmpty
           ? FloatingActionButton(
-              onPressed: () async {
-                var storedEmail = await _storage.readData("email");
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text(storedEmail)));
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (ctx) => ContactsScreen()));
               },
               backgroundColor: Theme.of(context).colorScheme.primary,
               child: const Icon(
