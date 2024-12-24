@@ -108,7 +108,7 @@ void showCustomBottomDrawer(BuildContext context) {
                               onTap: () {}),
                           _buildListTile(
                               icon: Icons.settings,
-                              title: "settings",
+                              title: "Settings",
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (ctx) => SettingMainScreen()));

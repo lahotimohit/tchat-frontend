@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/chats/models/chat.dart';
 import 'package:tchat_frontend/chats/widgets/message_input.dart';
 import 'package:tchat_frontend/chats/widgets/messages.dart';
 import 'package:tchat_frontend/chats/data/chat.dart';
 import 'package:tchat_frontend/chats/widgets/appbar.dart';
+import 'dart:convert';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ChatMainScreen extends StatefulWidget {
   const ChatMainScreen({
@@ -31,6 +34,8 @@ class _ChatMainScreen extends State<ChatMainScreen>
   late String status;
   late String profilephoto;
 
+  late final WebSocketChannel channel;
+
   @override
   void initState() {
     super.initState();
@@ -38,8 +43,35 @@ class _ChatMainScreen extends State<ChatMainScreen>
     status = widget.status;
     profilephoto = widget.profileImage;
 
-    WidgetsBinding.instance.addObserver(this);
+    channel = WebSocketChannel.connect(
+      Uri.parse('ws://192.168.0.101:8000/ws/sc/'),
+    );
 
+    channel.stream.listen(
+      (event) {
+        try {
+          final data = jsonDecode(event);
+          final incomingMessage = Message.fromJson(data);
+          setState(() {
+            messages.add(incomingMessage);
+          });
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _scrollController
+                .jumpTo(_scrollController.position.maxScrollExtent);
+          });
+        } catch (e) {
+          debugPrint('Error parsing incoming message: $e');
+        }
+      },
+      onError: (error) {
+        debugPrint('WebSocket error: $error');
+      },
+      onDone: () {
+        debugPrint('WebSocket closed');
+      },
+    );
+
+    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollToBottom();
     });
@@ -49,8 +81,9 @@ class _ChatMainScreen extends State<ChatMainScreen>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _scrollController.dispose();
+    channel.sink.close();
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Color.fromARGB(255, 62, 102, 197), // Primary color
+      statusBarColor: Color.fromARGB(255, 62, 102, 197),
       statusBarBrightness: Brightness.dark,
       statusBarIconBrightness: Brightness.light,
     ));
@@ -78,16 +111,21 @@ class _ChatMainScreen extends State<ChatMainScreen>
   }
 
   void _onNewMessage(String message) {
+    final newMessage = Message(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      senderId: "",
+      receiverId: "",
+      content: message,
+      isSent: true,
+      timestamp: DateTime.now(),
+      isRead: false,
+      status: MessageStatus.sent,
+    );
+
+    channel.sink.add(jsonEncode(newMessage.toJson()));
+
     setState(() {
-      messages.add(Message(
-        senderId: "",
-        receiverId: "",
-        id: '12',
-        content: message,
-        isSent: true,
-        timestamp: DateTime.now(),
-        isRead: false,
-      ));
+      messages.add(newMessage);
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -99,22 +137,38 @@ class _ChatMainScreen extends State<ChatMainScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: chatAppBar(username, status, profilephoto, context),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                return buildMessage(messages[index], context);
-              },
+      body: messages.isEmpty
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                Center(
+                  child: Text(
+                    "No Chats available",
+                    style: GoogleFonts.raleway(fontWeight: FontWeight.w600),
+                  ),
+                ),
+                buildMessageInputField(
+                  onNewMessage: _onNewMessage,
+                ),
+              ],
+            )
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    itemCount: messages.length,
+                    itemBuilder: (context, index) {
+                      return buildMessage(messages[index], context);
+                    },
+                  ),
+                ),
+                buildMessageInputField(
+                  onNewMessage: _onNewMessage,
+                ),
+              ],
             ),
-          ),
-          buildMessageInputField(
-            onNewMessage: _onNewMessage,
-          ),
-        ],
-      ),
     );
   }
 }
