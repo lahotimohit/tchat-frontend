@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tchat_frontend/home/screen/main.dart';
-
+import 'package:tchat_frontend/home/screen/dashboard.dart';
 
 class PhoneNumberMainScreen extends StatefulWidget {
   const PhoneNumberMainScreen({super.key});
@@ -72,7 +71,8 @@ class _PhoneNumberMainScreenState extends State<PhoneNumberMainScreen> {
                                 },
                                 activeColor:
                                     const Color.fromARGB(255, 255, 255, 255),
-                                activeTrackColor: Theme.of(context).colorScheme.primary,
+                                activeTrackColor:
+                                    Theme.of(context).colorScheme.primary,
                                 inactiveTrackColor:
                                     const Color.fromARGB(100, 62, 102, 197),
                                 inactiveThumbColor: Colors.white,
@@ -125,14 +125,17 @@ class _PhoneNumberMainScreenState extends State<PhoneNumberMainScreen> {
                 width: 300,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => HomeMainScreen()));
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (ctx) => HomeMainScreen()));
                   },
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       backgroundColor: Theme.of(context).colorScheme.primary),
                   child: Text(
                     "Continue",
-                    style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 18),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.surface,
+                        fontSize: 18),
                   ),
                 ),
               ),

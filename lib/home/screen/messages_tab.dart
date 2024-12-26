@@ -42,33 +42,20 @@ class _MessagesTabState extends State<MessagesTab> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/icons/illustration.png',
-                    width: 150,
-                    height: 150,
-                  ),
-                  const SizedBox(height: 20),
                   Text(
                     'No Message',
                     style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.bold, fontSize: 24),
+                        fontWeight: FontWeight.w500, fontSize: 24),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 5),
                   Text(
-                    'You don’t have any Message yet.',
+                    'You not have any Message yet.',
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w400,
-                        fontSize: 14,
+                        fontSize: 12,
                         color: const Color.fromARGB(255, 154, 156, 164)),
                   ),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Message People',
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        color: const Color.fromARGB(255, 91, 131, 242)),
-                  )
+                  const SizedBox(height: 40),
                 ],
               ),
             )
@@ -145,19 +132,17 @@ class _MessagesTabState extends State<MessagesTab> {
                 ),
               ],
             ),
-      floatingActionButton: messages.isNotEmpty
-          ? FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (ctx) => ContactsScreen()));
-              },
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              child: const Icon(
-                Icons.chat,
-                color: Colors.white,
-              ),
-            )
-          : null,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (ctx) => ContactsScreen()));
+        },
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        child: const Icon(
+          Icons.chat,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

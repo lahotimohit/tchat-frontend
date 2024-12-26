@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tchat_frontend/home/screen/main.dart';
+import 'package:tchat_frontend/home/screen/dashboard.dart';
 import 'package:tchat_frontend/services/storage.dart';
 import 'package:tchat_frontend/splash_screen/screen/main.dart';
 
@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
         surface: Colors.white);
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'TChat',
       theme: ThemeData(
         colorScheme: colorscheme,
         scaffoldBackgroundColor: colorscheme.surface,

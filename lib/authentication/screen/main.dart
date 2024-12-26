@@ -44,7 +44,7 @@ class AuthScreen extends StatelessWidget {
                       MaterialPageRoute(builder: (ctx) => const LoginScreen()));
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.all(1),
+                  padding: const EdgeInsets.all(1),
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
                 ),

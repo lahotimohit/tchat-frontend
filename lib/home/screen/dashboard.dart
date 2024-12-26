@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tchat_frontend/home/widget/call_tab.dart';
-import 'package:tchat_frontend/home/widget/communities_tab.dart';
-import 'package:tchat_frontend/home/widget/messages_tab.dart';
+import 'package:tchat_frontend/home/screen/call_tab.dart';
+import 'package:tchat_frontend/home/screen/communities_tab.dart';
+import 'package:tchat_frontend/home/screen/messages_tab.dart';
 
 class HomeMainScreen extends StatefulWidget {
   const HomeMainScreen({super.key});
@@ -23,8 +23,8 @@ class _HomeMainScreen extends State<HomeMainScreen> {
               Expanded(
                 child: TabBarView(
                   children: [
-                    MessagesTab(),
-                    CommunitiesTab(),
+                    const MessagesTab(),
+                    const CommunitiesTab(),
                     CallScreen(),
                   ],
                 ),

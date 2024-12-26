@@ -4,7 +4,7 @@ import 'package:tchat_frontend/home/models/call.dart';
 import 'package:tchat_frontend/home/data/calls.dart';
 
 class CallScreen extends StatelessWidget {
-  CallScreen({super.key});
+  const CallScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +44,15 @@ class CallScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             _buildCallList(calls),
-            _buildCallList(calls.where((call) => call.status == CallStatus.missed).toList()),
-            _buildCallList(calls.where((call) => call.status == CallStatus.outgoing).toList()),
-            _buildCallList(calls.where((call) => call.status == CallStatus.incoming).toList()),
+            _buildCallList(calls
+                .where((call) => call.status == CallStatus.missed)
+                .toList()),
+            _buildCallList(calls
+                .where((call) => call.status == CallStatus.outgoing)
+                .toList()),
+            _buildCallList(calls
+                .where((call) => call.status == CallStatus.incoming)
+                .toList()),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -94,12 +100,12 @@ class CallScreen extends StatelessWidget {
             ],
           ),
           trailing: IconButton(
-                icon: Icon(
-                  call.isVideoCall ? Icons.videocam : Icons.call,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                onPressed: () {},
-              ),
+            icon: Icon(
+              call.isVideoCall ? Icons.videocam : Icons.call,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            onPressed: () {},
+          ),
           onTap: () {},
         );
       },

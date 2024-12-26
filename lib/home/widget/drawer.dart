@@ -121,7 +121,7 @@ void showCustomBottomDrawer(BuildContext context) {
                                 storage.deleteData("refresh_token");
                                 Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
-                                      builder: (ctx) => SplashScreen()),
+                                      builder: (ctx) => const SplashScreen()),
                                   (Route<dynamic> route) => false,
                                 );
                               }),

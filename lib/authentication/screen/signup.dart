@@ -6,7 +6,7 @@ import 'package:tchat_frontend/authentication/widgets/snackmessage.dart';
 import 'dart:io';
 import 'package:tchat_frontend/authentication/widgets/bottom_sheet.dart';
 import 'package:tchat_frontend/authentication/widgets/profile_photo.dart';
-import 'package:tchat_frontend/home/screen/main.dart';
+import 'package:tchat_frontend/home/screen/dashboard.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});

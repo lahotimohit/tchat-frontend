@@ -86,7 +86,8 @@ class _ContactsScreenState extends State<ContactsScreen> {
                       itemBuilder: (context, index) {
                         Contact contact = _contacts[index];
                         return ListTile(
-                          leading: CircleAvatar(child: Icon(Icons.person)),
+                          leading:
+                              const CircleAvatar(child: Icon(Icons.person)),
                           title: Text(contact.displayName),
                           subtitle: Text(contact.phones.isNotEmpty
                               ? contact.phones.first.number

@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tchat_frontend/api/otp.dart';
 import 'package:tchat_frontend/authentication/screen/signup.dart';
-import 'package:tchat_frontend/home/screen/main.dart';
+import 'package:tchat_frontend/home/screen/dashboard.dart';
 import 'package:tchat_frontend/services/storage.dart';
 
 class OtpScreen extends StatefulWidget {
