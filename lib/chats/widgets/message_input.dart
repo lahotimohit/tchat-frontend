@@ -9,8 +9,6 @@ void _openBottomSheet(
   Future<void> _pickImage(ImageSource source) async {
     final XFile? image = await _picker.pickImage(source: source);
     if (image != null) {
-      print('Image path: ${image.path}');
-      // Send the image as a new message with MessageType.image
       onNewMessage(image.path, MessageType.image);
     }
     Navigator.of(context).pop();

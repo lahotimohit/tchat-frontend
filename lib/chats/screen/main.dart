@@ -170,17 +170,14 @@ class _ChatMainScreen extends State<ChatMainScreen>
                             alignment: Alignment.centerRight,
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                    12), // Adjust the radius for rounded corners
+                                borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: Colors.grey.withOpacity(
-                                      0.3), // Optional: adds a subtle border around the image
-                                  width: 1.0, // Border thickness
+                                  color: Colors.grey.withOpacity(0.3),
+                                  width: 1.0,
                                 ),
                               ),
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                    12), // Apply the same radius to ClipRRect for rounded corners
+                                borderRadius: BorderRadius.circular(12),
                                 child: Image.file(
                                   File(message.content),
                                   width: 150,

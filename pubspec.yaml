@@ -48,6 +48,7 @@ dependencies:
   connectivity_plus: ^6.1.1
   flutter_contacts: ^1.1.9+2
   web_socket_channel: ^3.0.1
+  cloudinary_public: ^0.23.1
 
 dev_dependencies:
   flutter_test:
