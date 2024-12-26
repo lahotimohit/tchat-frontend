@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:tchat_frontend/chats/models/chat.dart';
 
-void _openBottomSheet(context) {
+void _openBottomSheet(
+    BuildContext context, Function(String, MessageType) onNewMessage) {
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage(ImageSource source) async {
+    final XFile? image = await _picker.pickImage(source: source);
+    if (image != null) {
+      print('Image path: ${image.path}');
+      // Send the image as a new message with MessageType.image
+      onNewMessage(image.path, MessageType.image);
+    }
+    Navigator.of(context).pop();
+  }
+
   showModalBottomSheet(
     backgroundColor: Colors.white,
     context: context,
@@ -11,37 +26,12 @@ void _openBottomSheet(context) {
             ListTile(
               leading: const Icon(Icons.camera_alt),
               title: const Text('Camera'),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
+              onTap: () => _pickImage(ImageSource.camera),
             ),
             ListTile(
               leading: const Icon(Icons.photo),
               title: const Text('Gallery'),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.insert_drive_file),
-              title: const Text('Documents'),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.mic),
-              title: const Text('Audio'),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.location_on),
-              title: const Text('Location'),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
+              onTap: () => _pickImage(ImageSource.gallery),
             ),
           ],
         ),
@@ -52,7 +42,7 @@ void _openBottomSheet(context) {
 
 class buildMessageInputField extends StatefulWidget {
   const buildMessageInputField({super.key, required this.onNewMessage});
-  final Function(String) onNewMessage;
+  final Function(String, MessageType) onNewMessage;
   @override
   State<buildMessageInputField> createState() => _buildMessageInputFieldState();
 }
@@ -66,7 +56,7 @@ class _buildMessageInputFieldState extends State<buildMessageInputField> {
   Widget build(BuildContext context) {
     return Container(
       height: 70,
-      margin: EdgeInsets.only(bottom: 12, left: 4),
+      margin: const EdgeInsets.only(bottom: 12, left: 4),
       child: Row(
         children: [
           Container(
@@ -76,7 +66,8 @@ class _buildMessageInputFieldState extends State<buildMessageInputField> {
               elevation: 4,
               margin: const EdgeInsets.only(left: 2, right: 2, bottom: 4),
               shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(25))),
+                borderRadius: BorderRadius.all(Radius.circular(25)),
+              ),
               child: TextFormField(
                 controller: messageController,
                 maxLines: 5,
@@ -92,27 +83,31 @@ class _buildMessageInputFieldState extends State<buildMessageInputField> {
                 },
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
-                    hintText: "Type a message",
-                    hintStyle: const TextStyle(color: Colors.grey),
-                    border: InputBorder.none,
-                    prefixIcon: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.emoji_emotions_outlined)),
-                    suffixIcon: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            _openBottomSheet(context);
-                          },
-                          icon: const Icon(Icons.attach_file),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.camera_alt_outlined),
-                        ),
-                      ],
-                    )),
+                  hintText: "Type a message",
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  border: InputBorder.none,
+                  prefixIcon: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.emoji_emotions_outlined),
+                  ),
+                  suffixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          _openBottomSheet(context, widget.onNewMessage);
+                        },
+                        icon: const Icon(Icons.attach_file),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          _openBottomSheet(context, widget.onNewMessage);
+                        },
+                        icon: const Icon(Icons.camera_alt_outlined),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
@@ -121,23 +116,27 @@ class _buildMessageInputFieldState extends State<buildMessageInputField> {
             child: CircleAvatar(
               backgroundColor: Theme.of(context).colorScheme.primary,
               child: IconButton(
-                  onPressed: () {
-                    widget.onNewMessage(messageController.text);
-                    messageController.text = "";
-                  },
-                  icon: _hasFocus
-                      ? const Icon(
-                          Icons.send,
-                          color: Colors.white,
-                          size: 18,
-                        )
-                      : const Icon(
-                          Icons.mic,
-                          color: Colors.white,
-                          size: 22,
-                        )),
+                onPressed: () {
+                  widget.onNewMessage(
+                    messageController.text,
+                    MessageType.text,
+                  );
+                  messageController.text = "";
+                },
+                icon: _hasFocus
+                    ? const Icon(
+                        Icons.send,
+                        color: Colors.white,
+                        size: 18,
+                      )
+                    : const Icon(
+                        Icons.mic,
+                        color: Colors.white,
+                        size: 22,
+                      ),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

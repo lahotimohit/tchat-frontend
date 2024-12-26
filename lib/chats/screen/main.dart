@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -110,12 +111,13 @@ class _ChatMainScreen extends State<ChatMainScreen>
     }
   }
 
-  void _onNewMessage(String message) {
+  void _onNewMessage(String message, MessageType messageType) {
     final newMessage = Message(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       senderId: "",
       receiverId: "",
       content: message,
+      messageType: messageType,
       isSent: true,
       timestamp: DateTime.now(),
       isRead: false,
@@ -160,7 +162,22 @@ class _ChatMainScreen extends State<ChatMainScreen>
                     controller: _scrollController,
                     itemCount: messages.length,
                     itemBuilder: (context, index) {
-                      return buildMessage(messages[index], context);
+                      final message = messages[index];
+                      if (message.messageType == MessageType.image) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Image.file(
+                              File(message.content),
+                              width: 150,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      }
+                      return buildMessage(message, context);
                     },
                   ),
                 ),
