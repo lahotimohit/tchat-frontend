@@ -168,11 +168,26 @@ class _ChatMainScreen extends State<ChatMainScreen>
                           padding: const EdgeInsets.all(8.0),
                           child: Align(
                             alignment: Alignment.centerRight,
-                            child: Image.file(
-                              File(message.content),
-                              width: 150,
-                              height: 150,
-                              fit: BoxFit.cover,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    12), // Adjust the radius for rounded corners
+                                border: Border.all(
+                                  color: Colors.grey.withOpacity(
+                                      0.3), // Optional: adds a subtle border around the image
+                                  width: 1.0, // Border thickness
+                                ),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                    12), // Apply the same radius to ClipRRect for rounded corners
+                                child: Image.file(
+                                  File(message.content),
+                                  width: 150,
+                                  height: 150,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           ),
                         );
