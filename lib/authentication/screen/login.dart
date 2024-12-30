@@ -5,7 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:tchat_frontend/authentication/widgets/snackmessage.dart';
 import 'package:tchat_frontend/authentication/widgets/text_field.dart';
 import 'package:tchat_frontend/authentication/validators/auth.dart';
-import 'package:tchat_frontend/home/screen/dashboard.dart';
+// import 'package:tchat_frontend/home/screen/dashboard.dart';
 import 'package:tchat_frontend/otp/screen/main.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,52 +18,59 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isLogin = false;
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _countryCodeController = TextEditingController();
+  final TextEditingController _mobileController = TextEditingController();
+
   void _onLogin(BuildContext context) async {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (Ctx) => const HomeMainScreen()));
-    // String email = _emailController.text.trim();
-    // String response = emailValidate(email);
-    // var connectivityResult = await Connectivity().checkConnectivity();
-    // if (connectivityResult[0] == ConnectivityResult.none) {
-    //   snackmessage(context, "Please check your internet connection");
-    //   return;
-    // } else if (response == "Success") {
-    //   setState(() {
-    //     isLogin = true;
-    //   });
-    //   showCupertinoDialog(
-    //     context: context,
-    //     barrierDismissible: false,
-    //     builder: (context) => const Center(
-    //       child: CircularProgressIndicator(),
-    //     ),
-    //   );
+    final String email = _emailController.text.trim();
+    final String code = _countryCodeController.text.trim();
+    final String phone = _mobileController.text.trim();
 
-    //   try {
-    //     LoginAPI api = LoginAPI();
-    //     final Map<String, dynamic> result = await api.dioLogin(email);
-    //     setState(() {
-    //       isLogin = false;
-    //     });
-    //     Navigator.of(context).pop();
+    AuthValidation auth = AuthValidation(email, phone, code);
+    final String response = auth.validation();
 
-    //     if (result['code'] == 401) {
-    //       snackmessage(context, result['error']);
-    //     } else {
-    //       snackmessage(context, result['msg']);
-    //       Navigator.of(context)
-    //           .push(MaterialPageRoute(builder: (ctx) => const OtpScreen()));
-    //     }
-    //   } catch (e) {
-    //     setState(() {
-    //       isLogin = false;
-    //     });
-    //     snackmessage(context, "Internal Server Error");
-    //   }
-    // } else {
-    //   snackmessage(context, response);
-    //   return;
-    // }
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult[0] == ConnectivityResult.none) {
+      snackmessage(context, "Please check your internet connection");
+      return;
+    } else if (response == "Success") {
+      setState(() {
+        isLogin = true;
+      });
+      showCupertinoDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+
+      try {
+        LoginAPI api = LoginAPI();
+        final Map<String, dynamic> result =
+            await api.dioLogin(email, code, phone);
+        setState(() {
+          isLogin = false;
+        });
+        Navigator.of(context).pop();
+
+        if (result['code'] == 401) {
+          snackmessage(context, result['error']);
+        } else {
+          snackmessage(context, result['msg']);
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (ctx) => const OtpScreen()));
+        }
+      } catch (e) {
+        setState(() {
+          isLogin = false;
+        });
+        snackmessage(context, "Internal Server Error");
+      }
+    } else {
+      snackmessage(context, response);
+      return;
+    }
   }
 
   @override
@@ -93,6 +100,31 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: _emailController,
                     labelText: "Enter Your Email",
                     obscureText: false),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      child: TextFieldWidget(
+                          controller: _countryCodeController,
+                          labelText: "Code",
+                          obscureText: false),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.63,
+                      child: TextFieldWidget(
+                          controller: _mobileController,
+                          labelText: "Mobile Number",
+                          obscureText: false),
+                    )
+                  ],
+                ),
                 const SizedBox(
                   height: 20,
                 ),
