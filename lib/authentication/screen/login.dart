@@ -5,6 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:tchat_frontend/authentication/widgets/snackmessage.dart';
 import 'package:tchat_frontend/authentication/widgets/text_field.dart';
 import 'package:tchat_frontend/authentication/validators/auth.dart';
+import 'package:country_picker/country_picker.dart';
 // import 'package:tchat_frontend/home/screen/dashboard.dart';
 import 'package:tchat_frontend/otp/screen/main.dart';
 
@@ -46,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       try {
+        print("codeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ${code}");
         LoginAPI api = LoginAPI();
         final Map<String, dynamic> result =
             await api.dioLogin(email, code, phone);
@@ -71,6 +73,21 @@ class _LoginScreenState extends State<LoginScreen> {
       snackmessage(context, response);
       return;
     }
+  }
+
+  String _selectedCountryFlag = "🇺🇸"; // Default flag
+
+  void _showCountryPicker() {
+    showCountryPicker(
+      context: context,
+      showPhoneCode: true, // Display phone code alongside the country name
+      onSelect: (Country country) {
+        setState(() {
+          _countryCodeController.text = "+${country.phoneCode}";
+          _selectedCountryFlag = country.flagEmoji;
+        });
+      },
+    );
   }
 
   @override
@@ -106,13 +123,33 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: TextFieldWidget(
-                          controller: _countryCodeController,
-                          labelText: "Code",
-                          obscureText: false),
-                    ),
+                    GestureDetector(
+                        onTap: _showCountryPicker, // Show dialog on tap
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 12),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Row(children: [
+                              Text(
+                                _selectedCountryFlag,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              const SizedBox(width: 5),
+                              Text(
+                                _countryCodeController.text,
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ]))),
+                    // SizedBox(
+                    //   width: MediaQuery.of(context).size.width * 0.25,
+                    //   child: TextFieldWidget(
+                    //       controller: _countryCodeController,
+                    //       labelText: "Code",
+                    //       obscureText: false),
+                    // ),
                     const SizedBox(
                       width: 10,
                     ),
