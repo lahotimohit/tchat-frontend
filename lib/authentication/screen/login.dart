@@ -4,6 +4,7 @@ import 'package:tchat_frontend/api/login.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:tchat_frontend/authentication/widgets/snackmessage.dart';
 import 'package:tchat_frontend/authentication/widgets/text_field.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:tchat_frontend/authentication/validators/auth.dart';
 import 'package:country_picker/country_picker.dart';
 // import 'package:tchat_frontend/home/screen/dashboard.dart';
@@ -91,98 +92,211 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //       appBar: AppBar(),
+  //       body: SingleChildScrollView(
+  //         child: Padding(
+  //           padding: const EdgeInsets.all(16.0),
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               Center(
+  //                   child: Image.asset("assets/images/logo.png",
+  //                       width: 250, height: 250)),
+  //               Text(
+  //                 "Sign In",
+  //                 style: TextStyle(
+  //                     color: Theme.of(context).colorScheme.primary,
+  //                     fontSize: 20,
+  //                     fontWeight: FontWeight.bold),
+  //               ),
+  //               const SizedBox(
+  //                 height: 30,
+  //               ),
+  //               TextFieldWidget(
+  //                   controller: _emailController,
+  //                   labelText: "Enter Your Email",
+  //                   obscureText: false),
+  //               const SizedBox(
+  //                 height: 20,
+  //               ),
+  //               Row(
+  //                 mainAxisAlignment: MainAxisAlignment.start,
+  //                 children: [
+  //                   GestureDetector(
+  //                       onTap: _showCountryPicker, // Show dialog on tap
+  //                       child: Container(
+  //                           padding: const EdgeInsets.symmetric(
+  //                               horizontal: 8, vertical: 12),
+  //                           decoration: BoxDecoration(
+  //                             border: Border.all(color: Colors.grey),
+  //                             borderRadius: BorderRadius.circular(5),
+  //                           ),
+  //                           child: Row(children: [
+  //                             Text(
+  //                               _selectedCountryFlag,
+  //                               style: TextStyle(fontSize: 18),
+  //                             ),
+  //                             const SizedBox(width: 5),
+  //                             Text(
+  //                               _countryCodeController.text,
+  //                               style: TextStyle(fontSize: 16),
+  //                             ),
+  //                           ]))),
+  //                   // SizedBox(
+  //                   //   width: MediaQuery.of(context).size.width * 0.25,
+  //                   //   child: TextFieldWidget(
+  //                   //       controller: _countryCodeController,
+  //                   //       labelText: "Code",
+  //                   //       obscureText: false),
+  //                   // ),
+  //                   const SizedBox(
+  //                     width: 10,
+  //                   ),
+  //                   SizedBox(
+  //                     width: MediaQuery.of(context).size.width * 0.63,
+  //                     child: TextFieldWidget(
+  //                         controller: _mobileController,
+  //                         labelText: "Mobile Number",
+  //                         obscureText: false),
+  //                   )
+  //                 ],
+  //               ),
+  //               const SizedBox(
+  //                 height: 20,
+  //               ),
+  //               Center(
+  //                 child: SizedBox(
+  //                   width: 250,
+  //                   child: ElevatedButton(
+  //                       onPressed: () {
+  //                         _onLogin(context);
+  //                       },
+  //                       style: ElevatedButton.styleFrom(
+  //                           backgroundColor:
+  //                               Theme.of(context).colorScheme.primary,
+  //                           foregroundColor:
+  //                               Theme.of(context).colorScheme.surface),
+  //                       child: const Text("Log In")),
+  //                 ),
+  //               )
+  //             ],
+  //           ),
+  //         ),
+  //       ));
+  // }
+
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                    child: Image.asset("assets/images/logo.png",
-                        width: 250, height: 250)),
-                Text(
-                  "Sign In",
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                TextFieldWidget(
-                    controller: _emailController,
-                    labelText: "Enter Your Email",
-                    obscureText: false),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                        onTap: _showCountryPicker, // Show dialog on tap
-                        child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 12),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Row(children: [
-                              Text(
-                                _selectedCountryFlag,
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              const SizedBox(width: 5),
-                              Text(
-                                _countryCodeController.text,
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ]))),
-                    // SizedBox(
-                    //   width: MediaQuery.of(context).size.width * 0.25,
-                    //   child: TextFieldWidget(
-                    //       controller: _countryCodeController,
-                    //       labelText: "Code",
-                    //       obscureText: false),
-                    // ),
-                    const SizedBox(
-                      width: 10,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Stack(
+                children: [
+                  Image.asset(
+                    'assets/images/auth_screen/2.png',
+                    height: 200,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned(
+                    top: 35,
+                    left: 8,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          color: Colors.white, shape: BoxShape.circle),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                      ),
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.63,
-                      child: TextFieldWidget(
-                          controller: _mobileController,
-                          labelText: "Mobile Number",
-                          obscureText: false),
-                    )
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Welcome Text
+                    const Text(
+                      'Welcome back!',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Text(
+                      'Glad to see you, Again!',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.grey,
+                      ),
+                    ),
+
+                    // Email Field
+                    const SizedBox(height: 32),
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Enter your email',
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+
+                    // Phone Number Field with Country Code
+                    const SizedBox(height: 16),
+                    IntlPhoneField(
+                      decoration: InputDecoration(
+                        hintText: 'Enter your mobile number',
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      initialCountryCode: 'IN',
+                      onChanged: (phone) {
+                        print(phone.completeNumber);
+                      },
+                    ),
+
+                    const SizedBox(height: 24),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: SizedBox(
-                    width: 250,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          _onLogin(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.primary,
-                            foregroundColor:
-                                Theme.of(context).colorScheme.surface),
-                        child: const Text("Log In")),
-                  ),
-                )
-              ],
-            ),
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
