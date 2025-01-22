@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/api/login.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:tchat_frontend/authentication/widgets/snackmessage.dart';
@@ -270,7 +271,6 @@ class _LoginScreenState extends State<LoginScreen>
                   FadeTransition(
                     opacity: _imageAnimation,
                     child: Hero(
-                      // Add Hero widget for smooth image transition
                       tag: 'background_image',
                       child: Image.asset(
                         'assets/images/auth_screen/2.png',
@@ -311,7 +311,6 @@ class _LoginScreenState extends State<LoginScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Welcome Text
                     FadeTransition(
                       opacity: _welcomeTextAnimation,
                       child: SlideTransition(
@@ -319,14 +318,17 @@ class _LoginScreenState extends State<LoginScreen>
                           begin: const Offset(0, 0.2),
                           end: Offset.zero,
                         ).animate(_welcomeTextAnimation),
-                        child: const Text(
+                        child: Text(
                           'Welcome back!',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
                             fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
+                    ),
+                    const SizedBox(
+                      height: 10,
                     ),
                     FadeTransition(
                       opacity: _subtitleAnimation,
@@ -335,10 +337,10 @@ class _LoginScreenState extends State<LoginScreen>
                           begin: const Offset(0, 0.2),
                           end: Offset.zero,
                         ).animate(_subtitleAnimation),
-                        child: const Text(
+                        child: Text(
                           'Glad to see you, Again!',
-                          style: TextStyle(
-                            fontSize: 20,
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
                             color: Colors.grey,
                           ),
                         ),

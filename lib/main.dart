@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tchat_frontend/home/screen/dashboard.dart';
 import 'package:tchat_frontend/services/storage.dart';
-import 'package:tchat_frontend/splash_screen/screen/main.dart';
+import 'package:tchat_frontend/src/screens/splash.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,22 +42,23 @@ class _MyAppState extends State<MyApp> {
         surface: Colors.white);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'TChat',
       theme: ThemeData(
         colorScheme: colorscheme,
         scaffoldBackgroundColor: colorscheme.surface,
         useMaterial3: true,
       ),
-      builder: (context, child) {
-        return AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle(
-            statusBarColor: colorscheme.primary,
-            statusBarIconBrightness: Brightness.light, // For Android
-            statusBarBrightness: Brightness.dark, // For iOS
-          ),
-          child: child!,
-        );
-      },
+      // builder: (context, child) {
+      //   return AnnotatedRegion<SystemUiOverlayStyle>(
+      //     value: SystemUiOverlayStyle(
+      //       statusBarColor: colorscheme.primary,
+      //       statusBarIconBrightness: Brightness.light, // For Android
+      //       statusBarBrightness: Brightness.dark, // For iOS
+      //     ),
+      //     child: child!,
+      //   );
+      // },
       home: Scaffold(
         body:
             accessToken == null ? const SplashScreen() : const HomeMainScreen(),

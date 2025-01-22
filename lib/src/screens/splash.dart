@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:tchat_frontend/src/providers/splash_providers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tchat_frontend/authentication/screen/main.dart';
+import 'package:tchat_frontend/src/common.dart';
+import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,45 +13,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    super.dispose();
-  }
-
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
-
-  final List<Map<String, String>> sliderData = [
-    {
-      "image": "assets/images/splash_screen/1.svg",
-      "title": "Unlock the Power\nOf TChat",
-      "subtitle":
-          "Communicate with your friends in a fast,\nreliable and secure way."
-    },
-    {
-      "image": "assets/images/splash_screen/2.svg",
-      "title": "Keep Your Chats Private",
-      "subtitle":
-          "Prevent another party from taking screenshots, keep it confidential."
-    },
-    {
-      "image": "assets/images/splash_screen/3.svg",
-      "title": "Become a Part of Our Community",
-      "subtitle": "Your privacy is our priority with end-to-end encryption."
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: white,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -88,24 +57,19 @@ class _SplashScreenState extends State<SplashScreen> {
                                 width: 308,
                               ),
                               const SizedBox(height: 20),
-                              Text(
-                                sliderData[index]["title"]!,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.poppins(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
+                              CustomText(
+                                align: TextAlign.center,
+                                size: 28,
+                                text: sliderData[index]["title"]!,
+                                weight: FontWeight.bold,
                               ),
                               const SizedBox(height: 8),
-                              Text(
-                                sliderData[index]["subtitle"]!,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.poppins(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.grey,
-                                ),
+                              CustomText(
+                                text: sliderData[index]["subtitle"]!,
+                                align: TextAlign.center,
+                                size: 15,
+                                weight: FontWeight.w300,
+                                color: grey,
                               ),
                             ],
                           ),
@@ -125,15 +89,15 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             const SizedBox(height: 30),
             TextButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (ctx) => const AuthScreen()));
-              },
-              child: const Text(
-                "Skip",
-                style: TextStyle(fontSize: 18, color: Colors.black),
-              ),
-            ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (ctx) => const AuthScreen()));
+                },
+                child: const CustomText(
+                  size: 18,
+                  text: "Skip",
+                  weight: FontWeight.w600,
+                )),
             const SizedBox(height: 80),
           ],
         ),
@@ -148,7 +112,7 @@ class _SplashScreenState extends State<SplashScreen> {
       height: 10,
       width: index == currentPage ? 20 : 10,
       decoration: BoxDecoration(
-        color: index == currentPage ? Colors.black : Colors.grey,
+        color: index == currentPage ? black : grey,
         borderRadius: BorderRadius.circular(5),
       ),
     );

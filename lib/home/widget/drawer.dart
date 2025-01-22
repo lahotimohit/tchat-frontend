@@ -1,6 +1,6 @@
 import 'package:tchat_frontend/services/storage.dart';
 import 'package:tchat_frontend/setting/screen/main.dart';
-import 'package:tchat_frontend/splash_screen/screen/main.dart';
+import 'package:tchat_frontend/src/screens/splash.dart';
 import 'package:flutter/material.dart';
 
 void showCustomBottomDrawer(BuildContext context) {
