@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tchat_frontend/authentication/screen/slide_up.dart';
-import 'package:tchat_frontend/authentication/screen/login.dart';
+import 'package:tchat_frontend/src/widgets/slide_up.dart';
+import 'package:tchat_frontend/src/screens/login.dart';
 import 'package:tchat_frontend/src/common.dart';
+import 'package:tchat_frontend/src/widgets/custom_elevated_button.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -55,14 +56,7 @@ class AuthScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: black,
-                        foregroundColor: white,
-                        minimumSize: const Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
+                      style: customElevatedButton(),
                       onPressed: () {
                         Navigator.of(context).push(
                           SlideUpRoute(page: const LoginScreen()),
