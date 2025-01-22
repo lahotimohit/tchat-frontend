@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/authentication/screen/slide_up.dart';
 import 'package:tchat_frontend/authentication/screen/login.dart';
+import 'package:tchat_frontend/src/common.dart';
+import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
@@ -14,10 +15,9 @@ class AuthScreen extends StatelessWidget {
             flex: 2,
             child: Stack(
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Hero(
-                    // Add Hero widget for smooth image transition
                     tag: 'background_image',
                     child: Image.asset(
                       "assets/images/auth_screen/1.png",
@@ -37,49 +37,43 @@ class AuthScreen extends StatelessWidget {
                   "assets/images/logo.png",
                   height: 80,
                 ),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "TChat",
-                      style: GoogleFonts.poppins(
-                          fontSize: 20, fontWeight: FontWeight.w600),
+                    CustomText(
+                      size: 20,
+                      text: "TChat",
+                      weight: FontWeight.w600,
                     ),
-                    Text(
-                      "space",
-                      style: GoogleFonts.poppins(fontSize: 20),
+                    CustomText(
+                      size: 20,
+                      text: "space",
                     )
                   ],
                 ),
                 const SizedBox(height: 40),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
-                      minimumSize: const Size(double.infinity, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: black,
+                        foregroundColor: white,
+                        minimumSize: const Size(double.infinity, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      // Use custom route instead of MaterialPageRoute
-                      Navigator.of(context).push(
-                        SlideUpRoute(page: const LoginScreen()),
-                      );
-                    },
-                    child: Text(
-                      "Login",
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          SlideUpRoute(page: const LoginScreen()),
+                        );
+                      },
+                      child: const CustomText(
+                        size: 16,
+                        text: "Login",
+                        color: white,
+                      )),
                 ),
-                // ... rest of the widgets ...
               ],
             ),
           ),
