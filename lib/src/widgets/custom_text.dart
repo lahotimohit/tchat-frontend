@@ -10,8 +10,8 @@ class CustomText extends StatelessWidget {
   final TextAlign? align;
   const CustomText(
       {super.key,
-      @required this.size,
-      this.text,
+      @required this.text,
+      this.size,
       this.color,
       this.weight,
       this.align});

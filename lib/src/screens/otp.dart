@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'dart:async';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:tchat_frontend/api/otp.dart';
 import 'package:tchat_frontend/authentication/screen/signup.dart';
-import 'package:tchat_frontend/home/screen/dashboard.dart';
-import 'package:tchat_frontend/services/storage.dart';
+import 'package:tchat_frontend/authentication/widgets/snackmessage.dart';
+// import 'package:tchat_frontend/src/api/otp.dart';
+import 'package:tchat_frontend/src/common.dart';
+import 'package:tchat_frontend/src/widgets/custom_elevated_button.dart';
+import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -28,15 +29,7 @@ class _OtpVerificationScreenState extends State<OtpScreen> {
     super.initState();
   }
 
-  void _onSubmitOTP() async {
-    // String otp = _otpControllers.map((controller) => controller.text).join();
-    // print('OTP entered: $otp');
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (ctx) => const SignupScreen()));
-    // SecureStorage storage = SecureStorage();
-    // setState(() {
-    //   isVerified = true;
-    // });
+  void _onSubmitOTP(String otp) async {
     // showCupertinoDialog(
     //   context: context,
     //   barrierDismissible: false,
@@ -44,41 +37,11 @@ class _OtpVerificationScreenState extends State<OtpScreen> {
     //     child: CircularProgressIndicator(),
     //   ),
     // );
-
-    // try {
-    //   OtpAPI api = OtpAPI();
-    //   final Map<String, dynamic> result = await api.verifyOtp(otp);
-    //   setState(() {
-    //     isVerified = false;
-    //   });
-    //   Navigator.of(context).pop();
-
-    //   if (result['code'] == 200) {
-    //     String isRegistered = "";
-    //     ScaffoldMessenger.of(context)
-    //         .showSnackBar(SnackBar(content: Text(result['msg'])));
-    //     await storage.readData("isRegistered").then((value) {
-    //       isRegistered = value;
-    //     });
-    //     isRegistered == "true"
-    //         ? Navigator.of(context).pushAndRemoveUntil(
-    //             MaterialPageRoute(builder: (ctx) => const HomeMainScreen()),
-    //             (Route<dynamic> route) => false)
-    //         : Navigator.of(context).pushAndRemoveUntil(
-    //             MaterialPageRoute(builder: (ctx) => const SignupScreen()),
-    //             (Route<dynamic> route) => false);
-    //   } else {
-    //     ScaffoldMessenger.of(context)
-    //         .showSnackBar(SnackBar(content: Text(result['error'])));
-    //   }
-    // } catch (e) {
-    //   setState(() {
-    //     isVerified = false;
-    //   });
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(content: Text("An error occurred: $e")),
-    //   );
-    // }
+    // print('OTP entered: $otp');
+    // await onVerifyOTP(context, otp);
+    // Navigator.of(context).pop();
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (ctx) => const SignupScreen()));
   }
 
   @override
@@ -134,22 +97,19 @@ class _OtpVerificationScreenState extends State<OtpScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      'OTP Verification',
-                      style: GoogleFonts.poppins(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    const CustomText(
+                      text: "OTP Verification",
+                      size: 24,
+                      weight: FontWeight.w600,
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      'Enter the verification code we just sent on your email address',
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
+                    const CustomText(
+                      text:
+                          "Enter the verification code we just sent on your email address",
+                      size: 14,
+                      color: grey,
                     ),
                     const SizedBox(height: 32),
                     Row(
@@ -193,21 +153,19 @@ class _OtpVerificationScreenState extends State<OtpScreen> {
                     const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: () {
-                        _onSubmitOTP();
+                        String otp = _otpControllers
+                            .map((controller) => controller.text)
+                            .join();
+                        if (otp.length != 4) {
+                          snackmessage(context, "Please enter valid otp");
+                          return;
+                        }
+                        _onSubmitOTP(otp);
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: const Text(
-                        'Verify',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
+                      style: customElevatedButton(),
+                      child: const CustomText(
+                        text: "Verify",
+                        color: white,
                       ),
                     ),
                     const SizedBox(
@@ -216,26 +174,19 @@ class _OtpVerificationScreenState extends State<OtpScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          "Didn't Receive Code? ",
-                          style: TextStyle(
-                            color: Color(0xFF666666),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
+                        const CustomText(
+                            text: "Didn't Receive Code?",
+                            size: 14,
+                            color: grey),
                         GestureDetector(
                           onTap: () {
-                            // Add your resend logic here
                             debugPrint('Resend code requested');
                           },
-                          child: const Text(
-                            'Resend',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          child: const CustomText(
+                            size: 14,
+                            color: blue,
+                            weight: FontWeight.w600,
+                            text: "Resend",
                           ),
                         ),
                       ],

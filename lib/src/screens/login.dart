@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tchat_frontend/src/widgets/login_animation.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:tchat_frontend/otp/screen/main.dart';
+import 'package:tchat_frontend/src/screens/otp.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_elevated_button.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
