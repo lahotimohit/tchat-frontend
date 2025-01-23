@@ -1,6 +1,6 @@
 import 'package:tchat_frontend/api/login.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:tchat_frontend/authentication/widgets/snackmessage.dart';
+import 'package:tchat_frontend/src/widgets/snackmessage.dart';
 import 'package:tchat_frontend/src/validators/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tchat_frontend/src/screens/otp.dart';

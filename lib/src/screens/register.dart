@@ -1,12 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tchat_frontend/api/register.dart';
-import 'package:tchat_frontend/authentication/widgets/snackmessage.dart';
+import 'package:tchat_frontend/src/api/register.dart';
+import 'package:tchat_frontend/src/common.dart';
+
 import 'dart:io';
-import 'package:tchat_frontend/authentication/widgets/bottom_sheet.dart';
-import 'package:tchat_frontend/authentication/widgets/profile_photo.dart';
-import 'package:tchat_frontend/home/screen/dashboard.dart';
+import 'package:tchat_frontend/src/widgets/bottom_sheet.dart';
+import 'package:tchat_frontend/src/widgets/custom_text.dart';
+import 'package:tchat_frontend/src/widgets/profile_photo.dart';
+import 'package:tchat_frontend/src/widgets/snackmessage.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -17,7 +20,6 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final ImagePicker _picker = ImagePicker();
-  bool isRegister = false;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _aboutController = TextEditingController();
   XFile? _image;
@@ -52,51 +54,38 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void _submitSignup() async {
-    try {
-      RegisterAPI api = RegisterAPI();
-      final Map<String, dynamic> result = await api.dioRegister(
-          "https://placehold.co/600x400",
-          _aboutController.text.trim(),
-          _nameController.text.trim());
-      setState(() {
-        isRegister = false;
-      });
-      Navigator.of(context).pop();
-
-      if (result['code'] == 401) {
-        snackmessage(context, result['error']);
-      } else {
-        snackmessage(context, result['msg']);
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (ctx) => const HomeMainScreen()));
-      }
-    } catch (e) {
-      setState(() {
-        isRegister = false;
-      });
-      snackmessage(context, "Internal Server Error");
-    }
+    showCupertinoDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+    String name = _nameController.text.trim();
+    String about = _aboutController.text.trim();
+    await onRegister(context, name, about);
+    Navigator.of(context).pop();
+    // Navigator.of(context)
+    //     .push(MaterialPageRoute(builder: (ctx) => const SignupScreen()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            )),
-        title: Text(
-          "Profile",
-          style: GoogleFonts.raleway(
-              color: Colors.white, fontWeight: FontWeight.w500),
-        ),
-      ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back,
+                color: white,
+              )),
+          title: const CustomText(
+            text: "Profile",
+            color: white,
+          )),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -115,30 +104,33 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width - 30,
                   child: Card(
-                    color: Colors.white,
+                    color: white,
                     elevation: 0,
                     child: Column(
                       children: [
                         cardItem(
                             const Icon(
                               Icons.person,
-                              color: Colors.grey,
+                              color: grey,
                             ),
                             "Name",
                             _nameController,
                             "Enter your name"),
                         const SizedBox(height: 16),
-                        cardItem(
-                            const Icon(Icons.info, color: Colors.grey),
-                            "About",
-                            _aboutController,
-                            "Hey there I'm using TChat"),
+                        cardItem(const Icon(Icons.info, color: grey), "About",
+                            _aboutController, "Hey there I'm using TChat"),
                         const SizedBox(height: 20),
                         Center(
                           child: SizedBox(
                             width: 250,
                             child: ElevatedButton(
                               onPressed: () {
+                                if (_aboutController.text.isEmpty ||
+                                    _nameController.text.isEmpty) {
+                                  snackmessage(
+                                      context, "Please enter all details");
+                                  return;
+                                }
                                 _submitSignup();
                               },
                               style: ElevatedButton.styleFrom(
@@ -177,17 +169,15 @@ Widget cardItem(Icon labelIcon, String labelTitle,
           const SizedBox(
             width: 5,
           ),
-          Text(labelTitle,
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                color: Colors.grey,
-                fontWeight: FontWeight.w500,
-              )),
+          CustomText(
+            text: labelTitle,
+            color: grey,
+          )
         ],
       ),
       const SizedBox(height: 4),
       Card(
-        color: Colors.white,
+        color: white,
         elevation: 0,
         child: TextField(
           controller: controller,
@@ -195,7 +185,7 @@ Widget cardItem(Icon labelIcon, String labelTitle,
               border: InputBorder.none,
               hintText: hintText,
               hintStyle: GoogleFonts.raleway(
-                  color: Colors.grey, fontWeight: FontWeight.w400)),
+                  color: grey, fontWeight: FontWeight.w400)),
         ),
       ),
     ],
