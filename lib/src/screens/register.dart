@@ -1,15 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tchat_frontend/src/api/register.dart';
+import 'package:tchat_frontend/home/screen/dashboard.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:tchat_frontend/src/api/register.dart';
 import 'package:tchat_frontend/src/common.dart';
-
+import 'package:tchat_frontend/src/screens/plans.dart';
 import 'dart:io';
 import 'package:tchat_frontend/src/widgets/bottom_sheet.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 import 'package:tchat_frontend/src/widgets/profile_photo.dart';
-import 'package:tchat_frontend/src/widgets/snackmessage.dart';
+// import 'package:tchat_frontend/src/widgets/snackmessage.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -54,19 +55,19 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void _submitSignup() async {
-    showCupertinoDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-    String name = _nameController.text.trim();
-    String about = _aboutController.text.trim();
-    await onRegister(context, name, about);
-    Navigator.of(context).pop();
-    // Navigator.of(context)
-    //     .push(MaterialPageRoute(builder: (ctx) => const SignupScreen()));
+    // showCupertinoDialog(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (context) => const Center(
+    //     child: CircularProgressIndicator(),
+    //   ),
+    // );
+    // String name = _nameController.text.trim();
+    // String about = _aboutController.text.trim();
+    // await onRegister(context, name, about);
+    // Navigator.of(context).pop();
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (ctx) => ChoosePlanScreen()));
   }
 
   @override
@@ -125,12 +126,12 @@ class _SignupScreenState extends State<SignupScreen> {
                             width: 250,
                             child: ElevatedButton(
                               onPressed: () {
-                                if (_aboutController.text.isEmpty ||
-                                    _nameController.text.isEmpty) {
-                                  snackmessage(
-                                      context, "Please enter all details");
-                                  return;
-                                }
+                                // if (_aboutController.text.isEmpty ||
+                                //     _nameController.text.isEmpty) {
+                                //   snackmessage(
+                                //       context, "Please enter all details");
+                                //   return;
+                                // }
                                 _submitSignup();
                               },
                               style: ElevatedButton.styleFrom(

@@ -8,21 +8,26 @@ class CustomText extends StatelessWidget {
   final Color? color;
   final FontWeight? weight;
   final TextAlign? align;
+  final Alignment? alignment;
   const CustomText(
       {super.key,
       @required this.text,
       this.size,
       this.color,
       this.weight,
+      this.alignment,
       this.align});
 
   @override
   Widget build(BuildContext context) {
-    return Text(text!,
-        textAlign: align ?? TextAlign.left,
-        style: GoogleFonts.poppins(
-            fontSize: size ?? 16,
-            color: color ?? black,
-            fontWeight: weight ?? FontWeight.normal));
+    return Align(
+      alignment: alignment ?? Alignment.topLeft,
+      child: Text(text!,
+          textAlign: align ?? TextAlign.left,
+          style: GoogleFonts.poppins(
+              fontSize: size ?? 16,
+              color: color ?? black,
+              fontWeight: weight ?? FontWeight.normal)),
+    );
   }
 }

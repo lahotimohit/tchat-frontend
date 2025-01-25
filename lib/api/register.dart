@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:tchat_frontend/interceptors/dio_interceptor.dart';
-import 'package:tchat_frontend/services/storage.dart';
+import 'package:tchat_frontend/src/interceptors/dio_interceptor.dart';
+import 'package:tchat_frontend/src/providers/storage.dart';
 
 class RegisterAPI {
   late Dio _dio;

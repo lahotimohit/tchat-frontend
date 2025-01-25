@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:tchat_frontend/services/storage.dart';
+import 'package:tchat_frontend/src/providers/storage.dart';
 
 class DioInterceptor extends Interceptor {
   final Dio _dio = Dio();

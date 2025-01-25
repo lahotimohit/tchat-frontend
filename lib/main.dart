@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tchat_frontend/home/screen/dashboard.dart';
-import 'package:tchat_frontend/services/storage.dart';
+import 'package:tchat_frontend/src/providers/storage.dart';
 import 'package:tchat_frontend/src/screens/splash.dart';
 
 void main() {

@@ -58,6 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
                               ),
                               const SizedBox(height: 20),
                               CustomText(
+                                alignment: Alignment.center,
                                 align: TextAlign.center,
                                 size: 28,
                                 text: sliderData[index]["title"]!,
@@ -65,6 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
                               ),
                               const SizedBox(height: 8),
                               CustomText(
+                                alignment: Alignment.center,
                                 text: sliderData[index]["subtitle"]!,
                                 align: TextAlign.center,
                                 size: 15,
@@ -94,6 +96,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       MaterialPageRoute(builder: (ctx) => const AuthScreen()));
                 },
                 child: const CustomText(
+                  alignment: Alignment.center,
                   size: 18,
                   text: "Skip",
                   weight: FontWeight.w600,

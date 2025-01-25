@@ -207,6 +207,7 @@ class _LoginScreenState extends State<LoginScreen>
                             },
                             style: customElevatedButton(),
                             child: const CustomText(
+                              alignment: Alignment.center,
                               size: 16,
                               text: "Login",
                               color: white,

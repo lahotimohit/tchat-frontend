@@ -63,6 +63,7 @@ class AuthScreen extends StatelessWidget {
                         );
                       },
                       child: const CustomText(
+                        alignment: Alignment.center,
                         size: 16,
                         text: "Login",
                         color: white,

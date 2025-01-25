@@ -164,6 +164,7 @@ class _OtpVerificationScreenState extends State<OtpScreen> {
                       },
                       style: customElevatedButton(),
                       child: const CustomText(
+                        alignment: Alignment.center,
                         text: "Verify",
                         color: white,
                       ),
