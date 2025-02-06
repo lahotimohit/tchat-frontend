@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tchat_frontend/home/screen/dashboard.dart';
 // import 'package:tchat_frontend/home/screen/dashboard.dart';
 // import 'package:flutter/cupertino.dart';
 // import 'package:tchat_frontend/src/api/register.dart';
 import 'package:tchat_frontend/src/common.dart';
-import 'package:tchat_frontend/src/screens/plans.dart';
 import 'dart:io';
 import 'package:tchat_frontend/src/widgets/bottom_sheet.dart';
+import 'package:tchat_frontend/src/widgets/custom_elevated_button.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
-import 'package:tchat_frontend/src/widgets/profile_photo.dart';
 // import 'package:tchat_frontend/src/widgets/snackmessage.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -67,87 +68,96 @@ class _SignupScreenState extends State<SignupScreen> {
     // await onRegister(context, name, about);
     // Navigator.of(context).pop();
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (ctx) => ChoosePlanScreen()));
+        .push(MaterialPageRoute(builder: (ctx) => const HomeMainScreen()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          leading: IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: const Icon(
-                Icons.arrow_back,
-                color: white,
-              )),
-          title: const CustomText(
-            text: "Profile",
-            color: white,
-          )),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+      body: SafeArea(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 40),
-              Center(
-                child: ProfilePhoto(
-                  image: _image != null ? File(_image!.path) : null,
-                  onPressed: () => _openBottomSheet(context),
-                ),
-              ),
-              const SizedBox(height: 40),
-              Center(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width - 30,
-                  child: Card(
-                    color: white,
-                    elevation: 0,
-                    child: Column(
-                      children: [
-                        cardItem(
-                            const Icon(
-                              Icons.person,
-                              color: grey,
-                            ),
-                            "Name",
-                            _nameController,
-                            "Enter your name"),
-                        const SizedBox(height: 16),
-                        cardItem(const Icon(Icons.info, color: grey), "About",
-                            _aboutController, "Hey there I'm using TChat"),
-                        const SizedBox(height: 20),
-                        Center(
-                          child: SizedBox(
-                            width: 250,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // if (_aboutController.text.isEmpty ||
-                                //     _nameController.text.isEmpty) {
-                                //   snackmessage(
-                                //       context, "Please enter all details");
-                                //   return;
-                                // }
-                                _submitSignup();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.primary,
-                                foregroundColor:
-                                    Theme.of(context).colorScheme.surface,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Center(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          const CustomText(
+                            text: "Profile Info",
+                            alignment: Alignment.center,
+                            size: 24,
+                            weight: FontWeight.w600,
+                          ),
+                          const SizedBox(height: 10),
+                          const CustomText(
+                            text:
+                                "Please provide your name and about you and an optional profile photo",
+                            size: 15,
+                            color: grey,
+                            weight: FontWeight.w500,
+                            align: TextAlign.center,
+                          ),
+                          const SizedBox(height: 20),
+                          GestureDetector(
+                            onTap: () => _openBottomSheet(context),
+                            child: _image == null
+                                ? SvgPicture.asset('assets/svgs/profile.svg')
+                                : CircleAvatar(
+                                    maxRadius: 75,
+                                    backgroundImage: _image != null
+                                        ? FileImage(File(_image!.path))
+                                        : null,
+                                  ),
+                          ),
+                          const SizedBox(height: 20),
+                          TextField(
+                            controller: _nameController,
+                            decoration: InputDecoration(
+                              hintText: "Enter your Name",
+                              hintStyle: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: grey,
                               ),
-                              child: const Text("Register"),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 50,
-                        )
-                      ],
+                          const SizedBox(height: 20),
+                          TextField(
+                            controller: _aboutController,
+                            decoration: InputDecoration(
+                              hintText: "About",
+                              hintStyle: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: grey,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _submitSignup,
+                    style: customElevatedButton(),
+                    child: const CustomText(
+                      alignment: Alignment.center,
+                      text: "Continue",
+                      color: white,
                     ),
                   ),
                 ),
@@ -158,37 +168,4 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
     );
   }
-}
-
-Widget cardItem(Icon labelIcon, String labelTitle,
-    TextEditingController controller, String hintText) {
-  return Column(
-    children: [
-      Row(
-        children: [
-          labelIcon,
-          const SizedBox(
-            width: 5,
-          ),
-          CustomText(
-            text: labelTitle,
-            color: grey,
-          )
-        ],
-      ),
-      const SizedBox(height: 4),
-      Card(
-        color: white,
-        elevation: 0,
-        child: TextField(
-          controller: controller,
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: hintText,
-              hintStyle: GoogleFonts.raleway(
-                  color: grey, fontWeight: FontWeight.w400)),
-        ),
-      ),
-    ],
-  );
 }
