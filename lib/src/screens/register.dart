@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tchat_frontend/home/screen/dashboard.dart';
+// import 'package:tchat_frontend/home/screen/dashboard.dart';
 // import 'package:flutter/cupertino.dart';
 // import 'package:tchat_frontend/src/api/register.dart';
 import 'package:tchat_frontend/src/common.dart';
