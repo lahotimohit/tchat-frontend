@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tchat_frontend/api/register.dart';
 import 'package:tchat_frontend/src/widgets/snackmessage.dart';
-import 'package:tchat_frontend/home/screen/dashboard.dart';
+import 'package:tchat_frontend/src/screens/dashboard.dart';
 
 Future<bool> onRegister(BuildContext context, String name, String about) async {
   try {

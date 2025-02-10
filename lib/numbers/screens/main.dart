@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tchat_frontend/home/screen/dashboard.dart';
+import 'package:tchat_frontend/src/screens/dashboard.dart';
 
 class PhoneNumberMainScreen extends StatefulWidget {
   const PhoneNumberMainScreen({super.key});

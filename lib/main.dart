@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tchat_frontend/home/screen/dashboard.dart';
+import 'package:tchat_frontend/src/screens/dashboard.dart';
 import 'package:tchat_frontend/src/providers/storage.dart';
 import 'package:tchat_frontend/src/screens/splash.dart';
 
@@ -37,8 +37,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     final colorscheme = ColorScheme.fromSeed(
         brightness: Brightness.light,
-        seedColor: const Color.fromARGB(255, 62, 102, 197),
-        primary: const Color.fromARGB(255, 62, 102, 197),
+        seedColor: const Color.fromARGB(255, 36, 145, 255),
+        primary: const Color.fromARGB(255, 36, 145, 255),
         surface: Colors.white);
 
     return MaterialApp(
