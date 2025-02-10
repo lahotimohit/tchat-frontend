@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/screens/dashboard.dart';
 import 'package:tchat_frontend/src/providers/storage.dart';
 import 'package:tchat_frontend/src/screens/splash.dart';
@@ -49,16 +50,16 @@ class _MyAppState extends State<MyApp> {
         scaffoldBackgroundColor: colorscheme.surface,
         useMaterial3: true,
       ),
-      // builder: (context, child) {
-      //   return AnnotatedRegion<SystemUiOverlayStyle>(
-      //     value: SystemUiOverlayStyle(
-      //       statusBarColor: colorscheme.primary,
-      //       statusBarIconBrightness: Brightness.light, // For Android
-      //       statusBarBrightness: Brightness.dark, // For iOS
-      //     ),
-      //     child: child!,
-      //   );
-      // },
+      builder: (context, child) {
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: const SystemUiOverlayStyle(
+            statusBarColor: grey,
+            statusBarIconBrightness: Brightness.light, // For Android
+            statusBarBrightness: Brightness.dark, // For iOS
+          ),
+          child: child!,
+        );
+      },
       home: Scaffold(
         body:
             accessToken == null ? const SplashScreen() : const HomeMainScreen(),
