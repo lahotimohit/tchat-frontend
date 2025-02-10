@@ -53,8 +53,8 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: const SystemUiOverlayStyle(
-            statusBarColor: grey,
-            statusBarIconBrightness: Brightness.light, // For Android
+            statusBarColor: Color.fromARGB(255, 244, 244, 244),
+            statusBarIconBrightness: Brightness.dark, // For Android
             statusBarBrightness: Brightness.dark, // For iOS
           ),
           child: child!,

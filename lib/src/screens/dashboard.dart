@@ -3,9 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/home/screen/call_tab.dart';
 import 'package:tchat_frontend/home/screen/communities_tab.dart';
-import 'package:tchat_frontend/home/screen/messages_tab.dart';
 import 'package:tchat_frontend/src/common.dart';
-import 'package:tchat_frontend/src/widgets/custom_text.dart';
+import 'package:tchat_frontend/src/widgets/message_tab.dart';
 
 class HomeMainScreen extends StatefulWidget {
   const HomeMainScreen({super.key});
@@ -42,8 +41,8 @@ class _HomeMainScreen extends State<HomeMainScreen> with SingleTickerProviderSta
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: const [
-                  MessagesTab(),
+                children: [
+                  MessageTab(),
                   CommunitiesTab(),
                   CallScreen(),
                 ],
