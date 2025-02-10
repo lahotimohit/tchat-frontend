@@ -8,6 +8,7 @@ class CustomText extends StatelessWidget {
   final Color? color;
   final FontWeight? weight;
   final TextAlign? align;
+  final double? letterspacing;
   final Alignment? alignment;
   const CustomText(
       {super.key,
@@ -16,6 +17,7 @@ class CustomText extends StatelessWidget {
       this.color,
       this.weight,
       this.alignment,
+      this.letterspacing,
       this.align});
 
   @override
@@ -26,6 +28,7 @@ class CustomText extends StatelessWidget {
           textAlign: align ?? TextAlign.left,
           style: GoogleFonts.poppins(
               fontSize: size ?? 16,
+              letterSpacing: letterspacing,
               color: color ?? black,
               fontWeight: weight ?? FontWeight.normal)),
     );
