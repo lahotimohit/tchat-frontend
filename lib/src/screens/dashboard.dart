@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tchat_frontend/home/screen/call_tab.dart';
-import 'package:tchat_frontend/home/screen/communities_tab.dart';
 import 'package:tchat_frontend/src/common.dart';
+import 'package:tchat_frontend/src/widgets/call_tab.dart';
+import 'package:tchat_frontend/src/widgets/community_tab.dart';
 import 'package:tchat_frontend/src/widgets/message_tab.dart';
 
 class HomeMainScreen extends StatefulWidget {
@@ -35,16 +35,17 @@ class _HomeMainScreen extends State<HomeMainScreen> with SingleTickerProviderSta
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white,
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
               child: TabBarView(
                 controller: _tabController,
-                children: [
+                children: const [
                   MessageTab(),
-                  CommunitiesTab(),
-                  CallScreen(),
+                  CommunityTab(),
+                  CallTab()
                 ],
               ),
             ),
