@@ -1,4 +1,4 @@
-import 'package:tchat_frontend/home/models/call.dart';
+import 'package:tchat_frontend/src/models/call.dart';
 
 final List<Call> calls = [
     Call(

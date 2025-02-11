@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tchat_frontend/home/models/call.dart';
+import 'package:tchat_frontend/src/models/call.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/providers/calls.providers.dart';
 import 'package:tchat_frontend/src/widgets/app_bar_dashboard.dart';

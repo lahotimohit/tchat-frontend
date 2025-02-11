@@ -1,4 +1,4 @@
-import 'package:tchat_frontend/home/models/messages.dart';
+import 'package:tchat_frontend/src/models/messages.dart';
 
 final List<Message> messages = [
   Message(

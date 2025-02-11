@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tchat_frontend/home/data/messages.dart';
+import 'package:tchat_frontend/src/providers/messages.dart';
 import 'package:tchat_frontend/chats/screen/main.dart';
 import 'package:tchat_frontend/home/widget/all_contacts.dart';
 import 'package:tchat_frontend/home/widget/show_profile_image.dart';
