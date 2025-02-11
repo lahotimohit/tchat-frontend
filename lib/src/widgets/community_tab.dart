@@ -19,6 +19,55 @@ class _CommunityTab extends State<CommunityTab> {
       body: Column(
         children: [
           const CustomAppBar(searchHint: "Search community, groups"),
+          Padding(
+  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+  child: Row(
+    children: [
+      Stack(
+        children: [
+          Container(
+            width: 35,
+            height: 35,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 226, 226, 226),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: SvgPicture.asset(
+                "assets/svgs/user_group_2.svg",
+                width: 25,
+                height: 25,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: Container(
+              width: 15, 
+              height: 15,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.add, size: 10, color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(width: 16),
+      const Expanded(
+        child: CustomText(
+          weight: FontWeight.w500,
+          text: "New Community",
+        ),
+      ),
+    ],
+  ),
+),
+
+                    const Divider(thickness: 0.5,),
           Expanded(
             child: ListView.separated(
               itemCount: communities.length,
