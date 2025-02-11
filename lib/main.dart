@@ -60,8 +60,8 @@ class _MyAppState extends State<MyApp> {
         );
       },
       home: Scaffold(
-        body:
-            accessToken == null ? const SplashScreen() : const HomeMainScreen(),
+        body: HomeMainScreen()
+            // accessToken == null ? const SplashScreen() : const HomeMainScreen(),
       ),
     );
   }
