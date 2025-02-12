@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/src/providers/chat_providers.dart';
 import 'package:tchat_frontend/src/models/chat.dart';
+import 'package:tchat_frontend/src/screens/video_call_outgoing.dart';
 import 'package:tchat_frontend/src/screens/voice_call_outgoing.dart';
 import 'package:tchat_frontend/src/widgets/message_input.dart';
 import 'package:tchat_frontend/src/widgets/messages.dart';
@@ -89,7 +90,11 @@ class _ChatScreenState extends State<ChatScreen> {
         )));
       }),
     const SizedBox(width: 10),
-    SvgPicture.asset("assets/svgs/video_camera.svg"),
+    InkWell(
+      child: SvgPicture.asset("assets/svgs/video_camera.svg"),
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => VideoCallOutgoingScreen(username:  widget.username,)));
+      },),
     const SizedBox(width: 10),
     SvgPicture.asset("assets/svgs/menu_dots.svg"),
     const SizedBox(width: 20),
