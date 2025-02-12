@@ -3,10 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/src/providers/chat_providers.dart';
 import 'package:tchat_frontend/src/models/chat.dart';
+import 'package:tchat_frontend/src/screens/voice_call_incoming.dart';
 import 'package:tchat_frontend/src/widgets/message_input.dart';
 import 'package:tchat_frontend/src/widgets/messages.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
+import 'package:tchat_frontend/voice_call/screens/main.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key, required this.username, required this.profileImage, required this.status});
@@ -80,7 +82,13 @@ class _ChatScreenState extends State<ChatScreen> {
     ],
   ),
   actions: [
-    SvgPicture.asset("assets/svgs/phone_rounded.svg"),
+    InkWell(
+      child: SvgPicture.asset("assets/svgs/phone_rounded.svg"),
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => 
+        CallVoiceIncomingScreen(username: widget.username, userPhoto: widget.profileImage,
+        )));
+      }),
     const SizedBox(width: 10),
     SvgPicture.asset("assets/svgs/video_camera.svg"),
     const SizedBox(width: 10),
