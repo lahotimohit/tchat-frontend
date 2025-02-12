@@ -34,7 +34,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
             ),
           ),
           Container(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black,
           ),
           Center(
             child: Column(

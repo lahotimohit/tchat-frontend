@@ -147,7 +147,7 @@ class PremiumBusinessScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: ListTile(
                               dense: true,
                               leading: CircleAvatar(
@@ -217,7 +217,7 @@ class PremiumBusinessScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: ListTile(
                               dense: true,
                               leading: CircleAvatar(

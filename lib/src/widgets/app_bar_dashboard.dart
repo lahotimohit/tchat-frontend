@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tchat_frontend/setting/screen/main.dart';
+import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class CustomAppBar extends StatelessWidget {
@@ -16,7 +18,18 @@ class CustomAppBar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const CustomText(text: "TChat", size: 20, weight: FontWeight.w600,),
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
+                      PopupMenuButton(
+                        onSelected: (value) {
+                          _handleMenuClick(context, value);
+                        },
+                        offset: const Offset(-10, 35),
+                        color: white,
+                        itemBuilder: (BuildContext context) => [
+                              _buildPopupMenuItem("Profile"),
+                              _buildPopupMenuItem("New group"),
+                              _buildPopupMenuItem("Link Device"),
+                              _buildPopupMenuItem("Settings"),
+                  ],)
                     ],
                   ),
                 ),
@@ -55,5 +68,33 @@ class CustomAppBar extends StatelessWidget {
       ],
     );
 
+  }
+  PopupMenuItem<String> _buildPopupMenuItem(String text) {
+  return PopupMenuItem(
+    height: 40,
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    value: text,
+    child: CustomText(text: text, size: 14, weight: FontWeight.w500,)
+  );
+}
+
+  void _handleMenuClick(BuildContext context, String value) {
+    switch (value) {
+      case "Profile":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => SettingMainScreen()));
+        break;
+      case "New group":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => SettingMainScreen()));
+        break;
+      case "New broadcast":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => SettingMainScreen()));
+        break;
+      case "Link Device":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => SettingMainScreen()));
+        break;
+      case "Settings":
+        Navigator.push(context, MaterialPageRoute(builder: (context) => SettingMainScreen()));
+        break;
+    }
   }
 }
