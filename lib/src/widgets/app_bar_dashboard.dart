@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tchat_frontend/setting/screen/main.dart';
+import 'package:tchat_frontend/src/screens/settings.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
