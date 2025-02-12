@@ -21,7 +21,7 @@ class _MessageTabState extends State<MessageTab> {
       backgroundColor: white,
       body: Column(
               children: [
-                const CustomAppBar(searchHint: "Search messages, people",),
+                const CustomAppBar(searchHint: "Search messages, people", tab: "messages",),
                 Expanded(
                   child: ListView.separated(
                     itemCount: messages.length,

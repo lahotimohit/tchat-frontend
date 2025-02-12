@@ -7,8 +7,9 @@ import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key, required this.searchHint});
+  const CustomAppBar({super.key, required this.searchHint, required this.tab});
   final String searchHint;
+  final String tab;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,18 +20,33 @@ class CustomAppBar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const CustomText(text: "TChat", size: 20, weight: FontWeight.w600,),
-                      PopupMenuButton(
-                        onSelected: (value) {
-                          _handleMenuClick(context, value);
-                        },
-                        offset: const Offset(-10, 35),
-                        color: white,
-                        itemBuilder: (BuildContext context) => [
-                              _buildPopupMenuItem("Profile"),
-                              _buildPopupMenuItem("New group"),
-                              _buildPopupMenuItem("Link Device"),
-                              _buildPopupMenuItem("Settings"),
-                  ],)
+                      PopupMenuButton<String>(
+        onSelected: (value) {
+          _handleMenuClick(context, value);
+        },
+        offset: const Offset(-10, 35),
+        color: white,
+        itemBuilder: (BuildContext context) {
+          if (tab == "messages") {
+            return [
+              _buildPopupMenuItem("Profile"),
+              _buildPopupMenuItem("New group"),
+              _buildPopupMenuItem("Link Device"),
+              _buildPopupMenuItem("Settings"),
+            ];
+          } else if (tab == "community") {
+            return [
+              _buildPopupMenuItem("Settings"),
+            ];
+          } else if (tab == "calls") {
+            return [
+              _buildPopupMenuItem("Clear call logs"),
+            ];
+          } else {
+            return []; // Empty menu if no condition matches
+          }
+        },
+      ),
                     ],
                   ),
                 ),
@@ -82,7 +98,7 @@ class CustomAppBar extends StatelessWidget {
   void _handleMenuClick(BuildContext context, String value) {
     switch (value) {
       case "Profile":
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>  ProfileScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>  const ProfileScreen()));
         break;
       case "New group":
         Navigator.push(context, MaterialPageRoute(builder: (context) => SettingMainScreen()));

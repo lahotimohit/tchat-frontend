@@ -18,7 +18,7 @@ class _CommunityTab extends State<CommunityTab> {
       backgroundColor: white,
       body: Column(
         children: [
-          const CustomAppBar(searchHint: "Search community, groups"),
+          const CustomAppBar(searchHint: "Search community, groups", tab: "community",),
           Padding(
   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
   child: Row(

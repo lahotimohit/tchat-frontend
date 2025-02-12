@@ -19,7 +19,7 @@ class _CallTab extends State<CallTab> {
       backgroundColor: white,
       body: Column(
               children: [
-                const CustomAppBar(searchHint: "Search people, calls",),
+                const CustomAppBar(searchHint: "Search people, calls", tab: "calls",),
                 Expanded(
                   child: ListView.separated(
                     itemCount: calls.length,
