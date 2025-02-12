@@ -58,7 +58,10 @@ class _CallTab extends State<CallTab> {
           ),
           onTap: () {
             if(!call.isVideoCall) {
-              Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const CallVoiceIncomingScreen(username: "Mohit Lahoti", userPhoto: "https://cdn.pixabay.com/photo/2022/02/06/15/53/nature-6997496_1280.jpg")));
+              Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const CallVoiceIncomingScreen(username: "Mohit Lahoti", userPhoto: "https://cdn.pixabay.com/photo/2022/02/06/15/53/nature-6997496_1280.jpg", isVideo: false,)));
+            }
+            else {
+              Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const CallVoiceIncomingScreen(username: "Mohit Lahoti", userPhoto: "https://cdn.pixabay.com/photo/2022/02/06/15/53/nature-6997496_1280.jpg", isVideo: true,)));
             }
           },
         )

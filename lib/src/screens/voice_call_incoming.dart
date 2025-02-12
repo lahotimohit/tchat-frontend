@@ -4,9 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/src/common.dart';
 
 class CallVoiceIncomingScreen extends StatefulWidget {
-  const CallVoiceIncomingScreen({super.key, required this.username, required this.userPhoto});
+  const CallVoiceIncomingScreen({super.key, required this.username, required this.userPhoto, required this.isVideo});
   final String username;
   final String userPhoto;
+  final bool isVideo;
   @override
   State<CallVoiceIncomingScreen> createState() {
     return _CallVoiceIncomingScreen();
@@ -33,7 +34,7 @@ class _CallVoiceIncomingScreen extends State<CallVoiceIncomingScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 80),
-                 Text('Incoming Voice Call',
+                 Text(widget.isVideo? "Incoming Video Call" : "Incoming Voice Call",
                   style: GoogleFonts.poppins(
                     color: white,
                     letterSpacing: 0.1,
