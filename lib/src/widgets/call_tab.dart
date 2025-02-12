@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tchat_frontend/src/models/call.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/providers/calls.providers.dart';
+import 'package:tchat_frontend/src/screens/voice_call_incoming.dart';
 import 'package:tchat_frontend/src/widgets/app_bar_dashboard.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
@@ -48,11 +49,18 @@ class _CallTab extends State<CallTab> {
         ),
         title: CustomText(text: call.name, weight: FontWeight.w500 ,color: call.status == CallStatus.missed ? Colors.red : black, letterspacing: 0.1,),
         subtitle: CustomText(size: 13, text: call.timestamp, color: call.status == CallStatus.missed ? Colors.red : const Color.fromARGB(255, 63, 63, 63), letterspacing: 0.1,),
-        trailing: SvgPicture.asset(
-          getAllIcon(call),
-          height: 27,
-          width: 27,
-          colorFilter: getCallIconColor(call),
+        trailing: InkWell(
+          child: SvgPicture.asset(
+            getAllIcon(call),
+            height: 27,
+            width: 27,
+            colorFilter: getCallIconColor(call),
+          ),
+          onTap: () {
+            if(!call.isVideoCall) {
+              Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const CallVoiceIncomingScreen(username: "Mohit Lahoti", userPhoto: "https://cdn.pixabay.com/photo/2022/02/06/15/53/nature-6997496_1280.jpg")));
+            }
+          },
         )
         );
                     },

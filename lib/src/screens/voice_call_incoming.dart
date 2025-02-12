@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/src/common.dart';
-import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class CallVoiceIncomingScreen extends StatefulWidget {
   const CallVoiceIncomingScreen({super.key, required this.username, required this.userPhoto});
@@ -9,75 +9,69 @@ class CallVoiceIncomingScreen extends StatefulWidget {
   final String userPhoto;
   @override
   State<CallVoiceIncomingScreen> createState() {
-    return _CallVoiceScreen();
+    return _CallVoiceIncomingScreen();
 }
 }
 
-class _CallVoiceScreen extends State<CallVoiceIncomingScreen> {
+class _CallVoiceIncomingScreen extends State<CallVoiceIncomingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Stack(
         children: [
-          Column(
-            children: [
-              const SizedBox(height: 5,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(onPressed: () {
-                    Navigator.of(context).pop();
-                  }, icon: const Icon(Icons.arrow_back_ios_new)),
-                  Column(
-                    children: [
-                      CustomText(text: widget.username, weight: FontWeight.w600,),
-                      const CustomText(text: "1:00:01", size: 14, color: grey, weight: FontWeight.w500,)
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset("assets/svgs/user_add_call.svg"),
-                      const SizedBox(width: 15,)
-                    ],
-                  ),
-                ],
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(widget.userPhoto),
+                fit: BoxFit.cover,
               ),
-            ],
+            ),
           ),
-          CircleAvatar(
-            radius: 100,
-            backgroundImage: NetworkImage(widget.userPhoto),
-          ),
-          Column(
-            children: [
-              Container(
-                color: const Color.fromARGB(255, 245, 245, 245),
-                height: MediaQuery.of(context).size.height * 0.10,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset("assets/svgs/horizontal_dots.svg"),
-                    const SizedBox(width: 5,),
-                    SvgPicture.asset("assets/svgs/speaker.svg"),
-                    const SizedBox(width: 5,),
-                    SvgPicture.asset("assets/svgs/mic.svg"),
-                    const SizedBox(width: 5,),
-                    InkWell(
-                      child: SvgPicture.asset("assets/svgs/endCall.svg"),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },),
-                  ],
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 80),
+                 Text('Incoming Voice Call',
+                  style: GoogleFonts.poppins(
+                    color: white,
+                    letterSpacing: 0.1,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 5,)
-            ],
-          )
+                Text(
+                  widget.username,
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 32,
+                    letterSpacing: 0.1,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+                  bottom: 40,
+                  left: 0,
+                  right: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        child: SvgPicture.asset("assets/svgs/endcall_big.svg"),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        }),
+                      const SizedBox(width: 45,),
+                      SvgPicture.asset("assets/svgs/pickcall.svg"),
+                    ],
+                  ),
+                )
         ],
-      )),
+      ),
     );
   }
 }
