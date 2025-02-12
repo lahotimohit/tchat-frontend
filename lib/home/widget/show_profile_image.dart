@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui';
 import 'package:tchat_frontend/src/screens/chat.dart';
-import 'package:tchat_frontend/video_call/screen/main.dart';
-import 'package:tchat_frontend/voice_call/screens/main.dart';
+import 'package:tchat_frontend/src/screens/voice_call_outgoing.dart';
 
 void showProfileImage(
     BuildContext context, String profileImage, String username) {
@@ -67,9 +66,8 @@ void showProfileImage(
                       onTap: () {
                         Navigator.of(context).pop();
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) => VoiceCallScreen(
-                                isIncoming: false,
-                                userName: username,
+                            builder: (ctx) => CallVoiceOutgoingScreen(
+                                username: username,
                                 userPhoto: profileImage)));
                       }),
                   itemButton(
@@ -77,8 +75,8 @@ void showProfileImage(
                       icon: Icons.video_call,
                       onTap: () {
                         Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) => const VideoCallScreen()));
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (ctx) => const CallVoiceOutgoingScreen()));
                       }),
                   itemButton(context: context, icon: Icons.info, onTap: () {})
                 ],
