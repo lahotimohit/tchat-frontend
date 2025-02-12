@@ -1,10 +1,10 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tchat_frontend/chats/data/chat.dart';
-import 'package:tchat_frontend/chats/models/chat.dart';
-import 'package:tchat_frontend/chats/widgets/message_input.dart';
-import 'package:tchat_frontend/chats/widgets/messages.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:tchat_frontend/src/providers/chat_providers.dart';
+import 'package:tchat_frontend/src/models/chat.dart';
+import 'package:tchat_frontend/src/widgets/message_input.dart';
+import 'package:tchat_frontend/src/widgets/messages.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
@@ -26,10 +26,11 @@ class _ChatScreenState extends State<ChatScreen> {
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       senderId: "",
       receiverId: "",
+      date:  "Today",
       content: message,
       messageType: messageType,
       isSent: true,
-      timestamp: DateTime.now(),
+      timestamp: "15:31",
       isRead: false,
       status: MessageStatus.sent,
     );
@@ -37,12 +38,16 @@ class _ChatScreenState extends State<ChatScreen> {
     // channel.sink.add(jsonEncode(newMessage.toJson()));
 
     setState(() {
-      messages.add(newMessage);
-    });
+    messages.insert(0, newMessage);
+  });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-    });
+    _scrollController.animateTo(
+      0.0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
+  });
   }
 
   @override
@@ -85,39 +90,45 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
               children: [
                 Expanded(
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: messages.length,
-                    itemBuilder: (context, index) {
-                      final message = messages[index];
-                      if (message.messageType == MessageType.image) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  width: 1.0,
-                                ),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.file(
-                                  File(message.content),
-                                  width: 150,
-                                  height: 150,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      }
-                      return buildMessage(message, context);
-                    },
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 245, 245, 245)
+                    ),
+                    child: ListView.builder(
+                          controller: _scrollController,
+                          reverse: true,
+                          itemCount: messages.length,
+                          itemBuilder: (context, index) {
+                            final message = messages[index];
+                            final bool showDateHeader = index == 0 || messages[index - 1].date != message.date;
+
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                if (showDateHeader) 
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                      decoration: BoxDecoration(
+                                        color: white,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Text(
+                                        message.date,
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: grey,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                buildMessage(message, context),
+                              ],
+                            );
+                          },
+                        ),
                   ),
                 ),
                 buildMessageInputField(

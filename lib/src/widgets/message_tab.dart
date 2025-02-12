@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tchat_frontend/src/providers/messages.dart';
-import 'package:tchat_frontend/chats/screen/main.dart';
 import 'package:tchat_frontend/home/widget/all_contacts.dart';
 import 'package:tchat_frontend/home/widget/show_profile_image.dart';
 import 'package:tchat_frontend/src/common.dart';
-import 'package:tchat_frontend/src/screens/chat.dart';
 import 'package:tchat_frontend/src/widgets/app_bar_dashboard.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
+import 'package:tchat_frontend/src/screens/chat.dart';
 
 class MessageTab extends StatefulWidget {
   const MessageTab({super.key});
@@ -118,14 +117,17 @@ class _MessageTabState extends State<MessageTab> {
         ),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => ChatScreen(
+                      username: message.username,
+                      profileImage: message.profileImage,
+                      status: "online",
+                    )
                     // builder: (ctx) => ChatMainScreen(
                     //   username: message.username,
                     //   profileImage: message.profileImage,
                     //   status: "Online",
                     // ),
-                    builder: (ctx) => ChatScreen(username: message.username,
-                      profileImage: message.profileImage,
-                      status: "Online",)
+                    // builder: (ctx) => ChatScreen()
                   ));
                 },
               ),

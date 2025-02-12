@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui';
-import 'package:tchat_frontend/chats/screen/main.dart';
+import 'package:tchat_frontend/src/screens/chat.dart';
 import 'package:tchat_frontend/video_call/screen/main.dart';
 import 'package:tchat_frontend/voice_call/screens/main.dart';
 
@@ -56,7 +56,7 @@ void showProfileImage(
                       onTap: () {
                         Navigator.of(context).pop();
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) => ChatMainScreen(
+                            builder: (ctx) => ChatScreen(
                                 username: username,
                                 profileImage: profileImage,
                                 status: "Online")));
