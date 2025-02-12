@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tchat_frontend/src/screens/profile.dart';
 import 'package:tchat_frontend/src/screens/settings.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
@@ -81,7 +82,7 @@ class CustomAppBar extends StatelessWidget {
   void _handleMenuClick(BuildContext context, String value) {
     switch (value) {
       case "Profile":
-        Navigator.push(context, MaterialPageRoute(builder: (context) => SettingMainScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>  ProfileScreen()));
         break;
       case "New group":
         Navigator.push(context, MaterialPageRoute(builder: (context) => SettingMainScreen()));
