@@ -9,6 +9,7 @@ import 'package:tchat_frontend/src/widgets/message_input.dart';
 import 'package:tchat_frontend/src/widgets/messages.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
+import 'package:tchat_frontend/src/widgets/popup_menuitem.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key, required this.username, required this.profileImage, required this.status});
@@ -96,7 +97,21 @@ class _ChatScreenState extends State<ChatScreen> {
         Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => VideoCallOutgoingScreen(username:  widget.username,)));
       },),
     const SizedBox(width: 10),
-    SvgPicture.asset("assets/svgs/menu_dots.svg"),
+    PopupMenuButton(
+      offset: const Offset(10, 50),
+      color: white,
+      onSelected: (value) {
+        handleMenuClick(context, value);
+      },
+      itemBuilder: (context) {
+        return [
+        buildPopupMenuItem("View Contact"),
+        buildPopupMenuItem("Search"),
+        buildPopupMenuItem("Media"),
+        buildPopupMenuItem("Wallpaper"),
+        buildPopupMenuItem("Settings")];
+      },
+    ),
     const SizedBox(width: 20),
   ],),
       body: Column(

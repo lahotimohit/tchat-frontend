@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tchat_frontend/src/screens/profile.dart';
-import 'package:tchat_frontend/src/screens/settings.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
+import 'package:tchat_frontend/src/widgets/popup_menuitem.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key, required this.searchHint, required this.tab});
@@ -22,28 +21,28 @@ class CustomAppBar extends StatelessWidget {
                       const CustomText(text: "TChat", size: 20, weight: FontWeight.w600,),
                       PopupMenuButton<String>(
         onSelected: (value) {
-          _handleMenuClick(context, value);
+          handleMenuClick(context, value);
         },
         offset: const Offset(-10, 35),
         color: white,
         itemBuilder: (BuildContext context) {
           if (tab == "messages") {
             return [
-              _buildPopupMenuItem("Profile"),
-              _buildPopupMenuItem("New group"),
-              _buildPopupMenuItem("Link Device"),
-              _buildPopupMenuItem("Settings"),
+              buildPopupMenuItem("Profile"),
+              buildPopupMenuItem("New group"),
+              buildPopupMenuItem("Link Device"),
+              buildPopupMenuItem("Settings"),
             ];
           } else if (tab == "community") {
             return [
-              _buildPopupMenuItem("Settings"),
+              buildPopupMenuItem("Settings"),
             ];
           } else if (tab == "calls") {
             return [
-              _buildPopupMenuItem("Clear call logs"),
+              buildPopupMenuItem("Clear call logs"),
             ];
           } else {
-            return []; // Empty menu if no condition matches
+            return [];
           }
         },
       ),
@@ -86,32 +85,5 @@ class CustomAppBar extends StatelessWidget {
     );
 
   }
-  PopupMenuItem<String> _buildPopupMenuItem(String text) {
-  return PopupMenuItem(
-    height: 40,
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    value: text,
-    child: CustomText(text: text, size: 14, weight: FontWeight.w500,)
-  );
-}
-
-  void _handleMenuClick(BuildContext context, String value) {
-    switch (value) {
-      case "Profile":
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>  const ProfileScreen()));
-        break;
-      case "New group":
-        Navigator.push(context, MaterialPageRoute(builder: (context) => SettingMainScreen()));
-        break;
-      case "New broadcast":
-        Navigator.push(context, MaterialPageRoute(builder: (context) => SettingMainScreen()));
-        break;
-      case "Link Device":
-        Navigator.push(context, MaterialPageRoute(builder: (context) => SettingMainScreen()));
-        break;
-      case "Settings":
-        Navigator.push(context, MaterialPageRoute(builder: (context) => SettingMainScreen()));
-        break;
-    }
-  }
+  
 }
