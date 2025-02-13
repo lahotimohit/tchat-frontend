@@ -53,6 +53,7 @@ class _OtpVerificationScreenState extends State<OtpScreen> {
     for (var focusNode in _focusNodes) {
       focusNode.dispose();
     }
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
     super.dispose();
   }
 

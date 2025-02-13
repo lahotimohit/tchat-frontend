@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tchat_frontend/src/widgets/slide_up.dart';
 import 'package:tchat_frontend/src/screens/login.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_elevated_button.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
+
+  @override
+  State<AuthScreen> createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,10 +58,6 @@ class AuthScreen extends StatelessWidget {
                       text: "TChat",
                       weight: FontWeight.w600,
                     ),
-                    CustomText(
-                      size: 20,
-                      text: "space",
-                    )
                   ],
                 ),
                 const SizedBox(height: 40),
