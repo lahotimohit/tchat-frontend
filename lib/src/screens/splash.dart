@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tchat_frontend/src/animations/pageroute.dart';
 import 'package:tchat_frontend/src/providers/splash_providers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tchat_frontend/src/screens/auth.dart';
@@ -93,7 +94,8 @@ class _SplashScreenState extends State<SplashScreen> {
             TextButton(
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (ctx) => const AuthScreen()));
+                      createRoute(const AuthScreen())
+                      );
                 },
                 child: const CustomText(
                   alignment: Alignment.center,

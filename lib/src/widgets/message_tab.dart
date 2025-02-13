@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tchat_frontend/src/animations/pageroute.dart';
 import 'package:tchat_frontend/src/providers/messages.dart';
 import 'package:tchat_frontend/home/widget/all_contacts.dart';
 import 'package:tchat_frontend/home/widget/show_profile_image.dart';
@@ -116,19 +117,8 @@ class _MessageTabState extends State<MessageTab> {
           ],
         ),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => ChatScreen(
-                      username: message.username,
-                      profileImage: message.profileImage,
-                      status: "online",
-                    )
-                    // builder: (ctx) => ChatMainScreen(
-                    //   username: message.username,
-                    //   profileImage: message.profileImage,
-                    //   status: "Online",
-                    // ),
-                    // builder: (ctx) => ChatScreen()
-                  ));
+                  Navigator.of(context).push(
+                    createRoute(ChatScreen(username: message.username, profileImage: message.profileImage, status: "Online")));
                 },
               ),
             ),

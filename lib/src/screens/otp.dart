@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tchat_frontend/src/animations/fade_pageroute.dart';
 // import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import 'package:tchat_frontend/src/screens/register.dart';
@@ -41,7 +42,9 @@ class _OtpVerificationScreenState extends State<OtpScreen> {
     // await onVerifyOTP(context, otp);
     // Navigator.of(context).pop();
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (ctx) => const SignupScreen()));
+        .push(
+          fadeRoute(const SignupScreen())
+          );
   }
 
   @override

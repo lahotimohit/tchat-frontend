@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
+import 'package:tchat_frontend/src/animations/fade_pageroute.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/screens/dashboard.dart';
 import 'package:tchat_frontend/src/screens/splash.dart';
@@ -21,7 +22,7 @@ class _StartScreenState extends State<StartScreen> with SingleTickerProviderStat
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (ctx) => widget.nextScreen == "Splash" ?
+        fadeRoute(widget.nextScreen == "Splash" ?
         const SplashScreen()
         :const HomeMainScreen()));
     });

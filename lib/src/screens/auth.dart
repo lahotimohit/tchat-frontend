@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tchat_frontend/src/widgets/slide_up.dart';
+import 'package:tchat_frontend/src/animations/fade_pageroute.dart';
 import 'package:tchat_frontend/src/screens/login.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_elevated_button.dart';
@@ -67,7 +67,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       style: customElevatedButton(),
                       onPressed: () {
                         Navigator.of(context).push(
-                          SlideUpRoute(page: const LoginScreen()),
+                          fadeRoute(const LoginScreen()),
                         );
                       },
                       child: const CustomText(
