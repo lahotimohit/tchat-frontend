@@ -40,6 +40,7 @@ class CustomAppBar extends StatelessWidget {
           } else if (tab == "calls") {
             return [
               buildPopupMenuItem("Clear call logs"),
+              buildPopupMenuItem("Settings")
             ];
           } else {
             return [];

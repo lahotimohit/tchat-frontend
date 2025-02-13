@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:tchat_frontend/src/screens/dashboard.dart';
 import 'package:tchat_frontend/src/providers/storage.dart';
 import 'package:tchat_frontend/src/screens/splash.dart';
+// import 'package:tchat_frontend/src/screens/start.dart';
+// import 'package:tchat_frontend/src/screens/splash.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,8 +63,9 @@ class _MyAppState extends State<MyApp> {
       },
       home: Scaffold(  
         body: 
-        // accessToken == null ? const SplashScreen() : const HomeMainScreen(),
-        HomeMainScreen()
+        // StartScreen()
+        accessToken == null ? const SplashScreen() : const HomeMainScreen(),
+        // HomeMainScreen()
       ),
     );
   }

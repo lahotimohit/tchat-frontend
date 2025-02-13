@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tchat_frontend/src/screens/dashboard.dart';
 // import 'package:tchat_frontend/home/screen/dashboard.dart';
 // import 'package:flutter/cupertino.dart';
 // import 'package:tchat_frontend/src/api/register.dart';
 import 'package:tchat_frontend/src/common.dart';
+import 'package:tchat_frontend/src/screens/start.dart';
 import 'dart:io';
 import 'package:tchat_frontend/src/widgets/bottom_sheet.dart';
 import 'package:tchat_frontend/src/widgets/custom_elevated_button.dart';
@@ -68,7 +68,7 @@ class _SignupScreenState extends State<SignupScreen> {
     // await onRegister(context, name, about);
     // Navigator.of(context).pop();
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (ctx) => const HomeMainScreen()));
+        .push(MaterialPageRoute(builder: (ctx) => const StartScreen()));
   }
 
   @override
