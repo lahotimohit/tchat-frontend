@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 // import 'package:tchat_frontend/home/screen/dashboard.dart';
 // import 'package:flutter/cupertino.dart';
 // import 'package:tchat_frontend/src/api/register.dart';
@@ -44,13 +45,32 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  void _pickImage(ImageSource source) async {
-    final XFile? image = await _picker.pickImage(source: source);
+  void _checkPermission(BuildContext context, ImageSource source) async {
+    FocusScope.of(context).requestFocus(FocusNode());
+    Map<Permission, PermissionStatus> statues = await [
+      Permission.camera,
+    ].request();
+    PermissionStatus? statusCamera = statues[Permission.camera];
+    print("statussssssssssssssssssssssssssssssssssss.....$statusCamera");
+    bool isGranted = statusCamera == PermissionStatus.granted;
+    if (isGranted) {
+      final XFile? image = await _picker.pickImage(source: source);
     setState(() {
       _image = image;
     });
     Navigator.of(context).pop();
+    }
+    bool isPermanentlyDenied =
+        statusCamera == PermissionStatus.permanentlyDenied;
+    if (isPermanentlyDenied) {
+      const SnackBar(content: Text("Permission denied! Enable it in settings."));
+    }
   }
+
+  void _pickImage(ImageSource source) async {
+    _checkPermission(context, source);
+  }
+
 
   @override
   void dispose() {
