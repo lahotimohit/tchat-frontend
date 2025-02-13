@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tchat_frontend/src/screens/dashboard.dart';
+// import 'package:tchat_frontend/src/screens/dashboard.dart';
 import 'package:tchat_frontend/src/providers/storage.dart';
-import 'package:tchat_frontend/src/screens/splash.dart';
-// import 'package:tchat_frontend/src/screens/start.dart';
+// import 'package:tchat_frontend/src/screens/splash.dart';
+import 'package:tchat_frontend/src/screens/start.dart';
 // import 'package:tchat_frontend/src/screens/splash.dart';
 
 void main() {
@@ -61,10 +61,10 @@ class _MyAppState extends State<MyApp> {
           child: child!,
         );
       },
-      home: Scaffold(  
+      home: const Scaffold(  
         body: 
-        // StartScreen()
-        accessToken == null ? const SplashScreen() : const HomeMainScreen(),
+        StartScreen(nextScreen: "Splash")
+        // accessToken == null ? const SplashScreen() : const HomeMainScreen(),
         // HomeMainScreen()
       ),
     );

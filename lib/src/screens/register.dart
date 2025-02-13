@@ -70,7 +70,7 @@ class _SignupScreenState extends State<SignupScreen> {
     // await onRegister(context, name, about);
     // Navigator.of(context).pop();
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (ctx) => const StartScreen()));
+        .push(MaterialPageRoute(builder: (ctx) => const StartScreen(nextScreen: "HomeScreen",)));
   }
 
   @override

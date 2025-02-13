@@ -49,6 +49,7 @@ dependencies:
   country_picker: ^2.0.27
   intl_phone_field: ^3.2.0
   flutter_svg: ^2.0.17
+  flutter_native_splash: ^2.4.4
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +64,19 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/newlogo.png
+  android: true
+  ios: true
+
+  android_12:
+    image: assets/images/newlogo.png
+    icon_background_color: "#ffffff"
+  
+  android_gravity: center
+  ios_content_mode: scaleAspectFit
 
 # The following section is specific to Flutter packages.
 flutter:
