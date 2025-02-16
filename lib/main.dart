@@ -45,6 +45,7 @@ class _MyAppState extends State<MyApp> {
       title: 'TChat',
       theme: ThemeData(
         colorScheme: colorscheme,
+        fontFamily: "Poppins",
         scaffoldBackgroundColor: colorscheme.surface,
         useMaterial3: true,
       ),

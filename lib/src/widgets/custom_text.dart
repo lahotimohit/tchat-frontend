@@ -36,11 +36,13 @@ class CustomText extends StatelessWidget {
           overflow: overflow,
           softWrap: isSoftWrap,
           maxLines: maxlines,
-          style: GoogleFonts.poppins(
-              fontSize: size ?? 16,
-              letterSpacing: letterspacing ?? 0.1,
-              color: color ?? black,
-              fontWeight: weight ?? FontWeight.normal)),
+          style: TextStyle(fontFamily: "Poppins", fontSize: size ?? 16, letterSpacing: letterspacing ?? 0.1, color: color ?? black, fontWeight: weight ?? FontWeight.normal)
+          // GoogleFonts.poppins(
+          //     fontSize: size ?? 16,
+          //     letterSpacing: letterspacing ?? 0.1,
+          //     color: color ?? black,
+          //     fontWeight: weight ?? FontWeight.normal)
+              ),
     );
   }
 }
