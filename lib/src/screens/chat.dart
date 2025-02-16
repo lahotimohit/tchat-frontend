@@ -68,7 +68,9 @@ class _ChatScreenState extends State<ChatScreen> {
             const SizedBox(width: 6),
             IconButton(
               icon: const Icon(Icons.arrow_back_ios, size: 20, color: black),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
             CircleAvatar(
               radius: 16,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Route createRoute(Widget page) {
   return PageRouteBuilder(
-    transitionDuration: Duration(milliseconds: 800),
+    transitionDuration: Duration(milliseconds: 500),
     pageBuilder: (context, animation, secondaryAnimation) => page,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(1.0, 0.0);
