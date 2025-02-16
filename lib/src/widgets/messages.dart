@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 import "package:tchat_frontend/src/models/chat.dart";
-import "package:google_fonts/google_fonts.dart";
 import "package:tchat_frontend/src/common.dart";
 import "package:tchat_frontend/src/widgets/custom_text.dart";
 
@@ -31,10 +30,7 @@ Widget buildMessage(Message message, context) {
                     child: 
                     Text(
                       message.content,
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        letterSpacing: 0.1
-                      ),
+                      style: customTextStyle(14, null, null)
                     ),
                   ),
                   const SizedBox(width: 6),

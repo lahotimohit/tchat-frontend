@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/src/providers/chat_providers.dart';
 import 'package:tchat_frontend/src/models/chat.dart';
 import 'package:tchat_frontend/src/screens/video_call_outgoing.dart';
@@ -143,14 +142,12 @@ class _ChatScreenState extends State<ChatScreen> {
                                         color: white,
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      child: Text(
-                                        message.date,
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          color: grey,
-                                        ),
-                                      ),
+                                      child: 
+                                      FittedBox(
+                                        child: CustomText(
+                                          alignment: Alignment.center,
+                                          text: message.date, size: 12, color: grey, weight: FontWeight.w500,),
+                                      )
                                     ),
                                   ),
                                 buildMessage(message, context),

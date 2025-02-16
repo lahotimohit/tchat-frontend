@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tchat_frontend/src/animations/fade_pageroute.dart';
@@ -147,11 +146,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             controller: _nameController,
                             decoration: InputDecoration(
                               hintText: "Enter your Name",
-                              hintStyle: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: grey,
-                              ),
+                              hintStyle: customTextStyle(14, grey, FontWeight.w500)
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -159,11 +154,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             controller: _aboutController,
                             decoration: InputDecoration(
                               hintText: "About",
-                              hintStyle: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: grey,
-                              ),
+                              hintStyle: customTextStyle(14, grey, FontWeight.w500)
                             ),
                           ),
                         ],

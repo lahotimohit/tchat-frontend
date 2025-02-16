@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 Widget cardItem(
   BuildContext context,
@@ -40,7 +40,7 @@ Widget cardItem(
                 children: [
                   RichText(
                     text: TextSpan(
-                      style: GoogleFonts.poppins(color: Colors.black),
+                      style: customTextStyle(null, black, null),
                       children: [
                         TextSpan(
                           text: yearPrice,

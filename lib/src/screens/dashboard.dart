@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/call_tab.dart';
 import 'package:tchat_frontend/src/widgets/community_tab.dart';
+import 'package:tchat_frontend/src/widgets/custom_text.dart';
 import 'package:tchat_frontend/src/widgets/message_tab.dart';
 
 class HomeMainScreen extends StatefulWidget {
@@ -57,7 +57,7 @@ class _HomeMainScreen extends State<HomeMainScreen> with SingleTickerProviderSta
         child: TabBar(
           controller: _tabController,
           labelColor: Theme.of(context).colorScheme.primary,
-          labelStyle: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w600),
+          labelStyle: customTextStyle(12, null ,FontWeight.w600),
           unselectedLabelColor: black,
           indicator: const BoxDecoration(),
           tabs: [

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/src/common.dart';
+import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class CallVoiceIncomingScreen extends StatefulWidget {
   const CallVoiceIncomingScreen({super.key, required this.username, required this.userPhoto, required this.isVideo});
@@ -34,23 +34,8 @@ class _CallVoiceIncomingScreen extends State<CallVoiceIncomingScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 80),
-                 Text(widget.isVideo? "Incoming Video Call" : "Incoming Voice Call",
-                  style: GoogleFonts.poppins(
-                    color: white,
-                    letterSpacing: 0.1,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                  ),
-                ),
-                Text(
-                  widget.username,
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 32,
-                    letterSpacing: 0.1,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
+                CustomText(text: widget.isVideo? "Incoming Video Call" : "Incoming Voice Call", color: white, weight: FontWeight.w500, alignment: Alignment.center,),
+                CustomText(text: widget.username, size: 32, color: white, alignment: Alignment.center,)
               ],
             ),
           ),

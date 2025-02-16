@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/screens/dashboard.dart';
+import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class PhoneNumberMainScreen extends StatefulWidget {
   const PhoneNumberMainScreen({super.key});
@@ -31,16 +32,9 @@ class _PhoneNumberMainScreenState extends State<PhoneNumberMainScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Generated Phone Numbers",
-              style: GoogleFonts.poppins(
-                  fontSize: 21, fontWeight: FontWeight.w500),
-            ),
+            const CustomText(text: "Generated Phone Numbers", size: 21, weight: FontWeight.w500,),
             const SizedBox(height: 8),
-            Text(
-              "Choose any one phone number to be activated for now.",
-              style: GoogleFonts.poppins(fontSize: 15, color: Colors.grey),
-            ),
+            const CustomText(text: "Choose any one phone number to be activated for now.", color: grey,),
             const SizedBox(height: 20),
             Expanded(
               child: Column(

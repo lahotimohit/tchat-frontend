@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tchat_frontend/src/models/chat.dart';
+import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 void _openBottomSheet(
     BuildContext context, Function(String, MessageType) onNewMessage) {
@@ -82,11 +82,7 @@ class _buildMessageInputFieldState extends State<buildMessageInputField> {
   keyboardType: TextInputType.multiline,
   decoration: InputDecoration(
     hintText: "Message",
-    hintStyle: GoogleFonts.poppins(
-      fontSize: 14, 
-      fontWeight: FontWeight.w500, 
-      color: const Color.fromARGB(255, 144, 144, 144),
-    ),
+    hintStyle: customTextStyle(14, const Color.fromARGB(255, 144, 144, 144), FontWeight.w500),
     border: InputBorder.none,
     prefixIcon: Padding(
       padding: const EdgeInsets.all(12),

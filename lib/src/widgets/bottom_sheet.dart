@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class BottomSheetContent extends StatelessWidget {
   final Function(ImageSource) onImageSelected;
@@ -16,17 +16,9 @@ class BottomSheetContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Text(
-              'Select Picture From',
-              style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-          ),
+          const CustomText(text: "Select Picture From", weight: FontWeight.w500, alignment: Alignment.center,),
           const SizedBox(height: 8),
-          Text(
-            'Use camera or select file from device gallery',
-            style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w300),
-          ),
+          const CustomText(text: "Use camera or select files from device gallery", size: 14, weight: FontWeight.w300, alignment: Alignment.center,),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -37,8 +29,7 @@ class BottomSheetContent extends StatelessWidget {
                     icon: Icon(Icons.camera_alt, size: 30, color: Theme.of(context).colorScheme.primary),
                     onPressed: () => onImageSelected(ImageSource.camera),
                   ),
-                  Text("Camera",
-                  style: TextStyle(color: Theme.of(context).colorScheme.primary),)
+                  CustomText(text: "Camera", color: Theme.of(context).colorScheme.primary, size: 14,)
                 ],
               ),
               Column(
@@ -47,8 +38,7 @@ class BottomSheetContent extends StatelessWidget {
                     icon: Icon(Icons.photo, size: 30, color: Theme.of(context).colorScheme.primary),
                     onPressed: () => onImageSelected(ImageSource.gallery),
                   ),
-                  Text("Gallery",
-                  style: TextStyle(color: Theme.of(context).primaryColor),)
+                  CustomText(text: "Gallery", color: Theme.of(context).colorScheme.primary, size: 14,)
                 ],
               ),
             ],

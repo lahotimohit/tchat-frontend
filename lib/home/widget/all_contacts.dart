@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:tchat_frontend/src/common.dart';
+import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class ContactsScreen extends StatefulWidget {
   @override
@@ -46,12 +47,8 @@ class _ContactsScreenState extends State<ContactsScreen> {
         ),
         title: Column(
           children: [
-            Text("Select Contact",
-                style: GoogleFonts.raleway(color: Colors.white, fontSize: 14)),
-            Text(
-              "${_contacts.length} contacts",
-              style: GoogleFonts.raleway(color: Colors.white, fontSize: 10),
-            ),
+            const CustomText(text: "Select Contact", color: white, size: 14,),
+            CustomText(text: "${_contacts.length} contacts", color: white, size: 10,)
           ],
         ),
         actions: [
@@ -64,21 +61,14 @@ class _ContactsScreenState extends State<ContactsScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 18, top: 8, bottom: 8),
-            child: Text(
-              "Contacts on TChat",
-              style: GoogleFonts.poppins(
-                  color: Colors.grey, fontWeight: FontWeight.w500),
-            ),
+          const Padding(
+            padding: EdgeInsets.only(left: 18, top: 8, bottom: 8),
+            child: CustomText(text: "Contacts on TChat", color: grey, size: 14, weight: FontWeight.w500,)
           ),
           Expanded(
             child: _contacts.isEmpty
-                ? Center(
-                    child: Text(
-                      "No contacts available",
-                      style: GoogleFonts.poppins(color: Colors.grey),
-                    ),
+                ? const Center(
+                    child: CustomText(text: "No contacts available", color: grey)
                   )
                 : Scrollbar(
                     child: ListView.builder(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/src/common.dart';
 
 class CustomText extends StatelessWidget {
@@ -16,7 +15,7 @@ class CustomText extends StatelessWidget {
 
   const CustomText(
       {super.key,
-      @required this.text,
+      this.text,
       this.size,
       this.maxlines,
       this.color,
@@ -37,12 +36,17 @@ class CustomText extends StatelessWidget {
           softWrap: isSoftWrap,
           maxLines: maxlines,
           style: TextStyle(fontFamily: "Poppins", fontSize: size ?? 16, letterSpacing: letterspacing ?? 0.1, color: color ?? black, fontWeight: weight ?? FontWeight.normal)
-          // GoogleFonts.poppins(
-          //     fontSize: size ?? 16,
-          //     letterSpacing: letterspacing ?? 0.1,
-          //     color: color ?? black,
-          //     fontWeight: weight ?? FontWeight.normal)
               ),
     );
   }
+}
+
+
+TextStyle customTextStyle(double? size, Color? color, FontWeight? weight) {
+  return TextStyle(
+    fontFamily: "Poppins",
+    fontSize: size ?? 16,
+    color:  color ?? black,
+    fontWeight: weight ?? FontWeight.normal
+  );
 }

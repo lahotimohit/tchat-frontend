@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_elevated_button.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
@@ -52,16 +51,16 @@ class PremiumBusinessScreen extends StatelessWidget {
                           children: [
                             RichText(
                               text: TextSpan(
-                                style: GoogleFonts.poppins(color: Colors.black),
-                                children: [
+                                style: customTextStyle(null, black, null),
+                                children: const [
                                   TextSpan(
                                     text: "Rs. 99",
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 28,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  const TextSpan(
+                                  TextSpan(
                                     text: "/year",
                                     style: TextStyle(
                                       fontSize: 12,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 import 'package:tchat_frontend/src/widgets/popup_menuitem.dart';
@@ -56,14 +55,8 @@ class CustomAppBar extends StatelessWidget {
                   height: 45,
                   child: SearchBar(
                     hintText: searchHint,
-                    hintStyle: WidgetStateProperty.all<TextStyle>(
-                      GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: 0.1,
-                        color: const Color.fromARGB(255, 174, 174, 174),
-                      ),
-                    ),
+                    hintStyle: WidgetStateProperty.all<TextStyle>
+                    (customTextStyle(14, const Color.fromARGB(255, 174, 174, 174), FontWeight.w500)),
                      shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
