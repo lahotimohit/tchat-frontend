@@ -61,7 +61,7 @@ Widget cardItem(
                     ),
                   ),
                   CustomText(
-                    text: "Rs.${monthPrice} /month",
+                    text: "Rs.$monthPrice /month",
                     size: 10,
                     color: Colors.grey,
                   ),

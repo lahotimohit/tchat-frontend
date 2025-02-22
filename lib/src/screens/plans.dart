@@ -105,7 +105,6 @@ class _ChoosePlanScreenState extends State<ChoosePlanScreen> {
                           builder: (ctx) =>
                               const PremiumBusinessScreen(isPremium: false)));
                     }
-                    print("Selected Plan ID: $selectedPlan");
                   }
                 },
                 style: customElevatedButton(),

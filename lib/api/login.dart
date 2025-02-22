@@ -15,14 +15,12 @@ class LoginAPI {
 
   Future<Map<String, dynamic>> dioLogin(
       String email, String code, String phone) async {
-    // TODO: Handle the case when server is off....
     try {
       final response = await _dio.post(_loginURL, data: {
         "email": email,
         "countryCode": code,
         "defaultMobileNumber": phone
       });
-      print("responseeeeeeeeeeeeeeeeeeee: ${response.data}");
       if (response.statusCode == 200) {
         storage.writeSecureData("email", email);
         String message = response.data['message'];

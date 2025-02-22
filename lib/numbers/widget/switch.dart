@@ -4,10 +4,10 @@ class CustomSwitch extends StatefulWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
 
-  const CustomSwitch({Key? key, required this.value, required this.onChanged}) : super(key: key);
+  const CustomSwitch({super.key, required this.value, required this.onChanged});
 
   @override
-  _CustomSwitchState createState() => _CustomSwitchState();
+  State<CustomSwitch> createState() => _CustomSwitchState();
 }
 
 class _CustomSwitchState extends State<CustomSwitch> {
@@ -33,7 +33,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
         height: 40, // Equivalent to 2em
         padding: const EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
-          color: isChecked ? Theme.of(context).colorScheme.primary : Color.fromARGB(100, 62, 102, 197),
+          color: isChecked ? Theme.of(context).colorScheme.primary : const Color.fromARGB(100, 62, 102, 197),
           borderRadius: BorderRadius.circular(50),
         ),
         child: Stack(

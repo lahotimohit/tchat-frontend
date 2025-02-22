@@ -15,7 +15,6 @@ class RegisterAPI {
 
   Future<Map<String, dynamic>> dioRegister(
       String name, String about, String url) async {
-    // TODO: Handle the case when server is off....
     try {
       final response = await _dio.post(_loginURL,
           data: {"profilePicture": url, "about": about, "name": name});

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 void snackmessage(BuildContext context, String message) {
-  if (ScaffoldMessenger.maybeOf(context) != null) {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
@@ -11,4 +10,3 @@ void snackmessage(BuildContext context, String message) {
         ),
       );
   }
-}

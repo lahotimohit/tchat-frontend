@@ -71,7 +71,7 @@ class PremiumBusinessScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            CustomText(
+                            const CustomText(
                               text: "Rs.10 /month",
                               size: 14,
                               color: Colors.grey,
@@ -137,7 +137,7 @@ class PremiumBusinessScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(4),
                   child: Column(
                     children: [
-                      CustomText(
+                      const CustomText(
                         size: 14,
                         weight: FontWeight.w500,
                         text: "Payment Methods",
@@ -181,7 +181,7 @@ class PremiumBusinessScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: ListTile(
                               dense: true,
                               leading: CircleAvatar(
@@ -256,7 +256,6 @@ class PremiumBusinessScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    print("Button Pressed");
                   },
                   style: customElevatedButton(),
                   child: const CustomText(

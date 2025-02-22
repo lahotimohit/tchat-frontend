@@ -49,7 +49,7 @@ class _PhoneNumberMainScreenState extends State<PhoneNumberMainScreen> {
                             color: Colors.white,
                             margin: const EdgeInsets.symmetric(vertical: 4.0),
                             child: ListTile(
-                              title: Text("4568723170"),
+                              title: const Text("4568723170"),
                               trailing: Switch(
                                 value: selectedNumbers[mobileNumberIndex],
                                 onChanged: (bool newValue) {
@@ -120,7 +120,7 @@ class _PhoneNumberMainScreenState extends State<PhoneNumberMainScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (ctx) => HomeMainScreen()));
+                        MaterialPageRoute(builder: (ctx) => const HomeMainScreen()));
                   },
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 8),

@@ -51,14 +51,13 @@ class _SignupScreenState extends State<SignupScreen> {
       Permission.camera,
     ].request();
     PermissionStatus? statusCamera = statues[Permission.camera];
-    print("statussssssssssssssssssssssssssssssssssss.....$statusCamera");
     bool isGranted = statusCamera == PermissionStatus.granted;
     if (isGranted) {
       final XFile? image = await _picker.pickImage(source: source);
     setState(() {
       _image = image;
     });
-    Navigator.of(context).pop();
+    context.mounted? Navigator.of(context).pop() : null;
     }
     bool isPermanentlyDenied =
         statusCamera == PermissionStatus.permanentlyDenied;

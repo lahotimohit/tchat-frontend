@@ -157,7 +157,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                   ),
                 ),
-                buildMessageInputField(
+                BuildMessageInputField(
                   onNewMessage: _onNewMessage,
                 ),
               ],

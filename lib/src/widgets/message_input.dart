@@ -6,14 +6,14 @@ import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 void _openBottomSheet(
     BuildContext context, Function(String, MessageType) onNewMessage) {
-  final ImagePicker _picker = ImagePicker();
+  final ImagePicker picker = ImagePicker();
 
-  Future<void> _pickImage(ImageSource source) async {
-    final XFile? image = await _picker.pickImage(source: source);
+  Future<void> pickImage(ImageSource source) async {
+    final XFile? image = await picker.pickImage(source: source);
     if (image != null) {
       onNewMessage(image.path, MessageType.image);
     }
-    Navigator.of(context).pop();
+    context.mounted? Navigator.of(context).pop(): null;
   }
 
   showModalBottomSheet(
@@ -26,12 +26,12 @@ void _openBottomSheet(
             ListTile(
               leading: const Icon(Icons.camera_alt),
               title: const Text('Camera'),
-              onTap: () => _pickImage(ImageSource.camera),
+              onTap: () => pickImage(ImageSource.camera),
             ),
             ListTile(
               leading: const Icon(Icons.photo),
               title: const Text('Gallery'),
-              onTap: () => _pickImage(ImageSource.gallery),
+              onTap: () => pickImage(ImageSource.gallery),
             ),
           ],
         ),
@@ -40,14 +40,14 @@ void _openBottomSheet(
   );
 }
 
-class buildMessageInputField extends StatefulWidget {
-  const buildMessageInputField({super.key, required this.onNewMessage});
+class BuildMessageInputField extends StatefulWidget {
+  const BuildMessageInputField({super.key, required this.onNewMessage});
   final Function(String, MessageType) onNewMessage;
   @override
-  State<buildMessageInputField> createState() => _buildMessageInputFieldState();
+  State<BuildMessageInputField> createState() => _BuildMessageInputFieldState();
 }
 
-class _buildMessageInputFieldState extends State<buildMessageInputField> {
+class _BuildMessageInputFieldState extends State<BuildMessageInputField> {
   bool _hasFocus = false;
 
   TextEditingController messageController = TextEditingController();
