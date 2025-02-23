@@ -1,0 +1,421 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "description": "Authenticates a user and returns access and refresh tokens",
+                "operationId": "login",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User successfully logged in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "accessToken": {
+                                            "type": "string"
+                                        },
+                                        "refreshToken": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                },
+                "summary": "User login",
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "description": "Registers a new user during the onboarding process",
+                "operationId": "register",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "refresh",
+                        "in": "header",
+                        "description": "Refresh token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User successfully registered"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Invalid or missing token"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "summary": "User registration",
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/profile/update": {
+            "put": {
+                "description": "Updates the authenticated user's profile information",
+                "operationId": "updateProfile",
+                "parameters": [
+                    {
+                        "name": "refresh",
+                        "in": "header",
+                        "description": "Refresh token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateProfileDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profile successfully updated"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "summary": "Update user profile",
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/session": {
+            "get": {
+                "description": "Retrieves current session information for the user",
+                "operationId": "session",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Session information retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Invalid or missing token"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "summary": "Get session info",
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/logout": {
+            "get": {
+                "description": "Logs out the user and invalidates their tokens",
+                "operationId": "logout",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "refresh",
+                        "in": "header",
+                        "description": "Refresh token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Invalid or missing token"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "summary": "User logout",
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/get-access-token": {
+            "get": {
+                "description": "Generates a new access token using the refresh token",
+                "operationId": "getAccessToken",
+                "parameters": [
+                    {
+                        "name": "refresh",
+                        "in": "header",
+                        "description": "Refresh token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "New access token generated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "accessToken": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Invalid or missing token"
+                    }
+                },
+                "summary": "Get new access token",
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/verify-otp": {
+            "post": {
+                "description": "Verifies the one-time password sent to the user",
+                "operationId": "verifyOtp",
+                "parameters": [
+                    {
+                        "name": "otpToken",
+                        "required": true,
+                        "in": "query",
+                        "description": "Token received for OTP verification",
+                        "schema": {}
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyOtpDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OTP verified successfully"
+                    },
+                    "401": {
+                        "description": "Invalid or missing OTP token"
+                    }
+                },
+                "summary": "Verify OTP",
+                "tags": [
+                    "auth"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "TChat Application API",
+        "description": "API Gateway for the tchat app",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [
+        {
+            "name": "auth",
+            "description": "Authentication endpoints"
+        }
+    ],
+    "servers": [],
+    "components": {
+        "securitySchemes": {
+            "access-token": {
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "type": "http",
+                "description": "Enter your access token",
+                "in": "header"
+            },
+            "refresh-token": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "refresh",
+                "description": "Enter your refresh token"
+            }
+        },
+        "schemas": {
+            "LoginDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "The email id for logging in",
+                        "default": "testing@tchat.com"
+                    },
+                    "defaultMobileNumber": {
+                        "type": "string",
+                        "default": "9782XXXXXX",
+                        "description": "The mobile number of the user without the country code"
+                    },
+                    "countryCode": {
+                        "type": "integer",
+                        "default": 91,
+                        "description": "Country Code of the user mobile number"
+                    }
+                },
+                "required": [
+                    "email",
+                    "defaultMobileNumber",
+                    "countryCode"
+                ]
+            },
+            "RegisterDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the user for registration",
+                        "example": "John Doe"
+                    },
+                    "about": {
+                        "type": "string",
+                        "description": "About for the user account",
+                        "example": "Hey there I am using TChat"
+                    },
+                    "profile_picture_url": {
+                        "type": "string",
+                        "description": "Url of the profile picture of the user",
+                        "example": "https://unsplash.com"
+                    }
+                },
+                "required": [
+                    "name",
+                    "about"
+                ]
+            },
+            "UpdateProfileDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The new name for the user",
+                        "default": "John Doe"
+                    },
+                    "about": {
+                        "type": "string",
+                        "description": "The new about for the user",
+                        "default": "Hey there I am using TChat"
+                    },
+                    "profile_picture_url": {
+                        "type": "string",
+                        "description": "The new url for the profile picture",
+                        "default": "https://unsplash.com"
+                    }
+                },
+                "required": [
+                    "name",
+                    "about"
+                ]
+            },
+            "VerifyOtpDto": {
+                "type": "object",
+                "properties": {
+                    "otp": {
+                        "type": "string",
+                        "description": "Url of the profile picture of the user",
+                        "example": "1234"
+                    }
+                },
+                "required": [
+                    "otp"
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+targets:
+  $default:
+    builders:
+      swagger_dart_code_generator:
+        options:
+          input_folder: "lib/swagger/"  # Folder where OpenAPI JSON is located
+          output_folder: "lib/generated_api/"  # Folder where the generated code will be saved
+          with_base_url: true  # Enable base URL in generated code
+          use_required_attribute_for_headers: true  # Mark headers as required
+          use_default_null_for_lists: false  # Handle null values properly
+          build_only_models: false  # Generate both models and API clients
+          separate_models: true  # Split models into separate files
