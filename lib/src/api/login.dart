@@ -1,41 +1,51 @@
-import 'package:tchat_frontend/api/login.dart';
+import 'dart:convert';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:tchat_frontend/generated_api/client_index.dart';
+import 'package:tchat_frontend/generated_api/tchat.models.swagger.dart';
+import 'package:tchat_frontend/src/providers/storage.dart';
 import 'package:tchat_frontend/src/widgets/snackmessage.dart';
 import 'package:tchat_frontend/src/validators/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tchat_frontend/src/screens/otp.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-Future<bool> onLogin(
-    BuildContext context, String email, String phone, String code) async {
-  AuthValidation auth = AuthValidation(email, phone, code);
-  final String response = auth.validation();
+Future<bool> onLogin(BuildContext context, String email, String phone, int code) async {
+  AuthValidation auth = AuthValidation(email, phone);
+  SecureStorage storage = SecureStorage();
+  await dotenv.load(fileName: '.env');
+
+  late Tchat tchatClient;
+  tchatClient = Tchat.create(baseUrl: Uri.parse(dotenv.env["SERVER_URL"]!));
+
+  final String validate= auth.validation();
 
   var connectivityResult = await Connectivity().checkConnectivity();
-  if (connectivityResult[0] == ConnectivityResult.none) {
-    snackmessage(context, "Please check your internet connection");
-    return false;
-  } else if (response == "Success") {
-    try {
-      LoginAPI api = LoginAPI();
-      final Map<String, dynamic> result =
-          await api.dioLogin(email, code, phone);
-      Navigator.of(context).pop();
+  context.mounted? Navigator.of(context).pop() : null;
 
-      if (result['code'] == 401) {
-        snackmessage(context, result['error']);
-        return false;
-      } else {
-        snackmessage(context, result['msg']);
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (ctx) => const OtpScreen()));
-        return true;
+  if (connectivityResult[0] == ConnectivityResult.none) {
+    context.mounted? snackmessage(context, "Please check your internet connection") : null;
+    return false;
+  } 
+  else if (validate == "Success") {
+    try {
+      final loginDto = LoginDto(countryCode: code, email: email, defaultMobileNumber: phone);
+      final response = await tchatClient.authLoginPost(body: loginDto);
+      if(response.isSuccessful) {
+        storage.writeSecureData("otpToken", response.body['otpToken']);
+      return true;
       }
-    } catch (e) {
-      snackmessage(context, "Internal Server Error");
+      else{
+       Map<String, dynamic> jsonResponse = json.decode(response.error.toString());
+       context.mounted ? snackmessage(context, jsonResponse['message']) : null;
+       return false;
+      }
+    } 
+    catch (e) {
+      context.mounted? snackmessage(context, "Error: $e") : null;
       return false;
     }
   } else {
-    snackmessage(context, response);
+    context.mounted? snackmessage(context, validate) : null;
     return false;
   }
 }
