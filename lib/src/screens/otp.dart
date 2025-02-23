@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tchat_frontend/src/animations/fade_pageroute.dart';
-// import 'package:flutter/cupertino.dart';
-import 'dart:async';
-import 'package:tchat_frontend/src/screens/register.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:tchat_frontend/src/api/otp.dart';
 import 'package:tchat_frontend/src/widgets/snackmessage.dart';
-// import 'package:tchat_frontend/src/api/otp.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_elevated_button.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
@@ -23,33 +20,25 @@ class _OtpVerificationScreenState extends State<OtpScreen> {
       List.generate(4, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
   bool isVerified = false;
-  late Timer _timer;
 
   @override
   void initState() {
     super.initState();
   }
 
-  void _onSubmitOTP(String otp) async {
-    // showCupertinoDialog(
-    //   context: context,
-    //   barrierDismissible: false,
-    //   builder: (context) => const Center(
-    //     child: CircularProgressIndicator(),
-    //   ),
-    // );
-    // print('OTP entered: $otp');
-    // await onVerifyOTP(context, otp);
-    // Navigator.of(context).pop();
-    Navigator.of(context)
-        .push(
-          fadeRoute(const SignupScreen())
-          );
+  void _onSubmitOTP(String otp) {
+    showCupertinoDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+    onVerifyOTP(context, otp);
   }
 
   @override
   void dispose() {
-    _timer.cancel();
     for (var controller in _otpControllers) {
       controller.dispose();
     }

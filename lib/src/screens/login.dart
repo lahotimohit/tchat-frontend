@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:tchat_frontend/src/animations/fade_pageroute.dart';
-import 'package:tchat_frontend/src/screens/otp.dart';
+import 'package:tchat_frontend/src/api/login.dart';
 import 'package:tchat_frontend/src/common.dart';
+import 'package:tchat_frontend/src/screens/otp.dart';
 import 'package:tchat_frontend/src/widgets/custom_elevated_button.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
-// import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 // import 'package:tchat_frontend/src/api/login.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,57 +16,26 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>
-    with SingleTickerProviderStateMixin {
-  // late AnimationController _animationController;
-  // late LoginScreenAnimations _animations;
+class _LoginScreenState extends State<LoginScreen>{
   final TextEditingController _emailController = TextEditingController();
   bool isLogin = false;
-  String _countryCode = "";
+  int _countryCode = 91;
   String _mobile = "";
 
-  @override
-  void initState() {
-    super.initState();
-    // _animationController = AnimationController(
-    //   vsync: this,
-    //   duration: const Duration(milliseconds: 850),
-    // );
-    // _animations = LoginScreenAnimations(_animationController);
-    // LoginScreenAnimations.initialize(_animationController);
-  }
-
-  @override
-  void dispose() {
-    // if (_animationController.status == AnimationStatus.forward ||
-    //     _animationController.status == AnimationStatus.reverse) {
-    //   _animationController.stop();
-    // }
-    // _animationController.dispose();
-    super.dispose();
-  }
-
   void _onLogin(BuildContext context) async {
-    // showCupertinoDialog(
-    //   context: context,
-    //   barrierDismissible: false,
-    //   builder: (context) => const Center(
-    //     child: CircularProgressIndicator(),
-    //   ),
-    // );
+    showCupertinoDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
     final String email = _emailController.text.trim();
-    final String code = _countryCode;
+    final int code = _countryCode;
     final String phone = _mobile;
-    // await onLogin(context, email, phone, code);
-    // Navigator.of(context).pop();
-    print(email);
-    print(code);
-    print(phone);
-    Navigator.of(context)
-        .push(
-          fadeRoute(const OtpScreen())
-          // MaterialPageRoute(builder: (ctx) => const OtpScreen())
-          );
+    if(await onLogin(context, email, phone, code)) {
+      context.mounted? Navigator.of(context).push(fadeRoute(const OtpScreen())) : null;
+    }
   }
 
   @override
@@ -147,8 +117,8 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                           initialCountryCode: 'IN',
                           onChanged: (phone) {
-                            _countryCode = phone.countryCode;
-                            _mobile = phone.completeNumber;
+                            _countryCode = int.parse(phone.countryCode);
+                            _mobile = phone.number;
                           },
                         ),
                     const SizedBox(height: 24),
