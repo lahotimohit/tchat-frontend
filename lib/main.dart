@@ -59,11 +59,8 @@ class _MyAppState extends State<MyApp> {
           child: child!,
         );
       },
-      home: const Scaffold(  
-        body: 
-        StartScreen(nextScreen: "Splash")
-        // accessToken == null ? const SplashScreen() : const HomeMainScreen(),
-        // HomeMainScreen()
+      home: Scaffold(  
+        body: accessToken==null? const StartScreen(nextScreen: "Splash") : const StartScreen(nextScreen: "Home")
       ),
     );
   }
