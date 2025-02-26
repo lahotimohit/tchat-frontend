@@ -1,3 +1,5 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
+
 class AuthValidation {
   late String _email;
   late String _phone;
@@ -5,7 +7,11 @@ class AuthValidation {
     _email = email;
     _phone = phone;
   }
-  String validation() {
+  Future<String> validation() async{
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult[0] == ConnectivityResult.none) {
+   return "Please check your internet connection";
+  } 
     if (_email.isEmpty) {
       return "Please enter your email address";
     } else if (!_email.contains("@")) {

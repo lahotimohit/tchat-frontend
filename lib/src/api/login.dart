@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:tchat_frontend/generated_api/client_index.dart';
 import 'package:tchat_frontend/generated_api/tchat.models.swagger.dart';
 import 'package:tchat_frontend/src/providers/storage.dart';
@@ -17,16 +15,9 @@ Future<bool> onLogin(BuildContext context, String email, String phone, int code)
   late Tchat tchatClient;
   tchatClient = Tchat.create(baseUrl: Uri.parse(dotenv.env["SERVER_URL"]!));
 
-  final String validate= auth.validation();
-
-  var connectivityResult = await Connectivity().checkConnectivity();
+  final String validate= await auth.validation();
   context.mounted? Navigator.of(context).pop() : null;
-
-  if (connectivityResult[0] == ConnectivityResult.none) {
-    context.mounted? snackmessage(context, "Please check your internet connection") : null;
-    return false;
-  } 
-  else if (validate == "Success") {
+  if (validate == "Success") {
     try {
       final loginDto = LoginDto(countryCode: code, email: email, defaultMobileNumber: phone);
       final response = await tchatClient.authLoginPost(body: loginDto);
