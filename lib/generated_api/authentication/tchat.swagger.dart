@@ -1,16 +1,9 @@
 // ignore_for_file: type=lint
-
-import 'package:json_annotation/json_annotation.dart';
-import 'package:collection/collection.dart';
-import 'dart:convert';
-
 import 'tchat.models.swagger.dart';
 import 'package:chopper/chopper.dart';
-
 import 'client_mapping.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
 export 'tchat.models.swagger.dart';
 
@@ -52,7 +45,7 @@ abstract class Tchat extends ChopperService {
   }
 
   ///User login
-  @Post(
+  @POST(
     path: '/auth/login',
     optionalBody: true,
   )
@@ -75,7 +68,7 @@ abstract class Tchat extends ChopperService {
   ///User registration
   ///@param Authorization Sending the access token as Bearer <access_token_here>
   ///@param refresh Refresh token
-  @Post(
+  @POST(
     path: '/auth/register',
     optionalBody: true,
   )
@@ -102,7 +95,7 @@ abstract class Tchat extends ChopperService {
   ///Update user profile
   ///@param refresh Refresh token
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @Put(
+  @PUT(
     path: '/auth/profile/update',
     optionalBody: true,
   )
@@ -120,7 +113,7 @@ abstract class Tchat extends ChopperService {
 
   ///Get session info
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @Get(path: '/auth/session')
+  @GET(path: '/auth/session')
   Future<chopper.Response> _authSessionGet(
       {@Header('Authorization') String? authorization});
 
@@ -138,7 +131,7 @@ abstract class Tchat extends ChopperService {
   ///User logout
   ///@param Authorization Sending the access token as Bearer <access_token_here>
   ///@param refresh Refresh token
-  @Get(path: '/auth/logout')
+  @GET(path: '/auth/logout')
   Future<chopper.Response> _authLogoutGet({
     @Header('Authorization') String? authorization,
     @Header('refresh') String? refresh,
@@ -152,7 +145,7 @@ abstract class Tchat extends ChopperService {
 
   ///Get new access token
   ///@param refresh Refresh token
-  @Get(path: '/auth/get-access-token')
+  @GET(path: '/auth/get-access-token')
   Future<chopper.Response> _authGetAccessTokenGet(
       {@Header('refresh') String? refresh});
 
@@ -167,7 +160,7 @@ abstract class Tchat extends ChopperService {
 
   ///Verify OTP
   ///@param otpToken Token received for OTP verification
-  @Post(
+  @POST(
     path: '/auth/verify-otp',
     optionalBody: true,
   )
