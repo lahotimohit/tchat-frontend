@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:tchat_frontend/generated_api/client_index.dart';
-import 'package:tchat_frontend/generated_api/tchat.models.swagger.dart';
+import 'package:tchat_frontend/generated_api/authentication/client_index.dart';
+import 'package:tchat_frontend/generated_api/authentication/tchat.models.swagger.dart';
 import 'package:tchat_frontend/src/providers/storage.dart';
 import 'package:tchat_frontend/src/widgets/snackmessage.dart';
 
@@ -12,6 +11,7 @@ Future<bool> onRegister(BuildContext context, String name, String about) async {
   try {
     String accessToken ="";
     String refreshToken ="";
+    String ppUrl ="";
     await dotenv.load(fileName: '.env');
     await storage.readData("accessToken").then((value) {
         accessToken = value;
@@ -19,8 +19,11 @@ Future<bool> onRegister(BuildContext context, String name, String about) async {
     await storage.readData("refreshToken").then((value) {
         refreshToken = value;
       });
+    await storage.readData("pp_fileName").then((value) {
+        ppUrl = value;
+      });
     late Tchat tchatClient = Tchat.create(baseUrl: Uri.parse(dotenv.env['SERVER_URL']!));
-    final registerDto = RegisterDto(name: name, about: about);
+    final registerDto = RegisterDto(name: name, about: about, profilePictureUrl: ppUrl=="" ? null : ppUrl);
     final response = await tchatClient.authRegisterPost(body: registerDto, authorization: "Bearer $accessToken", refresh: refreshToken);
     if(response.isSuccessful) {
       final newAccessToken = response.body["tokens"]["accessToken"];
