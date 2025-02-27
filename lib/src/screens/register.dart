@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tchat_frontend/src/animations/fade_pageroute.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:tchat_frontend/src/api/pp_upload.dart';
 import 'package:tchat_frontend/src/api/register.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/screens/start.dart';
@@ -26,6 +27,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _aboutController = TextEditingController();
   XFile? _image;
+  bool _isUploading = false; // <-- Added state for tracking upload progress
 
   @override
   void initState() {
@@ -44,34 +46,41 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  void _checkPermission(BuildContext context, ImageSource source) async {
+  Future<void> _pickImage(ImageSource source) async {
     FocusScope.of(context).requestFocus(FocusNode());
-    Map<Permission, PermissionStatus> statues = await [
-      Permission.camera,
-    ].request();
-    PermissionStatus? statusCamera = statues[Permission.camera];
-    bool isGranted = statusCamera == PermissionStatus.granted;
-    if (isGranted) {
+    bool uploadSuccess = false;
+    Map<Permission, PermissionStatus> statuses = await [Permission.camera].request();
+    PermissionStatus? statusCamera = statuses[Permission.camera];
+    if (statusCamera == PermissionStatus.granted) {
       final XFile? image = await _picker.pickImage(source: source);
-    setState(() {
-      _image = image;
-    });
-    context.mounted? Navigator.of(context).pop() : null;
-    }
-    bool isPermanentlyDenied =
-        statusCamera == PermissionStatus.permanentlyDenied;
-    if (isPermanentlyDenied) {
-      const SnackBar(content: Text("Permission denied! Enable it in settings."));
+      if (image != null) {
+        setState(() {
+          Navigator.of(context).pop();
+          _isUploading = true;
+        });
+        if(mounted){
+        uploadSuccess = await uploadProfilePicture(context, image);
+        }
+        if (uploadSuccess) {
+          setState(() {
+            _image = image;
+            _isUploading = false;
+          });
+        } else {
+          setState(() {
+            _isUploading = false;
+          });
+        }
+      }
+    } else if (statusCamera == PermissionStatus.permanentlyDenied && mounted) {
+      snackmessage(context, "Permission denied! Enable it in settings.");
     }
   }
-
-  void _pickImage(ImageSource source) async {
-    _checkPermission(context, source);
-  }
-
 
   @override
   void dispose() {
+    _nameController.dispose();
+    _aboutController.dispose();
     super.dispose();
   }
 
@@ -83,17 +92,26 @@ class _SignupScreenState extends State<SignupScreen> {
         child: CircularProgressIndicator(),
       ),
     );
+
     String name = _nameController.text.trim();
     String about = _aboutController.text.trim();
-    if(name.isEmpty || about.isEmpty) {
-      context.mounted ? snackmessage(context, "Please enter both name and about...."): null;
+
+    if (name.isEmpty || about.isEmpty) {
+      if (context.mounted) {
+        snackmessage(context, "Please enter both name and about.");
+      }
       Navigator.of(context).pop();
       return;
     }
+
     final bool response = await onRegister(context, name, about);
-    Navigator.of(context).pop();
-    if(response) {
-      Navigator.of(context).pushAndRemoveUntil(fadeRoute(const StartScreen(nextScreen: "Home")), (route) => false);
+    if(mounted) Navigator.of(context).pop();
+
+    if (response && mounted) {
+      Navigator.of(context).pushAndRemoveUntil(
+        fadeRoute(const StartScreen(nextScreen: "Home")),
+        (route) => false,
+      );
     }
   }
 
@@ -112,9 +130,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: Column(
                         children: [
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          const SizedBox(height: 30),
                           const CustomText(
                             text: "Profile Info",
                             alignment: Alignment.center,
@@ -124,30 +140,45 @@ class _SignupScreenState extends State<SignupScreen> {
                           const SizedBox(height: 10),
                           const CustomText(
                             text:
-                                "Please provide your name and about you and an optional profile photo",
+                                "Please provide your name, about you, and an optional profile photo.",
                             size: 15,
                             color: grey,
                             weight: FontWeight.w500,
                             align: TextAlign.center,
                           ),
                           const SizedBox(height: 20),
+                          
                           GestureDetector(
                             onTap: () => _openBottomSheet(context),
-                            child: _image == null
-                                ? SvgPicture.asset('assets/svgs/profile.svg')
-                                : CircleAvatar(
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                // Show CircularProgressIndicator if uploading
+                                if (_isUploading)
+                                  const CircleAvatar(
                                     maxRadius: 75,
-                                    backgroundImage: _image != null
-                                        ? FileImage(File(_image!.path))
-                                        : null,
-                                  ),
+                                    backgroundColor: Colors.grey,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                else if (_image != null)
+                                  CircleAvatar(
+                                    maxRadius: 75,
+                                    backgroundImage: FileImage(File(_image!.path)),
+                                  )
+                                else
+                                  SvgPicture.asset('assets/svgs/profile.svg'),
+                              ],
+                            ),
                           ),
+
                           const SizedBox(height: 20),
                           TextField(
                             controller: _nameController,
                             decoration: InputDecoration(
                               hintText: "Enter your Name",
-                              hintStyle: customTextStyle(14, grey, FontWeight.w500)
+                              hintStyle: customTextStyle(14, grey, FontWeight.w500),
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -155,7 +186,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             controller: _aboutController,
                             decoration: InputDecoration(
                               hintText: "About",
-                              hintStyle: customTextStyle(14, grey, FontWeight.w500)
+                              hintStyle: customTextStyle(14, grey, FontWeight.w500),
                             ),
                           ),
                         ],
@@ -165,8 +196,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
