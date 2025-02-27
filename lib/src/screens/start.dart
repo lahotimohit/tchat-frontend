@@ -21,10 +21,12 @@ class _StartScreenState extends State<StartScreen> with SingleTickerProviderStat
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(
+      if(mounted) {
+        Navigator.of(context).pushReplacement(
         fadeRoute(widget.nextScreen == "Splash" ?
         const SplashScreen()
         :const HomeMainScreen()));
+      }
     });
   }
 

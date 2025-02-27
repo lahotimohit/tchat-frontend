@@ -36,7 +36,7 @@ class OtpAPI {
         throw Error();
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 

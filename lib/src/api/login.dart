@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:tchat_frontend/generated_api/client_index.dart';
-import 'package:tchat_frontend/generated_api/tchat.models.swagger.dart';
+import 'dart:io';
+import 'package:tchat_frontend/generated_api/authentication/client_index.dart';
+import 'package:tchat_frontend/generated_api/authentication/tchat.models.swagger.dart';
 import 'package:tchat_frontend/src/providers/storage.dart';
 import 'package:tchat_frontend/src/widgets/snackmessage.dart';
 import 'package:tchat_frontend/src/validators/auth.dart';
@@ -31,6 +32,12 @@ Future<bool> onLogin(BuildContext context, String email, String phone, int code)
        return false;
       }
     } 
+
+    on SocketException {
+      context.mounted? snackmessage(context, "Internal Server Error. Please retry again...") : null;
+      return false;
+    }
+
     catch (e) {
       context.mounted? snackmessage(context, "Error: $e") : null;
       return false;

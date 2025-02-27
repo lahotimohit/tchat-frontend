@@ -4,8 +4,9 @@ import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class ContactsScreen extends StatefulWidget {
+  const ContactsScreen({super.key});
   @override
-  _ContactsScreenState createState() => _ContactsScreenState();
+  State<ContactsScreen> createState() => _ContactsScreenState();
 }
 
 class _ContactsScreenState extends State<ContactsScreen> {

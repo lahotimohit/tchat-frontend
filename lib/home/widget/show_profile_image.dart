@@ -15,7 +15,7 @@ void showProfileImage(
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
             child: Container(
-              color: Colors.black.withOpacity(0.8),
+              color: Colors.black,
               width: 2,
               height: 2,
             ),

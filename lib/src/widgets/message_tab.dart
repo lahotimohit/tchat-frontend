@@ -131,7 +131,7 @@ class _MessageTabState extends State<MessageTab> {
             ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => ContactsScreen()));
+          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const ContactsScreen()));
         },
         shape: const CircleBorder(),
         backgroundColor: Theme.of(context).colorScheme.primary,

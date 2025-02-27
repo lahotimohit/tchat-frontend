@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tchat_frontend/src/common.dart';
 
 class CustomSwitch extends StatefulWidget {
   final bool value;
@@ -48,12 +49,12 @@ class _CustomSwitchState extends State<CustomSwitch> {
                 curve: Curves.easeInOutCubic,
                 width: isChecked ? 28 : 28, // Expand circle on toggle
                 height: isChecked ? 35 : 28,
-                decoration: BoxDecoration(
-                  color: Colors.white,
+                decoration: const BoxDecoration(
+                  color: white,
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.4),
+                      color: black,
                       blurRadius: 20,
                     ),
                   ],

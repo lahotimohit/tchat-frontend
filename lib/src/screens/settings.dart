@@ -28,7 +28,7 @@ class SettingMainScreen extends StatelessWidget {
         ),
         title: const CustomText(text:  "Settings", size: 20, weight: FontWeight.w500,),
         actions: [
-          SvgPicture.asset("assets/svgs/magnifier.svg",  color: black,),
+          SvgPicture.asset("assets/svgs/magnifier.svg", colorFilter: const ColorFilter.mode(black, BlendMode.srcIn),),
           const SizedBox(width: 20,)
         ]
       ),
