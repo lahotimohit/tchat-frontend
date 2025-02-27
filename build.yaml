@@ -1,12 +1,37 @@
 targets:
   $default:
+    sources:
+      include:
+        - lib/swagger/authentication/**
+        - $package$
+      exclude:
+        - lib/generated_api/**
     builders:
       swagger_dart_code_generator:
+        generate_for:
+          - lib/swagger/authentication/**
         options:
-          input_folder: "lib/swagger/"  # Folder where OpenAPI JSON is located
-          output_folder: "lib/generated_api/"  # Folder where the generated code will be saved
-          with_base_url: true  # Enable base URL in generated code
-          use_required_attribute_for_headers: true  # Mark headers as required
-          use_default_null_for_lists: false  # Handle null values properly
-          build_only_models: false  # Generate both models and API clients
-          separate_models: true  # Split models into separate files
+          input_folder: "lib/swagger/authentication/"
+          output_folder: "lib/generated_api/authentication/"
+          with_base_url: true
+          use_required_attribute_for_headers: true
+          use_default_null_for_lists: false
+          build_only_models: false
+          separate_models: true
+
+  profile_pic:
+    sources:
+      include:
+        - lib/swagger/profile_pic_upload/**
+    builders:
+      swagger_dart_code_generator:
+        generate_for:
+          - lib/swagger/profile_pic_upload/**
+        options:
+          input_folder: "lib/swagger/profile_pic_upload/"
+          output_folder: "lib/generated_api/profile_pic_upload/"
+          with_base_url: true
+          use_required_attribute_for_headers: true
+          use_default_null_for_lists: false
+          build_only_models: false
+          separate_models: true
