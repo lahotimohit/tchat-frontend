@@ -1,0 +1,147 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/images/upload": {
+            "post": {
+                "operationId": "uploadImage",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "Images"
+                ]
+            }
+        },
+        "/profile-picture/upload": {
+            "post": {
+                "description": "Upload a new profile picture. Maximum file size is 4MB. Only image files (JPEG, PNG, GIF) are allowed.",
+                "operationId": "uploadFile",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "description": "Profile picture image file"
+                                    }
+                                },
+                                "required": [
+                                    "file"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Profile picture uploaded successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": 201
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Uploaded Successfully"
+                                        },
+                                        "fileName": {
+                                            "type": "string",
+                                            "example": "https://api.example.com/profile-picture/filename.jpg"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized access"
+                    },
+                    "422": {
+                        "description": "Invalid file: either too large (>4MB) or not an image file"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    },
+                    {
+                        "Authorization": []
+                    },
+                    {
+                        "bearer": []
+                    }
+                ],
+                "summary": "Upload profile picture",
+                "tags": [
+                    "Profile Picture"
+                ]
+            }
+        },
+        "/": {
+            "get": {
+                "operationId": "getHello",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "App"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "TChat Object Storage API",
+        "description": "API Gateway for the tchat object storage app",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [
+        {
+            "name": "object storage",
+            "description": "Authentication endpoints"
+        }
+    ],
+    "servers": [],
+    "components": {
+        "securitySchemes": {
+            "access-token": {
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "type": "http",
+                "description": "Enter your access token",
+                "in": "header"
+            }
+        },
+        "schemas": {}
+    }
+}
