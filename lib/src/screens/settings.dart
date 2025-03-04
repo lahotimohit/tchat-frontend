@@ -1,12 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tchat_frontend/src/animations/fade_pageroute.dart';
 import 'package:tchat_frontend/src/models/profile_option.dart';
 import 'package:tchat_frontend/src/common.dart';
+import 'package:tchat_frontend/src/providers/storage.dart';
+import 'package:tchat_frontend/src/screens/start.dart';
+import 'package:tchat_frontend/src/widgets/custom_elevated_button.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
-class SettingMainScreen extends StatelessWidget {
+class SettingMainScreen extends StatefulWidget {
   SettingMainScreen({super.key});
 
+  @override
+  State<SettingMainScreen> createState() => _SettingMainScreenState();
+}
+
+class _SettingMainScreenState extends State<SettingMainScreen> {
+  Map<String, dynamic> session = {};
     final List<ProfileOption> options = [
     ProfileOption(icon: SvgPicture.asset("assets/svgs/settings/account.svg"), title: 'Account', subtitle: "Security notifications, change number"),
     ProfileOption(icon: SvgPicture.asset("assets/svgs/settings/privacy.svg"), title: 'Privacy', subtitle: "Block Contacts, check privacy policy"),
@@ -16,6 +28,21 @@ class SettingMainScreen extends StatelessWidget {
     ProfileOption(icon: SvgPicture.asset("assets/svgs/settings/storage.svg"), title: 'Storage & Data', subtitle: "Network usage, auto-download"),
     ProfileOption(icon: SvgPicture.asset("assets/svgs/settings/help.svg"), title: 'Help', subtitle: "Help center, contact us")
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    getSession();
+  }
+
+  void getSession() async{
+    SecureStorage storage = SecureStorage();
+    await storage.readData("session").then((value) {
+      setState(() {
+        session = jsonDecode(value);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,23 +65,23 @@ class SettingMainScreen extends StatelessWidget {
             Row(
   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
   children: [
-    const Padding(
+    Padding(
       padding:  EdgeInsets.all(8.0),
       child:  CircleAvatar(
         backgroundImage: NetworkImage(
-          "https://cdn.pixabay.com/photo/2019/08/28/17/17/girl-4437225_640.jpg",
+          session['profilePicture'] ?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         ),
         radius: 30,
       ),
     ),
-    const Expanded(
+    Expanded(
       child: Padding(
         padding: EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomText(
-              text: "Nidhi Jain",
+              text: session['name'] ?? "User",
               size: 18,
               weight: FontWeight.w500,
             ),
@@ -93,6 +120,19 @@ class SettingMainScreen extends StatelessWidget {
               },
             ),
           ),
+          ElevatedButton(
+            onPressed: () {
+              SecureStorage storage = SecureStorage();
+              storage.deleteData("accessToken");
+              storage.deleteData("refreshToken");
+              storage.deleteData("isLoggedIn");
+              storage.deleteData("session");
+              Navigator.of(context).pushAndRemoveUntil(
+                fadeRoute(const StartScreen(nextScreen: "Splash"))
+                , (route) => false);
+            },
+            style: customElevatedButton(), 
+            child: const CustomText(text: "Log Out", color: white, alignment: Alignment.center,))
           ],),
         ),
       );
