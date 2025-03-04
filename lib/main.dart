@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tchat_frontend/src/api/session.dart';
 import 'package:tchat_frontend/src/providers/storage.dart';
 import 'package:tchat_frontend/src/screens/start.dart';
+import 'package:tchat_frontend/src/screens/temp_contact.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +20,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final SecureStorage _storage = SecureStorage();
   String? accessToken;
+  String? isRegister;
+  String? isLoggedIn;
 
   @override
   void initState() {
@@ -26,10 +30,15 @@ class _MyAppState extends State<MyApp> {
   }
 
   void secureTokenAccess() async {
-    String? fetchedToken = await _storage.readData("access_token");
+    String? fetchedToken = await _storage.readData("accessToken");
+    String? register = await _storage.readData("isRegister");
+    String? login = await _storage.readData("isLoggedIn");
     setState(() {
       accessToken = fetchedToken;
+      isRegister = register;
+      isLoggedIn = login;
     });
+    print("access Token $accessToken, isRegister $isRegister, isLoggedIn $isLoggedIn");
   }
 
   @override
@@ -59,9 +68,17 @@ class _MyAppState extends State<MyApp> {
           child: child!,
         );
       },
-      home: Scaffold(  
-        body: accessToken==null? const StartScreen(nextScreen: "Splash") : const StartScreen(nextScreen: "Home")
-      ),
-    );
-  }
-}
+      home: Scaffold(
+      body: Builder(
+      builder: (context) {
+        if (accessToken != null && isRegister == "true" && isLoggedIn == null) {
+          return const TempContactScreen();
+        } else if (accessToken != null && isLoggedIn == "true") {
+          getSession(context);
+          return const StartScreen(nextScreen: "Home",);
+        } else {
+          return const StartScreen(nextScreen: "Start",);
+        }
+      },
+  ),
+));}}

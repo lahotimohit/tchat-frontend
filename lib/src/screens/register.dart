@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:tchat_frontend/src/api/pp_upload.dart';
 import 'package:tchat_frontend/src/api/register.dart';
 import 'package:tchat_frontend/src/common.dart';
-import 'package:tchat_frontend/src/screens/start.dart';
+import 'package:tchat_frontend/src/screens/temp_contact.dart';
 import 'dart:io';
 import 'package:tchat_frontend/src/widgets/bottom_sheet.dart';
 import 'package:tchat_frontend/src/widgets/custom_elevated_button.dart';
@@ -27,7 +27,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _aboutController = TextEditingController();
   XFile? _image;
-  bool _isUploading = false; // <-- Added state for tracking upload progress
+  bool _isUploading = false;
 
   @override
   void initState() {
@@ -109,7 +109,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
     if (response && mounted) {
       Navigator.of(context).pushAndRemoveUntil(
-        fadeRoute(const StartScreen(nextScreen: "Home")),
+        fadeRoute(const TempContactScreen()),
         (route) => false,
       );
     }

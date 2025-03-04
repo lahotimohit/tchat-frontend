@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tchat_frontend/src/animations/fade_pageroute.dart';
+import 'package:tchat_frontend/src/api/session.dart';
 import 'package:tchat_frontend/src/common.dart';
+import 'package:tchat_frontend/src/providers/storage.dart';
 import 'package:tchat_frontend/src/screens/dashboard.dart';
 import 'package:tchat_frontend/src/screens/splash.dart';
 
@@ -22,12 +24,23 @@ class _StartScreenState extends State<StartScreen> with SingleTickerProviderStat
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(const Duration(seconds: 3), () {
       if(mounted) {
-        Navigator.of(context).pushReplacement(
+        checkAndCallToGetSession();
+        Navigator.of(context).pushAndRemoveUntil(
         fadeRoute(widget.nextScreen == "Splash" ?
         const SplashScreen()
-        :const HomeMainScreen()));
+        :const HomeMainScreen()),
+        (route) => false);
       }
     });
+  }
+
+  void checkAndCallToGetSession() async {
+    SecureStorage storage = SecureStorage();
+    String refreshToken = "";
+      await storage.readData("refreshToken").then((value) {
+        refreshToken = "Bearer $value";
+      });
+      refreshToken.isNotEmpty ? getSession(context) : null;
   }
 
   @override

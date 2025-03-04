@@ -5,8 +5,8 @@ import 'package:tchat_frontend/generated_api/authentication/client_index.dart';
 import 'package:tchat_frontend/generated_api/authentication/tchat.models.swagger.dart';
 import 'package:tchat_frontend/src/animations/fade_pageroute.dart';
 import 'package:tchat_frontend/src/providers/storage.dart';
-import 'package:tchat_frontend/src/screens/dashboard.dart';
 import 'package:tchat_frontend/src/screens/register.dart';
+import 'package:tchat_frontend/src/screens/start.dart';
 import 'package:tchat_frontend/src/widgets/snackmessage.dart';
 
 Future<bool> onVerifyOTP(BuildContext context, String otp) async {
@@ -30,7 +30,8 @@ Future<bool> onVerifyOTP(BuildContext context, String otp) async {
           context.mounted? Navigator.of(context).pushReplacement(fadeRoute(const SignupScreen())): null;
         }
         else {
-          context.mounted? Navigator.of(context).pushReplacement(fadeRoute(const HomeMainScreen())): null;
+          storage.writeSecureData("isLoggedIn", "true");
+          context.mounted? Navigator.of(context).pushAndRemoveUntil(fadeRoute(const StartScreen(nextScreen: "Home",)), (route)=> false): null;
         }
         storage.writeSecureData("accessToken", accessToken);
         storage.writeSecureData("refreshToken", response.body['tokens']['refreshToken']);

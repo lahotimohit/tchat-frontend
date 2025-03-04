@@ -30,6 +30,7 @@ Future<bool> onRegister(BuildContext context, String name, String about) async {
       final newRefreshToken = response.body["tokens"]["accessToken"];
       storage.writeSecureData("accessToken", newAccessToken);
       storage.writeSecureData("refreshToken", newRefreshToken);
+      storage.writeSecureData("isRegister", "true");
       return true;
     }
     else{
