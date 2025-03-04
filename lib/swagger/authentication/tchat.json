@@ -298,6 +298,179 @@
                     "auth"
                 ]
             }
+        },
+        "/tnum/mint": {
+            "post": {
+                "operationId": "mint",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "The temporary number has been successfully created."
+                    },
+                    "400": {
+                        "description": "Bad request."
+                    },
+                    "401": {
+                        "description": "Unauthorized."
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    },
+                    {
+                        "bearer": []
+                    }
+                ],
+                "summary": "Create a new temporary number",
+                "tags": [
+                    "Temporary Numbers"
+                ]
+            }
+        },
+        "/tnum/list": {
+            "post": {
+                "operationId": "list",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns a list of temporary numbers."
+                    },
+                    "401": {
+                        "description": "Unauthorized."
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    },
+                    {
+                        "bearer": []
+                    }
+                ],
+                "summary": "List all temporary numbers for the authenticated user",
+                "tags": [
+                    "Temporary Numbers"
+                ]
+            }
+        },
+        "/tnum/activate": {
+            "post": {
+                "operationId": "activate",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ActivateDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The temporary number has been successfully activated."
+                    },
+                    "400": {
+                        "description": "Bad request or temporary number not found."
+                    },
+                    "401": {
+                        "description": "Unauthorized."
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    },
+                    {
+                        "bearer": []
+                    }
+                ],
+                "summary": "Activate a temporary number",
+                "tags": [
+                    "Temporary Numbers"
+                ]
+            }
+        },
+        "/tnum/deactivate": {
+            "post": {
+                "operationId": "deactivate",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeactivateDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The temporary number has been successfully deactivated."
+                    },
+                    "400": {
+                        "description": "Bad request or temporary number not found."
+                    },
+                    "401": {
+                        "description": "Unauthorized."
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    },
+                    {
+                        "bearer": []
+                    }
+                ],
+                "summary": "Deactivate a temporary number",
+                "tags": [
+                    "Temporary Numbers"
+                ]
+            }
         }
     },
     "info": {
@@ -414,6 +587,32 @@
                 },
                 "required": [
                     "otp"
+                ]
+            },
+            "ActivateDto": {
+                "type": "object",
+                "properties": {
+                    "temporaryNumberId": {
+                        "type": "string",
+                        "description": "The temporary number id to activate",
+                        "example": "cm7hloydg000ap5xxxxxx8ndhb"
+                    }
+                },
+                "required": [
+                    "temporaryNumberId"
+                ]
+            },
+            "DeactivateDto": {
+                "type": "object",
+                "properties": {
+                    "temporaryNumberId": {
+                        "type": "string",
+                        "description": "The temporary number id to activate",
+                        "example": "cm7hloydg000ap5xxxxxx8ndhb"
+                    }
+                },
+                "required": [
+                    "temporaryNumberId"
                 ]
             }
         }
