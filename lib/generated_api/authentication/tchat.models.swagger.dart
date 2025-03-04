@@ -254,6 +254,102 @@ extension $VerifyOtpDtoExtension on VerifyOtpDto {
   }
 }
 
+@JsonSerializable(explicitToJson: true)
+class ActivateDto {
+  const ActivateDto({
+    required this.temporaryNumberId,
+  });
+
+  factory ActivateDto.fromJson(Map<String, dynamic> json) =>
+      _$ActivateDtoFromJson(json);
+
+  static const toJsonFactory = _$ActivateDtoToJson;
+  Map<String, dynamic> toJson() => _$ActivateDtoToJson(this);
+
+  @JsonKey(name: 'temporaryNumberId')
+  final String temporaryNumberId;
+  static const fromJsonFactory = _$ActivateDtoFromJson;
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other is ActivateDto &&
+            (identical(other.temporaryNumberId, temporaryNumberId) ||
+                const DeepCollectionEquality()
+                    .equals(other.temporaryNumberId, temporaryNumberId)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(temporaryNumberId) ^
+      runtimeType.hashCode;
+}
+
+extension $ActivateDtoExtension on ActivateDto {
+  ActivateDto copyWith({String? temporaryNumberId}) {
+    return ActivateDto(
+        temporaryNumberId: temporaryNumberId ?? this.temporaryNumberId);
+  }
+
+  ActivateDto copyWithWrapped({Wrapped<String>? temporaryNumberId}) {
+    return ActivateDto(
+        temporaryNumberId: (temporaryNumberId != null
+            ? temporaryNumberId.value
+            : this.temporaryNumberId));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class DeactivateDto {
+  const DeactivateDto({
+    required this.temporaryNumberId,
+  });
+
+  factory DeactivateDto.fromJson(Map<String, dynamic> json) =>
+      _$DeactivateDtoFromJson(json);
+
+  static const toJsonFactory = _$DeactivateDtoToJson;
+  Map<String, dynamic> toJson() => _$DeactivateDtoToJson(this);
+
+  @JsonKey(name: 'temporaryNumberId')
+  final String temporaryNumberId;
+  static const fromJsonFactory = _$DeactivateDtoFromJson;
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other is DeactivateDto &&
+            (identical(other.temporaryNumberId, temporaryNumberId) ||
+                const DeepCollectionEquality()
+                    .equals(other.temporaryNumberId, temporaryNumberId)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(temporaryNumberId) ^
+      runtimeType.hashCode;
+}
+
+extension $DeactivateDtoExtension on DeactivateDto {
+  DeactivateDto copyWith({String? temporaryNumberId}) {
+    return DeactivateDto(
+        temporaryNumberId: temporaryNumberId ?? this.temporaryNumberId);
+  }
+
+  DeactivateDto copyWithWrapped({Wrapped<String>? temporaryNumberId}) {
+    return DeactivateDto(
+        temporaryNumberId: (temporaryNumberId != null
+            ? temporaryNumberId.value
+            : this.temporaryNumberId));
+  }
+}
+
 // ignore: unused_element
 String? _dateToJson(DateTime? date) {
   if (date == null) {

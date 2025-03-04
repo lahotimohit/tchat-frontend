@@ -53,3 +53,22 @@ Map<String, dynamic> _$VerifyOtpDtoToJson(VerifyOtpDto instance) =>
     <String, dynamic>{
       'otp': instance.otp,
     };
+
+ActivateDto _$ActivateDtoFromJson(Map<String, dynamic> json) => ActivateDto(
+      temporaryNumberId: json['temporaryNumberId'] as String,
+    );
+
+Map<String, dynamic> _$ActivateDtoToJson(ActivateDto instance) =>
+    <String, dynamic>{
+      'temporaryNumberId': instance.temporaryNumberId,
+    };
+
+DeactivateDto _$DeactivateDtoFromJson(Map<String, dynamic> json) =>
+    DeactivateDto(
+      temporaryNumberId: json['temporaryNumberId'] as String,
+    );
+
+Map<String, dynamic> _$DeactivateDtoToJson(DeactivateDto instance) =>
+    <String, dynamic>{
+      'temporaryNumberId': instance.temporaryNumberId,
+    };

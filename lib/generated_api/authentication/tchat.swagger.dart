@@ -45,7 +45,7 @@ abstract class Tchat extends ChopperService {
   }
 
   ///User login
-  @POST(
+  @Post(
     path: '/auth/login',
     optionalBody: true,
   )
@@ -68,7 +68,7 @@ abstract class Tchat extends ChopperService {
   ///User registration
   ///@param Authorization Sending the access token as Bearer <access_token_here>
   ///@param refresh Refresh token
-  @POST(
+  @Post(
     path: '/auth/register',
     optionalBody: true,
   )
@@ -95,7 +95,7 @@ abstract class Tchat extends ChopperService {
   ///Update user profile
   ///@param refresh Refresh token
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @PUT(
+  @Put(
     path: '/auth/profile/update',
     optionalBody: true,
   )
@@ -113,7 +113,7 @@ abstract class Tchat extends ChopperService {
 
   ///Get session info
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @GET(path: '/auth/session')
+  @Get(path: '/auth/session')
   Future<chopper.Response> _authSessionGet(
       {@Header('Authorization') String? authorization});
 
@@ -131,7 +131,7 @@ abstract class Tchat extends ChopperService {
   ///User logout
   ///@param Authorization Sending the access token as Bearer <access_token_here>
   ///@param refresh Refresh token
-  @GET(path: '/auth/logout')
+  @Get(path: '/auth/logout')
   Future<chopper.Response> _authLogoutGet({
     @Header('Authorization') String? authorization,
     @Header('refresh') String? refresh,
@@ -145,7 +145,7 @@ abstract class Tchat extends ChopperService {
 
   ///Get new access token
   ///@param refresh Refresh token
-  @GET(path: '/auth/get-access-token')
+  @Get(path: '/auth/get-access-token')
   Future<chopper.Response> _authGetAccessTokenGet(
       {@Header('refresh') String? refresh});
 
@@ -160,13 +160,85 @@ abstract class Tchat extends ChopperService {
 
   ///Verify OTP
   ///@param otpToken Token received for OTP verification
-  @POST(
+  @Post(
     path: '/auth/verify-otp',
     optionalBody: true,
   )
   Future<chopper.Response> _authVerifyOtpPost({
     @Query('otpToken') required Object? otpToken,
     @Body() required VerifyOtpDto? body,
+  });
+
+  ///Create a new temporary number
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  Future<chopper.Response> tnumMintPost({String? authorization}) {
+    return _tnumMintPost(authorization: authorization?.toString());
+  }
+
+  ///Create a new temporary number
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  @Post(
+    path: '/tnum/mint',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _tnumMintPost(
+      {@Header('Authorization') String? authorization});
+
+  ///List all temporary numbers for the authenticated user
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  Future<chopper.Response> tnumListPost({String? authorization}) {
+    return _tnumListPost(authorization: authorization?.toString());
+  }
+
+  ///List all temporary numbers for the authenticated user
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  @Post(
+    path: '/tnum/list',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _tnumListPost(
+      {@Header('Authorization') String? authorization});
+
+  ///Activate a temporary number
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  Future<chopper.Response> tnumActivatePost({
+    String? authorization,
+    required ActivateDto? body,
+  }) {
+    return _tnumActivatePost(
+        authorization: authorization?.toString(), body: body);
+  }
+
+  ///Activate a temporary number
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  @Post(
+    path: '/tnum/activate',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _tnumActivatePost({
+    @Header('Authorization') String? authorization,
+    @Body() required ActivateDto? body,
+  });
+
+  ///Deactivate a temporary number
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  Future<chopper.Response> tnumDeactivatePost({
+    String? authorization,
+    required DeactivateDto? body,
+  }) {
+    return _tnumDeactivatePost(
+        authorization: authorization?.toString(), body: body);
+  }
+
+  ///Deactivate a temporary number
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  @Post(
+    path: '/tnum/deactivate',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _tnumDeactivatePost({
+    @Header('Authorization') String? authorization,
+    @Body() required DeactivateDto? body,
   });
 }
 
