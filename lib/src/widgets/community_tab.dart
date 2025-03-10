@@ -17,10 +17,10 @@ class _CommunityTab extends State<CommunityTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
-      body: communities.isEmpty? Center(child: emptyTab("Build new teams", "assets/svgs/empty_community.svg"),):
+      body: communities.isEmpty? Center(child: emptyTab("Build new teams", "assets/svgs/empty_community.svg", context, "community"),):
       Column(
         children: [
-          const CustomAppBar(searchHint: "Search community, groups", tab: "community",),
+          const CustomAppBar(tab: "community",),
           Padding(
   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
   child: Row(

@@ -20,10 +20,10 @@ class _CallTab extends State<CallTab> {
     return Scaffold(
       backgroundColor: white,
       body: calls.isEmpty? Center(
-        child: emptyTab("Make your first phone call", "assets/svgs/empty_call.svg"),
+        child: emptyTab("Make your first phone call", "assets/svgs/empty_call.svg", context, 'calls'),
       ) : Column(
               children: [
-                const CustomAppBar(searchHint: "Search people, calls", tab: "calls",),
+                const CustomAppBar(tab: "calls",),
                 Expanded(
                   child: ListView.separated(
                     itemCount: calls.length,

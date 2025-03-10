@@ -17,6 +17,7 @@ class ContactsScreen extends StatefulWidget {
 class _ContactsScreenState extends State<ContactsScreen> {
   List<dynamic> _contacts = [];
   List<Contact> _inviteContacts = [];
+  int totalTChatContacts = 0;
   bool _isLoading = true;
 
   @override
@@ -34,7 +35,6 @@ class _ContactsScreenState extends State<ContactsScreen> {
       if (await FlutterContacts.requestPermission()) {
         List<dynamic> tchatContacts = await getTChatContacts(context);
         List<Contact> deviceContacts = await FlutterContacts.getContacts(withProperties: true);
-
         Set<String> tchatNumbers = tchatContacts.map((c) => c['mobileNumber'].toString()).toSet();
         List<Contact> inviteContacts = deviceContacts.where((contact) {
           String? phoneNumber = contact.phones.isNotEmpty ? contact.phones.first.number.replaceAll(" ", "") : null;
@@ -45,6 +45,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
           setState(() {
             _contacts = tchatContacts;
             _inviteContacts = inviteContacts;
+            totalTChatContacts = tchatContacts.length;
             _isLoading = false;
           });
         }
@@ -164,7 +165,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomAppBar(searchHint: "Search among ${_contacts.length} contacts", tab: ""),
+             CustomAppBar(message: "Search among $totalTChatContacts contacts", tab: ""),
             
             Expanded(
               child: _isLoading 

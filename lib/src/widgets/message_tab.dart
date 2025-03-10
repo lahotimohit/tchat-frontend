@@ -21,10 +21,10 @@ class _MessageTabState extends State<MessageTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
-      body: messages.isEmpty? emptyTab("Send your first message first", "assets/svgs/empty_message.svg")
+      body: messages.isEmpty? emptyTab("Send your first message first", "assets/svgs/empty_message.svg", context, "messages")
       :Column(
               children: [
-                const CustomAppBar(searchHint: "Search messages, people", tab: "messages",),
+                const CustomAppBar(tab: "messages",),
                 Expanded(
                   child: ListView.separated(
                     itemCount: messages.length,
