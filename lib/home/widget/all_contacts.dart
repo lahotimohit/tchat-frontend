@@ -94,9 +94,8 @@ class _ContactsScreenState extends State<ContactsScreen> {
                     ),
                     const SizedBox(height: 4),
                     CustomText(
-                      text: contact['details']['about'] != null
-                          ? contact['details']['about']
-                          : 'No about',
+                      text: contact['details']['about'] ??
+                          contact['details']['about'],
                       size: 13,
                       color: grey,
                     ),

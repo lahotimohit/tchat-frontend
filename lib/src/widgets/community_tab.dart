@@ -4,6 +4,7 @@ import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/providers/community_providers.dart';
 import 'package:tchat_frontend/src/widgets/app_bar_dashboard.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
+import 'package:tchat_frontend/src/widgets/empty_tab.dart';
 
 class CommunityTab extends StatefulWidget {
   const CommunityTab({super.key});
@@ -16,7 +17,8 @@ class _CommunityTab extends State<CommunityTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
-      body: Column(
+      body: communities.isEmpty? Center(child: emptyTab("Build new teams", "assets/svgs/empty_community.svg"),):
+      Column(
         children: [
           const CustomAppBar(searchHint: "Search community, groups", tab: "community",),
           Padding(
@@ -66,8 +68,7 @@ class _CommunityTab extends State<CommunityTab> {
     ],
   ),
 ),
-
-                    const Divider(thickness: 0.5,),
+          const Divider(thickness: 0.5,),
           Expanded(
             child: ListView.separated(
               itemCount: communities.length,
@@ -213,6 +214,13 @@ class _CommunityTab extends State<CommunityTab> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+        },
+        shape: const CircleBorder(),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        child: SvgPicture.asset("assets/svgs/add_profile.svg", height: 25, width: 25, color: white,),
+        ),
     );
   }
 }

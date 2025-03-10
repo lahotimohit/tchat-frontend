@@ -8,6 +8,7 @@ import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/app_bar_dashboard.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 import 'package:tchat_frontend/src/screens/chat.dart';
+import 'package:tchat_frontend/src/widgets/empty_tab.dart';
 
 class MessageTab extends StatefulWidget {
   const MessageTab({super.key});
@@ -20,7 +21,8 @@ class _MessageTabState extends State<MessageTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
-      body: Column(
+      body: messages.isEmpty? emptyTab("Send your first message first", "assets/svgs/empty_message.svg")
+      :Column(
               children: [
                 const CustomAppBar(searchHint: "Search messages, people", tab: "messages",),
                 Expanded(

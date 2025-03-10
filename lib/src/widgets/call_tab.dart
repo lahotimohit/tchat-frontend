@@ -6,6 +6,7 @@ import 'package:tchat_frontend/src/providers/calls.providers.dart';
 import 'package:tchat_frontend/src/screens/voice_call_incoming.dart';
 import 'package:tchat_frontend/src/widgets/app_bar_dashboard.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
+import 'package:tchat_frontend/src/widgets/empty_tab.dart';
 
 class CallTab extends StatefulWidget {
   const CallTab({super.key});
@@ -18,7 +19,9 @@ class _CallTab extends State<CallTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: white,
-      body: Column(
+      body: calls.isEmpty? Center(
+        child: emptyTab("Make your first phone call", "assets/svgs/empty_call.svg"),
+      ) : Column(
               children: [
                 const CustomAppBar(searchHint: "Search people, calls", tab: "calls",),
                 Expanded(
