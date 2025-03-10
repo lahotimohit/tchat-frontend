@@ -55,14 +55,14 @@ final class _$Tchat extends Tchat {
 
   @override
   Future<Response<dynamic>> _authProfileUpdatePut({
-    String? refresh,
     String? authorization,
+    String? refresh,
     required UpdateProfileDto? body,
   }) {
     final Uri $url = Uri.parse('/auth/profile/update');
     final Map<String, String> $headers = {
-      if (refresh != null) 'refresh': refresh,
       if (authorization != null) 'Authorization': authorization,
+      if (refresh != null) 'refresh': refresh,
     };
     final $body = body;
     final Request $request = Request(
@@ -145,6 +145,36 @@ final class _$Tchat extends Tchat {
   }
 
   @override
+  Future<Response<dynamic>> _authResendOtpPost({required Object? otpToken}) {
+    final Uri $url = Uri.parse('/auth/resend-otp');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'otpToken': otpToken
+    };
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _authProfileGet({String? authorization}) {
+    final Uri $url = Uri.parse('/auth/profile');
+    final Map<String, String> $headers = {
+      if (authorization != null) 'Authorization': authorization,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      headers: $headers,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
   Future<Response<dynamic>> _tnumMintPost({String? authorization}) {
     final Uri $url = Uri.parse('/tnum/mint');
     final Map<String, String> $headers = {
@@ -209,6 +239,86 @@ final class _$Tchat extends Tchat {
       $url,
       client.baseUrl,
       body: $body,
+      headers: $headers,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _contactsFilterPost({
+    String? authorization,
+    required String? body,
+  }) {
+    final Uri $url = Uri.parse('/contacts/filter');
+    final Map<String, String> $headers = {
+      if (authorization != null) 'Authorization': authorization,
+    };
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+      headers: $headers,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _conversationAllGet({
+    required num? limit,
+    required String? cursor,
+    String? authorization,
+  }) {
+    final Uri $url = Uri.parse('/conversation/all');
+    final Map<String, dynamic> $params = <String, dynamic>{
+      'limit': limit,
+      'cursor': cursor,
+    };
+    final Map<String, String> $headers = {
+      if (authorization != null) 'Authorization': authorization,
+    };
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+      parameters: $params,
+      headers: $headers,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _conversationCreateIndividualPost({
+    String? authorization,
+    required CreateIndividualConversationDto? body,
+  }) {
+    final Uri $url = Uri.parse('/conversation/create/individual');
+    final Map<String, String> $headers = {
+      if (authorization != null) 'Authorization': authorization,
+    };
+    final $body = body;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+      headers: $headers,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> _conversationCreateGroupPost(
+      {String? authorization}) {
+    final Uri $url = Uri.parse('/conversation/create/group');
+    final Map<String, String> $headers = {
+      if (authorization != null) 'Authorization': authorization,
+    };
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
       headers: $headers,
     );
     return client.send<dynamic, dynamic>($request);

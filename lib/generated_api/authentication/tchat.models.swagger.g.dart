@@ -72,3 +72,15 @@ Map<String, dynamic> _$DeactivateDtoToJson(DeactivateDto instance) =>
     <String, dynamic>{
       'temporaryNumberId': instance.temporaryNumberId,
     };
+
+CreateIndividualConversationDto _$CreateIndividualConversationDtoFromJson(
+        Map<String, dynamic> json) =>
+    CreateIndividualConversationDto(
+      userMobile: json['userMobile'] as String,
+    );
+
+Map<String, dynamic> _$CreateIndividualConversationDtoToJson(
+        CreateIndividualConversationDto instance) =>
+    <String, dynamic>{
+      'userMobile': instance.userMobile,
+    };

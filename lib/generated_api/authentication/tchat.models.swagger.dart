@@ -350,6 +350,54 @@ extension $DeactivateDtoExtension on DeactivateDto {
   }
 }
 
+@JsonSerializable(explicitToJson: true)
+class CreateIndividualConversationDto {
+  const CreateIndividualConversationDto({
+    required this.userMobile,
+  });
+
+  factory CreateIndividualConversationDto.fromJson(Map<String, dynamic> json) =>
+      _$CreateIndividualConversationDtoFromJson(json);
+
+  static const toJsonFactory = _$CreateIndividualConversationDtoToJson;
+  Map<String, dynamic> toJson() =>
+      _$CreateIndividualConversationDtoToJson(this);
+
+  @JsonKey(name: 'userMobile')
+  final String userMobile;
+  static const fromJsonFactory = _$CreateIndividualConversationDtoFromJson;
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other is CreateIndividualConversationDto &&
+            (identical(other.userMobile, userMobile) ||
+                const DeepCollectionEquality()
+                    .equals(other.userMobile, userMobile)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(userMobile) ^ runtimeType.hashCode;
+}
+
+extension $CreateIndividualConversationDtoExtension
+    on CreateIndividualConversationDto {
+  CreateIndividualConversationDto copyWith({String? userMobile}) {
+    return CreateIndividualConversationDto(
+        userMobile: userMobile ?? this.userMobile);
+  }
+
+  CreateIndividualConversationDto copyWithWrapped(
+      {Wrapped<String>? userMobile}) {
+    return CreateIndividualConversationDto(
+        userMobile: (userMobile != null ? userMobile.value : this.userMobile));
+  }
+}
+
 // ignore: unused_element
 String? _dateToJson(DateTime? date) {
   if (date == null) {

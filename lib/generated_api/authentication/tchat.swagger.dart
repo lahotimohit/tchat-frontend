@@ -1,9 +1,17 @@
 // ignore_for_file: type=lint
+
+import 'package:json_annotation/json_annotation.dart';
+import 'package:json_annotation/json_annotation.dart' as json;
+import 'package:collection/collection.dart';
+import 'dart:convert';
+
 import 'tchat.models.swagger.dart';
 import 'package:chopper/chopper.dart';
+
 import 'client_mapping.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
 export 'tchat.models.swagger.dart';
 
@@ -79,29 +87,29 @@ abstract class Tchat extends ChopperService {
   });
 
   ///Update user profile
-  ///@param refresh Refresh token
   ///@param Authorization Sending the access token as Bearer <access_token_here>
+  ///@param refresh Refresh token
   Future<chopper.Response> authProfileUpdatePut({
-    String? refresh,
     String? authorization,
+    String? refresh,
     required UpdateProfileDto? body,
   }) {
     return _authProfileUpdatePut(
-        refresh: refresh?.toString(),
         authorization: authorization?.toString(),
+        refresh: refresh?.toString(),
         body: body);
   }
 
   ///Update user profile
-  ///@param refresh Refresh token
   ///@param Authorization Sending the access token as Bearer <access_token_here>
+  ///@param refresh Refresh token
   @Put(
     path: '/auth/profile/update',
     optionalBody: true,
   )
   Future<chopper.Response> _authProfileUpdatePut({
-    @Header('refresh') String? refresh,
     @Header('Authorization') String? authorization,
+    @Header('refresh') String? refresh,
     @Body() required UpdateProfileDto? body,
   });
 
@@ -168,6 +176,33 @@ abstract class Tchat extends ChopperService {
     @Query('otpToken') required Object? otpToken,
     @Body() required VerifyOtpDto? body,
   });
+
+  ///Resend OTP
+  ///@param otpToken Token received for OTP verification
+  Future<chopper.Response> authResendOtpPost({required Object? otpToken}) {
+    return _authResendOtpPost(otpToken: otpToken);
+  }
+
+  ///Resend OTP
+  ///@param otpToken Token received for OTP verification
+  @Post(
+    path: '/auth/resend-otp',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _authResendOtpPost(
+      {@Query('otpToken') required Object? otpToken});
+
+  ///Get Profile
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  Future<chopper.Response> authProfileGet({String? authorization}) {
+    return _authProfileGet(authorization: authorization?.toString());
+  }
+
+  ///Get Profile
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  @Get(path: '/auth/profile')
+  Future<chopper.Response> _authProfileGet(
+      {@Header('Authorization') String? authorization});
 
   ///Create a new temporary number
   ///@param Authorization Sending the access token as Bearer <access_token_here>
@@ -240,6 +275,89 @@ abstract class Tchat extends ChopperService {
     @Header('Authorization') String? authorization,
     @Body() required DeactivateDto? body,
   });
+
+  ///Filter contacts based on criteria
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  Future<chopper.Response> contactsFilterPost({
+    String? authorization,
+    required String? body,
+  }) {
+    return _contactsFilterPost(
+        authorization: authorization?.toString(), body: body);
+  }
+
+  ///Filter contacts based on criteria
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  @Post(
+    path: '/contacts/filter',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _contactsFilterPost({
+    @Header('Authorization') String? authorization,
+    @Body() required String? body,
+  });
+
+  ///
+  ///@param limit
+  ///@param cursor
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  Future<chopper.Response> conversationAllGet({
+    required num? limit,
+    required String? cursor,
+    String? authorization,
+  }) {
+    return _conversationAllGet(
+        limit: limit, cursor: cursor, authorization: authorization?.toString());
+  }
+
+  ///
+  ///@param limit
+  ///@param cursor
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  @Get(path: '/conversation/all')
+  Future<chopper.Response> _conversationAllGet({
+    @Query('limit') required num? limit,
+    @Query('cursor') required String? cursor,
+    @Header('Authorization') String? authorization,
+  });
+
+  ///
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  Future<chopper.Response> conversationCreateIndividualPost({
+    String? authorization,
+    required CreateIndividualConversationDto? body,
+  }) {
+    return _conversationCreateIndividualPost(
+        authorization: authorization?.toString(), body: body);
+  }
+
+  ///
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  @Post(
+    path: '/conversation/create/individual',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _conversationCreateIndividualPost({
+    @Header('Authorization') String? authorization,
+    @Body() required CreateIndividualConversationDto? body,
+  });
+
+  ///
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  Future<chopper.Response> conversationCreateGroupPost(
+      {String? authorization}) {
+    return _conversationCreateGroupPost(
+        authorization: authorization?.toString());
+  }
+
+  ///
+  ///@param Authorization Sending the access token as Bearer <access_token_here>
+  @Post(
+    path: '/conversation/create/group',
+    optionalBody: true,
+  )
+  Future<chopper.Response> _conversationCreateGroupPost(
+      {@Header('Authorization') String? authorization});
 }
 
 typedef $JsonFactory<T> = T Function(Map<String, dynamic> json);

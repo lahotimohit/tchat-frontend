@@ -83,7 +83,7 @@
                         "description": "User successfully registered"
                     },
                     "401": {
-                        "description": "Unauthorized - Invalid or missing token"
+                        "description": "Unauthorized - Invalid or missing tokens"
                     }
                 },
                 "security": [
@@ -103,18 +103,18 @@
                 "operationId": "updateProfile",
                 "parameters": [
                     {
-                        "name": "refresh",
+                        "name": "Authorization",
                         "in": "header",
-                        "description": "Refresh token",
+                        "description": "Sending the access token as Bearer <access_token_here>",
                         "required": true,
                         "schema": {
                             "type": "string"
                         }
                     },
                     {
-                        "name": "Authorization",
+                        "name": "refresh",
                         "in": "header",
-                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "description": "Refresh token",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -136,9 +136,14 @@
                         "description": "Profile successfully updated"
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Unauthorized - Invalid or missing token"
                     }
                 },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
                 "summary": "Update user profile",
                 "tags": [
                     "auth"
@@ -299,6 +304,67 @@
                 ]
             }
         },
+        "/auth/resend-otp": {
+            "post": {
+                "description": "Resends the OTP back the the user",
+                "operationId": "resendOtp",
+                "parameters": [
+                    {
+                        "name": "otpToken",
+                        "required": true,
+                        "in": "query",
+                        "description": "Token received for OTP verification",
+                        "schema": {}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OTP verified successfully"
+                    },
+                    "401": {
+                        "description": "Invalid or missing OTP token"
+                    }
+                },
+                "summary": "Resend OTP",
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/profile": {
+            "get": {
+                "description": "Resends the OTP back the the user",
+                "operationId": "profile",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "required": true,
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OTP verified successfully"
+                    },
+                    "401": {
+                        "description": "Invalid or missing OTP token"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "summary": "Get Profile",
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
         "/tnum/mint": {
             "post": {
                 "operationId": "mint",
@@ -325,9 +391,6 @@
                     }
                 },
                 "security": [
-                    {
-                        "Bearer": []
-                    },
                     {
                         "bearer": []
                     }
@@ -361,9 +424,6 @@
                     }
                 },
                 "security": [
-                    {
-                        "Bearer": []
-                    },
                     {
                         "bearer": []
                     }
@@ -411,9 +471,6 @@
                 },
                 "security": [
                     {
-                        "Bearer": []
-                    },
-                    {
                         "bearer": []
                     }
                 ],
@@ -460,15 +517,188 @@
                 },
                 "security": [
                     {
-                        "Bearer": []
-                    },
-                    {
                         "bearer": []
                     }
                 ],
                 "summary": "Deactivate a temporary number",
                 "tags": [
                     "Temporary Numbers"
+                ]
+            }
+        },
+        "/contacts/filter": {
+            "post": {
+                "operationId": "filterContacts",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Contact filter criteria",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "string"
+                            },
+                            "examples": {
+                                "example1": {
+                                    "value": {
+                                        "contacts": [
+                                            {
+                                                "countryCode": 91,
+                                                "mobileNumber": "1234567890"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Returns filtered contacts"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Invalid or missing token"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "summary": "Filter contacts based on criteria",
+                "tags": [
+                    "contacts"
+                ]
+            }
+        },
+        "/conversation/all": {
+            "get": {
+                "description": "Get All the conversations for the user",
+                "operationId": "getAllConversations",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "required": true,
+                        "in": "query",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "cursor",
+                        "required": true,
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "401": {
+                        "description": "Unauthorized - Invalid or missing token"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "summary": "",
+                "tags": [
+                    "conversation"
+                ]
+            }
+        },
+        "/conversation/create/individual": {
+            "post": {
+                "description": "Creates a new conversation between two users based upon their user id's",
+                "operationId": "createIndividualConversation",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateIndividualConversationDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized - Invalid or missing token"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "summary": "",
+                "tags": [
+                    "conversation"
+                ]
+            }
+        },
+        "/conversation/create/group": {
+            "post": {
+                "operationId": "createGroupConversation",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Sending the access token as Bearer <access_token_here>",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized - Invalid or missing token"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ],
+                "tags": [
+                    "conversation"
                 ]
             }
         }
@@ -494,12 +724,6 @@
                 "type": "http",
                 "description": "Enter your access token",
                 "in": "header"
-            },
-            "refresh-token": {
-                "type": "apiKey",
-                "in": "header",
-                "name": "refresh",
-                "description": "Enter your refresh token"
             }
         },
         "schemas": {
@@ -613,6 +837,18 @@
                 },
                 "required": [
                     "temporaryNumberId"
+                ]
+            },
+            "CreateIndividualConversationDto": {
+                "type": "object",
+                "properties": {
+                    "userMobile": {
+                        "type": "string",
+                        "description": "Send the phone number of the user that we are forming conversation with"
+                    }
+                },
+                "required": [
+                    "userMobile"
                 ]
             }
         }

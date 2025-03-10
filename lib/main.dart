@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
           getSession(context);
           return const StartScreen(nextScreen: "Home",);
         } else {
-          return const StartScreen(nextScreen: "Start",);
+          return const StartScreen(nextScreen: "Splash",);
         }
       },
   ),

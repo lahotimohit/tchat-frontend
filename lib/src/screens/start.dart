@@ -35,13 +35,12 @@ class _StartScreenState extends State<StartScreen> with SingleTickerProviderStat
   }
 
   void checkAndCallToGetSession() async {
-    SecureStorage storage = SecureStorage();
-    String refreshToken = "";
-      await storage.readData("refreshToken").then((value) {
-        refreshToken = "Bearer $value";
-      });
-      refreshToken.isNotEmpty ? getSession(context) : null;
-  }
+  SecureStorage storage = SecureStorage();
+  String? refreshToken = await storage.readData("refreshToken");
+
+  if (refreshToken != null && refreshToken.isNotEmpty) {
+    getSession(context);
+}}
 
   @override
   void dispose() {
