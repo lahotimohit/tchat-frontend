@@ -38,7 +38,6 @@ class _MyAppState extends State<MyApp> {
       isRegister = register;
       isLoggedIn = login;
     });
-    print("access Token $accessToken, isRegister $isRegister, isLoggedIn $isLoggedIn");
   }
 
   @override

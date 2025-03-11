@@ -16,7 +16,6 @@ Future<List> getTChatContacts(BuildContext context) async {
     await storage.readData("refreshToken").then((value) {
       accessToken = "Bearer $value";
     });
-    print("Token: $accessToken");
 
     List<Contact> contacts = await FlutterContacts.getContacts(withProperties: true);
 
@@ -44,16 +43,14 @@ Future<List> getTChatContacts(BuildContext context) async {
       body: jsonEncode(requestBody),
     );
 
-    print(response);
-
     if (response.isSuccessful) {
       return response.body["contacts"] ?? [];
     } else {
-      snackmessage(context, "Failed to fetch contacts: ${response.error}");
+      context.mounted? snackmessage(context, "Failed to fetch contacts: ${response.error}"): null;
       return [];
     }
   } catch (e) {
-    snackmessage(context, "Error: $e");
+    context.mounted? snackmessage(context, "Error: $e"): null;
     return [];
   }
 }

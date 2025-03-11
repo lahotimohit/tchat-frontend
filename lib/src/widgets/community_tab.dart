@@ -219,7 +219,7 @@ class _CommunityTab extends State<CommunityTab> {
         },
         shape: const CircleBorder(),
         backgroundColor: Theme.of(context).colorScheme.primary,
-        child: SvgPicture.asset("assets/svgs/add_profile.svg", height: 25, width: 25, color: white,),
+        child: SvgPicture.asset("assets/svgs/add_profile.svg", height: 25, width: 25, colorFilter: ColorFilter.mode(white, BlendMode.srcIn),),
         ),
     );
   }

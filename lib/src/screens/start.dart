@@ -38,7 +38,7 @@ class _StartScreenState extends State<StartScreen> with SingleTickerProviderStat
   SecureStorage storage = SecureStorage();
   String? refreshToken = await storage.readData("refreshToken");
 
-  if (refreshToken != null && refreshToken.isNotEmpty) {
+  if (refreshToken != null && refreshToken.isNotEmpty && mounted) {
     getSession(context);
 }}
 

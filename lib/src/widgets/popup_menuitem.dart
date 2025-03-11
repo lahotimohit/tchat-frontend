@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tchat_frontend/src/screens/profile.dart';
 import 'package:tchat_frontend/src/screens/settings.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 PopupMenuItem<String> buildPopupMenuItem(String text) {
@@ -14,7 +13,7 @@ PopupMenuItem<String> buildPopupMenuItem(String text) {
   void handleMenuClick(BuildContext context, String value) {
     switch (value) {
       case "Profile":
-        Navigator.push(context, MaterialPageRoute(builder: (context) =>  const ProfileScreen()));
+        // Navigator.push(context, MaterialPageRoute(builder: (context) =>  const ProfileScreen()));
         break;
       case "New group":
         Navigator.push(context, MaterialPageRoute(builder: (context) => SettingMainScreen()));

@@ -6,12 +6,13 @@ import 'package:tchat_frontend/src/animations/fade_pageroute.dart';
 import 'package:tchat_frontend/src/models/profile_option.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/providers/storage.dart';
+import 'package:tchat_frontend/src/screens/profile.dart';
 import 'package:tchat_frontend/src/screens/start.dart';
 import 'package:tchat_frontend/src/widgets/custom_elevated_button.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class SettingMainScreen extends StatefulWidget {
-  SettingMainScreen({super.key});
+  const SettingMainScreen({super.key});
 
   @override
   State<SettingMainScreen> createState() => _SettingMainScreenState();
@@ -97,7 +98,11 @@ class _SettingMainScreenState extends State<SettingMainScreen> {
         ),
       ),
     ),
-    SvgPicture.asset("assets/svgs/add_profile.svg"),
+    GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(fadeRoute(ProfileScreen(session: session,)));
+      },
+      child: SvgPicture.asset("assets/svgs/add_profile.svg")),
     const SizedBox(width: 15,)
   ],
 ),

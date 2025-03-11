@@ -45,7 +45,7 @@ abstract class TchatPpStorage extends ChopperService {
   }
 
   ///
-  @Post(
+  @POST(
     path: '/images/upload',
     optionalBody: true,
   )
@@ -67,7 +67,7 @@ abstract class TchatPpStorage extends ChopperService {
 
   ///Upload profile picture
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @Post(
+  @POST(
     path: '/profile-picture/upload',
     optionalBody: true,
   )
@@ -84,7 +84,7 @@ abstract class TchatPpStorage extends ChopperService {
   }
 
   ///
-  @Get(path: '/')
+  @GET(path: '/')
   Future<chopper.Response> _get();
 }
 

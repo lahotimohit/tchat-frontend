@@ -32,7 +32,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
     });
 
     try {
-      if (await FlutterContacts.requestPermission()) {
+      if (await FlutterContacts.requestPermission() && mounted) {
         List<dynamic> tchatContacts = await getTChatContacts(context);
         List<Contact> deviceContacts = await FlutterContacts.getContacts(withProperties: true);
         Set<String> tchatNumbers = tchatContacts.map((c) => c['mobileNumber'].toString()).toSet();

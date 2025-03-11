@@ -4,7 +4,9 @@ import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({super.key, required this.session});
+  final Map<String, dynamic> session;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,12 +24,12 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Stack(
+            Stack(
               children: [
                 CircleAvatar(
                   radius: 65,
                   backgroundImage: NetworkImage(
-                    "https://cdn.pixabay.com/photo/2019/08/28/17/17/girl-4437225_640.jpg",
+                    session['profilePicture'] ?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
                   ),
                 ),
                 Positioned(
@@ -49,7 +51,7 @@ class ProfileScreen extends StatelessWidget {
             ProfileItem(
               icon: SvgPicture.asset("assets/svgs/about.svg"),
               title: "Name",
-              subtitle: "Nidhijain",
+              subtitle: session['name'],
               trailingIcon: SvgPicture.asset("assets/svgs/edit.svg"),
             ),
             const SizedBox(height: 8),
@@ -68,14 +70,14 @@ class ProfileScreen extends StatelessWidget {
             ProfileItem(
               icon: SvgPicture.asset("assets/svgs/info.svg"),
               title: "About",
-              subtitle: "I am available on TChat",
+              subtitle: session['about'] ?? "Available on TChat only",
               trailingIcon: SvgPicture.asset("assets/svgs/edit.svg"),
             ),
             const SizedBox(height: 20),
             ProfileItem(
               icon: SvgPicture.asset("assets/svgs/call.svg"),
-              title: "Phone",
-              subtitle: "+91 984XX XXXX",
+              title: "Email",
+              subtitle: session['email'],
               trailingIcon: null,
             ),
           ],

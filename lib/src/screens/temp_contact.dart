@@ -143,7 +143,7 @@ class _TempContactScreenState extends State<TempContactScreen> {
                   submitNum = true;
                 });
                 bool response = await submitTempNum(context, tempNums[_selectedCardIndex!]['id']);
-                if(response) {
+                if(response && mounted) {
                   setState(() {
                     submitNum = false;
                   });

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tchat_frontend/src/animations/pageroute.dart';
 import 'package:tchat_frontend/src/providers/messages.dart';
-import 'package:tchat_frontend/home/widget/all_contacts.dart';
-import 'package:tchat_frontend/home/widget/show_profile_image.dart';
+import 'package:tchat_frontend/src/screens/all_contacts.dart';
 import 'package:tchat_frontend/src/common.dart';
 import 'package:tchat_frontend/src/widgets/app_bar_dashboard.dart';
 import 'package:tchat_frontend/src/widgets/custom_text.dart';
@@ -36,7 +35,6 @@ class _MessageTabState extends State<MessageTab> {
   children: [
     InkWell(
       onTap: () {
-        showProfileImage(context, message.profileImage, message.username);
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 12),

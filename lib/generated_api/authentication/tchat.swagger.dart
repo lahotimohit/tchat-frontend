@@ -1,17 +1,9 @@
 // ignore_for_file: type=lint
-
-import 'package:json_annotation/json_annotation.dart';
-import 'package:json_annotation/json_annotation.dart' as json;
-import 'package:collection/collection.dart';
-import 'dart:convert';
-
 import 'tchat.models.swagger.dart';
 import 'package:chopper/chopper.dart';
-
 import 'client_mapping.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
 export 'tchat.models.swagger.dart';
 
@@ -53,7 +45,7 @@ abstract class Tchat extends ChopperService {
   }
 
   ///User login
-  @Post(
+  @POST(
     path: '/auth/login',
     optionalBody: true,
   )
@@ -76,7 +68,7 @@ abstract class Tchat extends ChopperService {
   ///User registration
   ///@param Authorization Sending the access token as Bearer <access_token_here>
   ///@param refresh Refresh token
-  @Post(
+  @POST(
     path: '/auth/register',
     optionalBody: true,
   )
@@ -103,7 +95,7 @@ abstract class Tchat extends ChopperService {
   ///Update user profile
   ///@param Authorization Sending the access token as Bearer <access_token_here>
   ///@param refresh Refresh token
-  @Put(
+  @PUT(
     path: '/auth/profile/update',
     optionalBody: true,
   )
@@ -121,7 +113,7 @@ abstract class Tchat extends ChopperService {
 
   ///Get session info
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @Get(path: '/auth/session')
+  @GET(path: '/auth/session')
   Future<chopper.Response> _authSessionGet(
       {@Header('Authorization') String? authorization});
 
@@ -139,7 +131,7 @@ abstract class Tchat extends ChopperService {
   ///User logout
   ///@param Authorization Sending the access token as Bearer <access_token_here>
   ///@param refresh Refresh token
-  @Get(path: '/auth/logout')
+  @GET(path: '/auth/logout')
   Future<chopper.Response> _authLogoutGet({
     @Header('Authorization') String? authorization,
     @Header('refresh') String? refresh,
@@ -153,7 +145,7 @@ abstract class Tchat extends ChopperService {
 
   ///Get new access token
   ///@param refresh Refresh token
-  @Get(path: '/auth/get-access-token')
+  @GET(path: '/auth/get-access-token')
   Future<chopper.Response> _authGetAccessTokenGet(
       {@Header('refresh') String? refresh});
 
@@ -168,7 +160,7 @@ abstract class Tchat extends ChopperService {
 
   ///Verify OTP
   ///@param otpToken Token received for OTP verification
-  @Post(
+  @POST(
     path: '/auth/verify-otp',
     optionalBody: true,
   )
@@ -185,7 +177,7 @@ abstract class Tchat extends ChopperService {
 
   ///Resend OTP
   ///@param otpToken Token received for OTP verification
-  @Post(
+  @POST(
     path: '/auth/resend-otp',
     optionalBody: true,
   )
@@ -200,7 +192,7 @@ abstract class Tchat extends ChopperService {
 
   ///Get Profile
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @Get(path: '/auth/profile')
+  @GET(path: '/auth/profile')
   Future<chopper.Response> _authProfileGet(
       {@Header('Authorization') String? authorization});
 
@@ -212,7 +204,7 @@ abstract class Tchat extends ChopperService {
 
   ///Create a new temporary number
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @Post(
+  @POST(
     path: '/tnum/mint',
     optionalBody: true,
   )
@@ -227,7 +219,7 @@ abstract class Tchat extends ChopperService {
 
   ///List all temporary numbers for the authenticated user
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @Post(
+  @POST(
     path: '/tnum/list',
     optionalBody: true,
   )
@@ -246,7 +238,7 @@ abstract class Tchat extends ChopperService {
 
   ///Activate a temporary number
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @Post(
+  @POST(
     path: '/tnum/activate',
     optionalBody: true,
   )
@@ -267,7 +259,7 @@ abstract class Tchat extends ChopperService {
 
   ///Deactivate a temporary number
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @Post(
+  @POST(
     path: '/tnum/deactivate',
     optionalBody: true,
   )
@@ -288,7 +280,7 @@ abstract class Tchat extends ChopperService {
 
   ///Filter contacts based on criteria
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @Post(
+  @POST(
     path: '/contacts/filter',
     optionalBody: true,
   )
@@ -314,7 +306,7 @@ abstract class Tchat extends ChopperService {
   ///@param limit
   ///@param cursor
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @Get(path: '/conversation/all')
+  @GET(path: '/conversation/all')
   Future<chopper.Response> _conversationAllGet({
     @Query('limit') required num? limit,
     @Query('cursor') required String? cursor,
@@ -333,7 +325,7 @@ abstract class Tchat extends ChopperService {
 
   ///
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @Post(
+  @POST(
     path: '/conversation/create/individual',
     optionalBody: true,
   )
@@ -352,7 +344,7 @@ abstract class Tchat extends ChopperService {
 
   ///
   ///@param Authorization Sending the access token as Bearer <access_token_here>
-  @Post(
+  @POST(
     path: '/conversation/create/group',
     optionalBody: true,
   )
